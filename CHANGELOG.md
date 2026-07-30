@@ -6,6 +6,15 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.8] - 2026-07-30
+
+### 🚀 Adicionado (Added)
+- **Tag de Versão Dinâmica no Rodapé (`LandingFooter.tsx`):**
+  - Adicionado badge dinâmico da versão da aplicação (`v1.0.8`) no rodapé (footer), importado automaticamente do `package.json` a cada nova release sem necessidade de alteração manual no componente.
+  - Exibição estendida do rodapé tanto na Landing Page quanto no Dashboard do projeto.
+
+---
+
 ## [1.0.7] - 2026-07-30
 
 ### 🚀 Adicionado & 🛠️ Melhorado (Added & Improved)

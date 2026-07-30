@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from './components/common/Header';
 import { LandingPage } from './components/landing/LandingPage';
+import { LandingFooter } from './components/landing/LandingFooter';
 import { RiskScoreBadge } from './components/dashboard/RiskScoreBadge';
 import { ExecutiveMetrics } from './components/dashboard/ExecutiveMetrics';
 import { SeverityChart } from './components/dashboard/SeverityChart';
@@ -54,6 +55,8 @@ export const App: React.FC = () => {
           </div>
         </main>
       )}
+
+      {report && <LandingFooter />}
     </div>
   );
 };
