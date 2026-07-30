@@ -6,6 +6,20 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.5] - 2026-07-30
+
+### 🛠️ Corrigido (Fixed)
+- **Título & Metadados SEO (`index.html`):**
+  - Atualizado o elemento `<head>` da aplicação trocando a tag genérica `<title>frontend</title>` por `Semgrep CLI Visualizer & Executive Security Dashboard`, além de incluir metadados SEO, Open Graph e fontes do Google (*Inter* e *JetBrains Mono*).
+- **Ajuste de CSP no Nginx (`nginx.conf`):**
+  - Atualizada a regra de `Content-Security-Policy` adicionando origens autorizadas para os scripts e chamadas de métricas do Cloudflare Insights (`https://static.cloudflareinsights.com`) e Google Analytics nas diretivas `script-src` e `connect-src`.
+- **Estratégia de Deploy no GitLab CI (`deploy.gitlab-ci.yml`):**
+  - Migrado o deploy para um fluxo Cloud-Native via Container Registry (`docker pull`), resolvendo a incompatibilidade com o Docker Executor do GitLab Runner sem afetar outros projetos do servidor.
+- **Gestão de Espaço em Disco no Docker:**
+  - Configurada a limpeza pós-deploy com `docker image prune -af`, removendo automaticamente imagens e tags de commits anteriores não associadas a containers ativos.
+
+---
+
 ## [1.0.4] - 2026-07-30
 
 ### 🚀 Adicionado (Added)
