@@ -10,6 +10,7 @@ stages:
   - build
   - docker-build
   - docker-security
+  - deploy
 
 # Inclusão dos Módulos Especializados de CI/CD & Segurança
 include:
@@ -17,3 +18,5 @@ include:
   - local: '.gitlab/ci/test.gitlab-ci.yml'
   - local: '.gitlab/ci/build.gitlab-ci.yml'
   - local: '.gitlab/ci/docker.gitlab-ci.yml'
+  - local: '.gitlab/ci/deploy.gitlab-ci.yml'
+

@@ -1,4 +1,4 @@
-# Guia de Implantação em Produção (Docker & Nginx)
+# Guia de Implantação em Produção (Docker, Nginx & GitLab CI/CD)
 
 > **Domínio de Produção:** `semgrep.brunoizidorio.com.br`  
 > **Arquitetura:** 100% Client-Side SPA (Zero Backend, Zero Data Persistence)  
@@ -16,71 +16,113 @@ Não há banco de dados, API backend ou armazenamento persistente. O container D
 
 ## 🛠️ Pré-requisitos do Servidor (VPS / Cloud)
 
-Antes de iniciar a implantação na sua VPS (DigitalOcean, AWS EC2, GCP, Linode ou servidor próprio):
+Antes de iniciar a implantação na sua VPS (Oracle Cloud, DigitalOcean, AWS EC2, GCP ou servidor próprio):
 
+- **Git:** Instalado na VPS (`sudo apt install -y git`)
 - **Docker Engine:** Versão 24.0+ instalada
 - **Docker Compose:** Plugin v2.0+ instalado
-- **Portas Liberadas:** Porta `80` (HTTP) e `443` (HTTPS)
+- **Portas Liberadas:** Porta `80` (HTTP) e `443` (HTTPS) no firewall/Security List
 - **Domínio Apontado:** Registro DNS tipo `A` apontando `semgrep.brunoizidorio.com.br` para o IP público da VPS
 
 ---
 
-## 📂 Arquivos de Configuração de Produção
+## 🔑 Autorização para `git clone` na VPS (GitLab Deploy Keys)
 
-O repositório já conta com todos os arquivos preparados para produção:
+Para permitir que a VPS faça o `git clone` e receba atualizações do repositório no GitLab de forma segura (sem expor credenciais pessoais):
 
-### 1. [frontend/Dockerfile](file:///home/bruno/Projetos/Semgrep%20front/frontend/Dockerfile) (Multi-stage Build)
-- **Stage 1 (Builder):** Compila o código TypeScript/React com Vite em um ambiente isolado Node 20.
-- **Stage 2 (Runner):** Copia os artefatos estáticos compilados para uma imagem Nginx Alpine ultra-leve (~25MB) sem manter dependências de desenvolvimento.
+### Opção A: SSH Deploy Key (Recomendada)
 
-### 2. [frontend/nginx.conf](file:///home/bruno/Projetos/Semgrep%20front/frontend/nginx.conf) (Cabeçalhos & Roteamento SPA)
-Configurações incluídas:
-- **Gzip Compression:** Compressão de texto/JS/CSS reduzindo a carga de rede.
-- **SPA Fallback:** `try_files $uri $uri/ /index.html;` (evita erro 404 ao atualizar rotas).
-- **Cabeçalhos OWASP:** `X-Frame-Options DENY`, `X-Content-Type-Options nosniff`, `Content-Security-Policy`, `Referrer-Policy`.
-- **Cache Estático:** `Cache-Control` estático de 1 ano para arquivos hash (`js/css`).
+#### 1. Gerar um par de chaves SSH exclusivo para a VPS
+Acesse o terminal da sua VPS e gere a chave sem passphrase (para permitir automação):
+```bash
+ssh-keygen -t ed25519 -C "vps-semgrep-deploy" -f ~/.ssh/id_ed25519 -N ""
+```
 
-### 3. [docker-compose.yml](file:///home/bruno/Projetos/Semgrep%20front/docker-compose.yml)
-Gerencia a inicialização, reinicialização automática (`restart: always`), mapeamento de porta e verificação de saúde (`healthcheck`).
+#### 2. Copiar a chave pública gerada
+Exiba a chave pública gerada na VPS:
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+*Copie todo o conteúdo exibido (começando com `ssh-ed25519 ...`).*
+
+#### 3. Cadastrar a Deploy Key no GitLab
+1. No GitLab, acesse o repositório do projeto (`semgrep`).
+2. Vá em **Settings > Repository**.
+3. Expanda a seção **Deploy Keys**.
+4. Clique em **Add key**.
+5. Preencha os campos:
+   - **Title:** `VPS Production Server`
+   - **Key:** Cole a chave pública copiada no passo anterior.
+   - **Grant write permissions to this key:** ❌ **Deixe DESMARCADO** (princípio do menor privilégio — acesso somente leitura para o repositório).
+6. Clique em **Add key**.
+
+#### 4. Testar a Autorização SSH na VPS
+Na VPS, teste a conexão SSH com o GitLab:
+```bash
+ssh -T git@gitlab.com
+```
+*Ao ser questionado sobre o fingerprint (`Are you sure you want to continue connecting`), digite `yes`.*  
+Saída esperada: `Welcome to GitLab, @seu-usuario!` ou mensagem indicando autenticação bem-sucedida.
 
 ---
 
-## 🚀 Passo a Passo de Deploy em Produção
+### Opção B: GitLab Deploy Token (Alternativa HTTP/HTTPS)
 
-### Passo 1: Clonar o Repositório na VPS
+1. No GitLab, acesse **Settings > Repository > Deploy Tokens**.
+2. Crie um token com nome `vps-deploy-token` e marque a permissão `read_repository`.
+3. Utilize a URL com token no clone:
 ```bash
-git clone https://github.com/seu-usuario/Semgrep-front.git /opt/semgrep-front
-cd /opt/semgrep-front
+git clone https://gitlab-ci-token:<DEPLOY_TOKEN>@gitlab.com/brunoizidorio/semgrep.git /opt/semgrep
 ```
 
-### Passo 2: Executar o Container via Docker Compose
-Rode o comando abaixo para construir a imagem e iniciar o serviço em segundo plano:
+---
 
+## 🚀 Primeiro Deploy Manual na VPS (Passo a Passo)
+
+Siga este procedimento para realizar a primeira implantação da aplicação no servidor:
+
+### Passo 1: Criar e Configurar o Diretório de Destino
+Na VPS, crie a pasta `/opt/semgrep` e atribua permissão ao seu usuário não-root:
+```bash
+sudo mkdir -p /opt/semgrep
+sudo chown -R $USER:$USER /opt/semgrep
+```
+
+### Passo 2: Clonar o Repositório via SSH
+Execute o clone no diretório criado:
+```bash
+git clone git@gitlab.com:brunoizidorio/semgrep.git /opt/semgrep
+cd /opt/semgrep
+```
+
+### Passo 3: Executar o Container via Docker Compose
+Construa a imagem e inicie o container em segundo plano:
 ```bash
 docker compose up -d --build
 ```
 
-Para verificar o status do container:
+### Passo 4: Verificar a Execução Inicial
+Certifique-se de que o container está ativo e respondendo localmente:
 ```bash
 docker compose ps
+curl -I http://localhost:8080
 ```
-
-O container estará rodando localmente na porta `8080`.
+*O container estará servindo o Nginx interno na porta `8080`.*
 
 ---
 
 ## 🔒 Configuração de SSL/TLS (HTTPS) para `semgrep.brunoizidorio.com.br`
 
-Para expor a aplicação na porta `443` com certificado SSL/TLS gratuito do Let's Encrypt, escolha uma das opções abaixo:
+Para expor a aplicação publicamente com certificado SSL/TLS gratuito do Let's Encrypt:
 
-### Opção A: Nginx Proxy no Host + Certbot (Recomendado)
+### Nginx Reverse Proxy no Host + Certbot (Recomendado)
 
-1. Instale o Nginx e Certbot no host:
+1. Instale Nginx e Certbot no host da VPS:
 ```bash
 sudo apt update && sudo apt install -y nginx certbot python3-certbot-nginx
 ```
 
-2. Crie o arquivo `/etc/nginx/sites-available/semgrep.brunoizidorio.com.br`:
+2. Crie o arquivo de configuração `/etc/nginx/sites-available/semgrep.brunoizidorio.com.br`:
 ```nginx
 server {
     server_name semgrep.brunoizidorio.com.br;
@@ -95,7 +137,7 @@ server {
 }
 ```
 
-3. Ative o site e emita o certificado HTTPS:
+3. Ative o site e emita o certificado SSL:
 ```bash
 sudo ln -s /etc/nginx/sites-available/semgrep.brunoizidorio.com.br /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
@@ -104,46 +146,67 @@ sudo certbot --nginx -d semgrep.brunoizidorio.com.br
 
 ---
 
-### Opção B: Cloudflare Tunnel (Zero Porta Exposta)
+## 🤖 Automatização do Deploy no GitLab CI/CD (`.gitlab-ci.yml`)
 
-Se utilizar o Cloudflare:
-1. Instale o `cloudflared` na VPS.
-2. Crie o tunnel apontando o hostname `semgrep.brunoizidorio.com.br` para `http://localhost:8080`.
-3. A porta `80/443` do servidor nem precisa ficar aberta para a internet pública!
+Após o **primeiro deploy manual**, a infraestrutura e o diretório `/opt/semgrep` já estão devidamente configurados na VPS. A partir deste ponto, o **GitLab CI/CD assume o deploy automatizado**.
+
+### Como Funciona a Automação CI/CD
+
+O projeto conta com o runner configurado com a tag `oracle-vps` diretamente na VPS de produção (ou executando tarefas no host). 
+
+O estágio `deploy` está configurado no arquivo modular [`.gitlab/ci/deploy.gitlab-ci.yml`](file:///.gitlab/ci/deploy.gitlab-ci.yml) e incluído no [`.gitlab-ci.yml`](file:///.gitlab-ci.yml):
+
+```yaml
+deploy_production:
+  stage: deploy
+  tags:
+    - oracle-vps
+  environment:
+    name: production
+    url: https://semgrep.brunoizidorio.com.br
+  script:
+    - echo "🚀 [1/4] Acessando diretório do projeto na VPS (/opt/semgrep)..."
+    - cd /opt/semgrep
+    - echo "🔄 [2/4] Sincronizando repositório com o branch master..."
+    - git fetch origin master
+    - git reset --hard origin/master
+    - echo "🐳 [3/4] Reconstruindo e reiniciando os containers Docker..."
+    - docker compose up -d --build
+    - echo "🧹 [4/4] Removendo imagens Docker órfãs/antigas..."
+    - docker image prune -f
+    - echo "🧪 Validando execução dos containers..."
+    - docker compose ps
+    - curl -I http://localhost:8080 || exit 1
+    - echo "✅ Deploy em produção concluído com sucesso!"
+  only:
+    - master
+```
+
+### Fluxo Continuativo do Pipeline
+
+1. **Commit / Merge na branch `master`**: O pipeline do GitLab é disparado automaticamente.
+2. **Estágios Anteriores**:
+   - `security-scan` (Semgrep, Gitleaks)
+   - `test` (Vitest)
+   - `build` (Vite Build)
+   - `docker-build` & `docker-security` (Trivy)
+3. **Estágio `deploy`**:
+   - Atualiza o código-fonte em `/opt/semgrep` com `git fetch` + `git reset --hard`.
+   - Executa `docker compose up -d --build` para reconstruir a imagem Docker estática e recriar o container sem downtime.
+   - Executa a limpeza de imagens antigas com `docker image prune -f`.
 
 ---
 
 ## 🧪 Verificação de Saúde e Teste de Segurança
 
-Após a implantação, execute os comandos de teste para validar a resposta do servidor:
+Após qualquer deploy (manual ou via CI/CD), valide a aplicação:
 
 ### 1. Teste de Cabeçalhos HTTP de Segurança
 ```bash
 curl -I https://semgrep.brunoizidorio.com.br
 ```
-*Saída esperada:*
-```http
-HTTP/2 200
-server: nginx
-x-frame-options: DENY
-x-content-type-options: nosniff
-content-security-policy: default-src 'self'...
-```
 
-### 2. Verificar Logs do Container
+### 2. Logs do Container em Produção
 ```bash
-docker compose logs -f
+docker compose -f /opt/semgrep/docker-compose.yml logs -f
 ```
-
----
-
-## 🔄 Atualização de Versão (Deploy Continuativo)
-
-Para atualizar a aplicação quando houver novos commits:
-
-```bash
-cd /opt/semgrep-front
-git pull origin master
-docker compose up -d --build
-```
-O Docker compilará a nova versão sem causar downtime perceptível aos usuários.

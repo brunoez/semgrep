@@ -1,0 +1,25 @@
+# Módulo de Deploy Automatizado em Produção (VPS via GitLab Runner / Docker Compose)
+
+deploy_production:
+  stage: deploy
+  tags:
+    - oracle-vps
+  environment:
+    name: production
+    url: https://semgrep.brunoizidorio.com.br
+  script:
+    - echo "🚀 [1/4] Acessando diretório do projeto na VPS (/opt/semgrep)..."
+    - cd /opt/semgrep
+    - echo "🔄 [2/4] Sincronizando repositório com o branch master..."
+    - git fetch origin master
+    - git reset --hard origin/master
+    - echo "🐳 [3/4] Reconstruindo e reiniciando os containers Docker..."
+    - docker compose up -d --build
+    - echo "🧹 [4/4] Removendo imagens Docker órfãs/antigas..."
+    - docker image prune -f
+    - echo "🧪 Validando execução dos containers..."
+    - docker compose ps
+    - curl -I http://localhost:8080 || exit 1
+    - echo "✅ Deploy em produção concluído com sucesso!"
+  only:
+    - master

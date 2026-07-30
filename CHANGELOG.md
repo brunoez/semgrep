@@ -6,6 +6,20 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.4] - 2026-07-30
+
+### 🚀 Adicionado (Added)
+- **Autorização SSH & Deploy Keys na VPS:**
+  - Adicionado guia passo a passo em [docs/PROD.md](docs/PROD.md) para autorização de `git clone` e `git pull` na VPS utilizando GitLab Deploy Keys (acesso restrito somente leitura).
+- **Módulo de Deploy Automatizado no GitLab CI/CD:**
+  - Criado o arquivo modular [`.gitlab/ci/deploy.gitlab-ci.yml`](.gitlab/ci/deploy.gitlab-ci.yml) e incluído no [`.gitlab-ci.yml`](.gitlab-ci.yml), com suporte a GitLab Environments (`production`), reconstrução de containers Docker e verificação de saúde local post-deploy.
+
+### 🛠️ Corrigido (Fixed)
+- **Padronização do Diretório de Produção:**
+  - Unificados os caminhos do repositório e diretório na VPS de `/opt/semgrep-front` para `/opt/semgrep`.
+
+---
+
 ## [1.0.3] - 2026-07-30
 
 ### 🛠️ Corrigido (Fixed)

@@ -73,17 +73,17 @@ Acesse em seu navegador: `http://localhost:5173`
 
 ---
 
-## 🐳 Execução em Produção via Docker
+## 🐳 Execução em Produção via Docker & CI/CD
 
-A aplicação conta com build multi-stage Docker e servidor estático Nginx Alpine.
+A aplicação conta com build multi-stage Docker, servidor estático Nginx Alpine e pipeline de CI/CD automatizado no GitLab.
 
 ```bash
-# Build e execução via Docker Compose
+# Build e execução manual via Docker Compose
 docker compose up -d --build
 ```
 
 Acesse em: `http://localhost:8080`  
-Para documentação completa de implantação em produção (HTTPS/Nginx/Cloudflare), consulte [docs/PROD.md](docs/PROD.md).
+Para a documentação completa de autorização `git clone` (Deploy Keys), primeiro deploy manual e esteira automatizada no GitLab CI/CD, consulte [docs/PROD.md](docs/PROD.md).
 
 ---
 
