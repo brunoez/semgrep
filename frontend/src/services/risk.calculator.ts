@@ -1,5 +1,8 @@
+export type SecurityGrade = 'A+' | 'A' | 'B+' | 'B' | 'C' | 'D' | 'F';
+
 export interface RiskScoreResult {
   score: number;
+  grade: SecurityGrade;
   level: string;
   color: string;
   badgeClass: string;
@@ -16,6 +19,28 @@ export interface RiskScoreResult {
   };
 }
 
+export function getSecurityGrade(score: number): { grade: SecurityGrade; level: string; color: string; badgeClass: string } {
+  if (score >= 97) {
+    return { grade: 'A+', level: 'Nota A+ (Excelente / Baixo Risco)', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+  }
+  if (score >= 90) {
+    return { grade: 'A', level: 'Nota A (Baixo Risco)', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+  }
+  if (score >= 80) {
+    return { grade: 'B+', level: 'Nota B+ (Bom / Pouca Exposição)', color: '#84cc16', badgeClass: 'bg-lime-500/10 text-lime-400 border-lime-500/20' };
+  }
+  if (score >= 70) {
+    return { grade: 'B', level: 'Nota B (Risco Moderado)', color: '#f59e0b', badgeClass: 'bg-amber-500/10 text-amber-400 border-amber-500/20' };
+  }
+  if (score >= 60) {
+    return { grade: 'C', level: 'Nota C (Atenção Necessária)', color: '#eab308', badgeClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' };
+  }
+  if (score >= 50) {
+    return { grade: 'D', level: 'Nota D (Alto Risco)', color: '#f97316', badgeClass: 'bg-orange-500/10 text-orange-400 border-orange-500/20' };
+  }
+  return { grade: 'F', level: 'Nota F (Risco Crítico / Reprovado)', color: '#ef4444', badgeClass: 'bg-rose-500/10 text-rose-400 border-rose-500/20' };
+}
+
 export function calculateExecutiveRiskScore(summary: {
   critical: number;
   high: number;
@@ -30,11 +55,13 @@ export function calculateExecutiveRiskScore(summary: {
 
   const totalFindings = summary.critical + summary.high + summary.medium + summary.low;
   if (totalFindings === 0) {
+    const meta = getSecurityGrade(100);
     return {
       score: 100,
-      level: 'Excelente / Baixo Risco',
-      color: '#10b981',
-      badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      grade: meta.grade,
+      level: meta.level,
+      color: meta.color,
+      badgeClass: meta.badgeClass,
       weightedImpact: 0,
       breakdown: {
         criticalCount: 0, criticalPts: 0,
@@ -47,30 +74,14 @@ export function calculateExecutiveRiskScore(summary: {
 
   // Logarithmic risk scale: handles both small & large enterprise scans without immediate saturation
   const score = Math.max(0, Math.round(100 - 40 * Math.log10(1 + weightedImpact / 10)));
-
-  let level = 'Risco Crítico';
-  let color = '#ef4444';
-  let badgeClass = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-
-  if (score >= 90) {
-    level = 'Excelente / Baixo Risco';
-    color = '#10b981';
-    badgeClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-  } else if (score >= 70) {
-    level = 'Risco Moderado';
-    color = '#f59e0b';
-    badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-  } else if (score >= 50) {
-    level = 'Alto Risco';
-    color = '#f97316';
-    badgeClass = 'bg-orange-500/10 text-orange-400 border-orange-500/20';
-  }
+  const meta = getSecurityGrade(score);
 
   return {
     score,
-    level,
-    color,
-    badgeClass,
+    grade: meta.grade,
+    level: meta.level,
+    color: meta.color,
+    badgeClass: meta.badgeClass,
     weightedImpact,
     breakdown: {
       criticalCount: summary.critical, criticalPts,

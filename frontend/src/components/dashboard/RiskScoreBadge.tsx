@@ -19,7 +19,7 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
     <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-between shadow-xl relative group">
       <div>
         <div className="flex items-center gap-2">
-          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Executive Risk Score</p>
+          <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Executive Security Rating</p>
           
           {/* Help Icon with Hover Card */}
           <div className="relative inline-block">
@@ -31,15 +31,22 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
             <div className="absolute left-0 sm:left-auto sm:-right-12 top-7 hidden group-hover:block z-50 w-80 p-4 bg-slate-900/95 border border-slate-700 rounded-xl shadow-2xl backdrop-blur-md text-xs text-slate-200 space-y-3 pointer-events-none">
               <div className="flex items-center gap-2 text-indigo-400 font-semibold border-b border-slate-800 pb-2">
                 <Calculator className="w-4 h-4" />
-                <span>Cálculo do Risk Score ({risk.score}/100)</span>
+                <span>Classificação por Notas (A+ até F)</span>
               </div>
 
               <p className="text-slate-300 leading-relaxed font-semibold">
-                💡 Quanto MAIOR a nota (0-100), MAIS SEGURA é a aplicação!
+                💡 Nota {risk.grade} ({risk.score}/100) • {risk.level}
               </p>
-              <p className="text-slate-400 text-[11px]">
-                100 representa saúde perfeita de segurança. 0 representa risco crítico extremo.
-              </p>
+
+              <div className="grid grid-cols-2 gap-1.5 text-[10px] bg-slate-950 p-2 rounded border border-slate-800 font-mono">
+                <div className="text-emerald-400">A+ (97-100 pts)</div>
+                <div className="text-emerald-400">A (90-96 pts)</div>
+                <div className="text-lime-400">B+ (80-89 pts)</div>
+                <div className="text-amber-400">B (70-79 pts)</div>
+                <div className="text-yellow-400">C (60-69 pts)</div>
+                <div className="text-orange-400">D (50-59 pts)</div>
+                <div className="text-rose-400 font-bold col-span-2">F (0-49 pts) - Risco Crítico</div>
+              </div>
 
               <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 font-mono space-y-1 text-[11px]">
                 <div className="flex justify-between text-rose-400">
@@ -63,34 +70,26 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
                   <span>{weightedImpact} pts</span>
                 </div>
               </div>
-
-              <div className="text-[11px] text-slate-400 bg-slate-950/60 p-2 rounded border border-slate-800">
-                <span className="text-slate-300 font-semibold">Fórmula Logarítmica: </span>
-                <code className="text-indigo-300 font-mono block mt-0.5">100 - 40 × log10(1 + Impacto/10)</code>
-                <div className="mt-1 text-emerald-400 font-mono">
-                  Result: 100 - 40 × log10(1 + {(weightedImpact / 10).toFixed(1)}) = <strong>{risk.score}</strong>
-                </div>
-              </div>
             </div>
           </div>
         </div>
 
         <div className="flex items-baseline gap-3 mt-2">
-          <span className="text-5xl font-extrabold text-white tracking-tight">{risk.score}</span>
-          <span className="text-sm text-slate-500">/ 100</span>
+          <span className="text-5xl font-extrabold text-white tracking-tight">Nota {risk.grade}</span>
+          <span className="text-sm text-slate-400 font-mono">({risk.score}/100)</span>
         </div>
 
         <div className="flex items-center gap-1.5 mt-1 text-[11px] text-slate-400 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Saúde da Segurança (100 = Máximo Seguro)</span>
+          <span>Security Rating (A+ = Seguro, F = Crítico)</span>
         </div>
 
-        <div className={`mt-3 inline-block px-3 py-1 text-xs font-semibold rounded-full border ${risk.badgeClass}`}>
+        <div className={`mt-3 inline-block px-3 py-1 text-xs font-bold rounded-full border ${risk.badgeClass}`}>
           {risk.level}
         </div>
       </div>
 
-      {/* SVG Circular Progress Gauge */}
+      {/* SVG Circular Progress Gauge with Letter Grade Inside */}
       <div className="relative w-24 h-24 flex items-center justify-center flex-shrink-0">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 96 96">
           {/* Background Track Circle */}
@@ -117,9 +116,16 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
             className="transition-all duration-1000 ease-out"
           />
         </svg>
-        <span className="absolute font-bold text-2xl" style={{ color: risk.color }}>
-          {risk.score}
-        </span>
+        
+        {/* Big Letter Grade Inside Circle */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+          <span className="font-extrabold text-3xl leading-none" style={{ color: risk.color }}>
+            {risk.grade}
+          </span>
+          <span className="text-[10px] font-mono text-slate-400 mt-0.5">
+            {risk.score}/100
+          </span>
+        </div>
       </div>
     </div>
   );
