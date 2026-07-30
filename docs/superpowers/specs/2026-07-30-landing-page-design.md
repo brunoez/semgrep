@@ -3,21 +3,21 @@
 **Date:** 2026-07-30  
 **Status:** Approved Specification  
 **Target Domain:** `semgrep.brunoizidorio.com.br`  
-**Target Stack:** React 18 + Vite + TypeScript + Tailwind CSS (Glassmorphism) + Lucide React + Vitest  
+**Target Stack:** React 18 + Vite + TypeScript + Tailwind CSS (Glassmorphism) + GSAP v3 (Animations) + Lucide React + Vitest  
 **Reference Handoff Document:** `docs/handoff_completo_semgrep_visualizer.md`
 
 ---
 
 ## 1. Executive Summary & Product Vision
 
-The goal of this specification is to define the design, user experience, component architecture, and security guidelines for the **Product Landing Page** of the **Semgrep CLI Visualizer** (`semgrep.brunoizidorio.com.br`).
+The goal of this specification is to define the design, user experience, component architecture, smooth GSAP micro-animations, and security guidelines for the **Product Landing Page** of the **Semgrep CLI Visualizer** (`semgrep.brunoizidorio.com.br`).
 
-When users navigate to `semgrep.brunoizidorio.com.br`, instead of encountering a plain file upload input, they will be greeted by a **Cybersecurity Dark Mode Landing Page** tailored for **CISOs, CTOs, VPs of Engineering, Security Engineers, and DevOps leaders**.
+When users navigate to `semgrep.brunoizidorio.com.br`, instead of encountering a plain file upload input, they will be greeted by a **Cybersecurity Dark Mode Landing Page** with **high-end GSAP animations** tailored for **CISOs, CTOs, VPs of Engineering, Security Engineers, and DevOps leaders**.
 
 ### Core Value Proposition
 - **Transform Raw CLI Scans into C-Level Intelligence:** Converts verbose `semgrep scan --json` outputs into executive risk scores (0-100), OWASP Top 10 radar mapping, top hotspot directory heatmaps, tech stack distributions, and prioritized remediation actions.
 - **Zero-Persistence & 100% Data Privacy Guarantee:** Runs completely client-side inside browser RAM. No findings, code snippets, or repositories are ever transmitted to any external server, database, or telemetry service.
-- **OWASP Top 10 & DefectDojo Parser Alignment:** Runtime Zod schema validation (`semgrep.schema.ts`) and DOMPurify XSS sanitization matching OWASP DefectDojo data models.
+- **Modern Micro-Animations (GSAP v3):** Smooth hero entrance animations, staggered card reveals, interactive hover transitions, and glassmorphic motion effects.
 
 ---
 
@@ -36,11 +36,10 @@ In alignment with the handoff specification (`docs/handoff_completo_semgrep_visu
 | **High / Medium Severity** | `#F59E0B` | `text-amber-500` / `bg-amber-500/10` | High/Medium warnings, hotspot progress |
 | **Success / Security** | `#10B981` | `text-emerald-500` / `bg-emerald-500/10` | Zero-persistence guarantee badges, Quick Wins |
 
-### 2.2 Aesthetics & Glassmorphism
-- **Glassmorphic Cards:** `bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl shadow-2xl`
-- **Typography:**
-  - *UI Text & Headings:* Inter / System Sans (`font-sans`, `tracking-tight`)
-  - *CLI Commands & Code Snippets:* Monospace (`font-mono`, Consolas/JetBrains Mono)
+### 2.2 Micro-Animations & Motion (GSAP v3 Integration)
+- **Hero Entrance:** Fade-in & slide-up (`y: 30`, `opacity: 0` $\rightarrow$ `opacity: 1`) on page load.
+- **Staggered Card Reveal:** Feature grids and security badges reveal sequentially with `gsap.from(..., { stagger: 0.15, ease: 'power2.out' })`.
+- **Interactive Glassmorphic Hover:** Subtle scale and glow effects on interactive CTA buttons and file dropzone.
 
 ---
 
@@ -52,18 +51,18 @@ The landing page consists of 5 core sections structured to educate, reassure sec
 ┌────────────────────────────────────────────────────────────────────────┐
 │  [ Top Bar / Header ] Marca semgrep.brunoizidorio.com.br & Ações Nav   │
 ├────────────────────────────────────────────────────────────────────────┤
-│  [ Section 1: Hero Banner ]                                            │
+│  [ Section 1: Hero Banner (Animado com GSAP) ]                         │
 │   - Headline: "Transforme Scans de Segurança em Insights Executivos"  │
 │   - Subheadline & Value Proposition                                   │
 │   - Dual CTA Buttons: [ Carregar Relatório JSON ] & [ Ver Exemplo ]    │
 │   - Embedded Drag & Drop Zone (Com opção de colar JSON)                │
 ├────────────────────────────────────────────────────────────────────────┤
-│  [ Section 2: Security & Zero-Persistence Badges (3 Colunas) ]        │
+│  [ Section 2: Security & Zero-Persistence Badges (Stagger Reveal) ]   │
 │   - 100% Client-Side Execution (RAM only, 0 Backend)                  │
 │   - OWASP Safe (Strict Zod + DOMPurify XSS Protection)                 │
 │   - DefectDojo Parser Engine (Normalização Inteligente)                │
 ├────────────────────────────────────────────────────────────────────────┤
-│  [ Section 3: C-Level Feature Showcase Grid (3 Colunas) ]             │
+│  [ Section 3: C-Level Feature Showcase Grid (Interactive Cards) ]      │
 │   - Executive Risk Scoring (Formula Logarítmica 0-100)                │
 │   - OWASP Top 10 Radar & Hotspots Heatmap                             │
 │   - Priorização Inteligente de Remedios (P1 -> P4 & Quick Wins)       │
@@ -87,9 +86,9 @@ The landing page consists of 5 core sections structured to educate, reassure sec
 frontend/src/
 ├── components/
 │   ├── landing/                  # Componentes da Landing Page
-│   │   ├── LandingPage.tsx       # Container Principal da Landing View
-│   │   ├── HeroSection.tsx       # Banner Hero com Headlines e Dropzone
-│   │   ├── SecurityFeatures.tsx  # Grid 3 Colunas de Garantias de Segurança
+│   │   ├── LandingPage.tsx       # Container Principal com GSAP Context / Animations
+│   │   ├── HeroSection.tsx       # Banner Hero Animado (Headlines e Dropzone)
+│   │   ├── SecurityFeatures.tsx  # Cards de Garantias de Segurança (Staggered GSAP)
 │   │   ├── ValueProps.tsx        # Grid de Funcionalidades C-Level
 │   │   ├── HowItWorks.tsx        # Guia em 3 Passos (CLI -> Browser -> Dashboard)
 │   │   ├── FaqSection.tsx        # Perguntas Frequentes de Segurança
@@ -112,7 +111,7 @@ The application state manages the active screen mode:
 - **Default State**: `'landing'` when opening `semgrep.brunoizidorio.com.br`.
 - **Transitions**:
   - Clicking "Carregar Relatório de Exemplo" or dropping a valid Semgrep CLI JSON file transitions `view` immediately to `'dashboard'`.
-  - Clicking "Voltar à Página Inicial" or "Novo Scan" in the Header returns `view` to `'landing'` (or resets store state).
+  - Clicking "Voltar à Página Inicial" ou "Novo Scan" no Header retorna `view` para `'landing'` (ou reseta o estado).
 
 ---
 
@@ -130,4 +129,4 @@ The application state manages the active screen mode:
 
 ## 7. Approval & Next Steps
 
-This design specification is aligned with `docs/handoff_completo_semgrep_visualizer.md` and ready for implementation.
+This design specification includes GSAP v3 animations and is aligned with `docs/handoff_completo_semgrep_visualizer.md`.

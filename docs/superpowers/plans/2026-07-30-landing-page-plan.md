@@ -1,19 +1,20 @@
-# Plan: Semgrep CLI Visualizer Landing Page & Product Showcase
+# Plan: Semgrep CLI Visualizer Landing Page & Product Showcase (with GSAP v3 Animations)
 
 > **Target Domain:** `semgrep.brunoizidorio.com.br`  
 > **Design Prototyping:** Google Stitch (https://stitch.withgoogle.com/)  
-> **Goal:** Create a high-converting, security-focused C-Level Landing Page for the Semgrep CLI Visualizer SPA, seamlessly integrated into the React + Vite + Tailwind CSS codebase.
+> **Animation Engine:** GSAP v3 (https://gsap.com/docs/v3/)  
+> **Goal:** Create a high-converting, security-focused C-Level Landing Page for the Semgrep CLI Visualizer SPA with smooth GSAP entrance and scroll animations, integrated into the React + Vite + Tailwind CSS codebase.
 
 ---
 
 ## 1. Overview & Architecture Strategy
 
-Rather than immediately presenting a bare file upload box when opening `semgrep.brunoizidorio.com.br`, the application will feature a modern, dark-mode **Landing Page** designed for **CISOs, CTOs, VPs of Engineering, and Security Leaders**.
+Rather than immediately presenting a bare file upload box when opening `semgrep.brunoizidorio.com.br`, the application will feature a modern, dark-mode **Landing Page** enriched with **GSAP v3 micro-animations** designed for **CISOs, CTOs, VPs of Engineering, and Security Leaders**.
 
-### Key Landing Page Sections (Google Stitch Alignment):
-1. **Hero Section:** High-impact value proposition, animated glassmorphic background, live metric badges, and dual CTA buttons ("Experimentar com Scan de Exemplo" & "Analisar Meu JSON").
-2. **Security & Zero-Persistence Guarantee Card:** Prominent security callouts highlighting 100% Client-Side execution, zero data persistence, zero telemetry, and OWASP Top 10 safe design.
-3. **C-Level Feature Grid:** Highlighting Executive Risk Score, DefectDojo Parser Alignment, OWASP Top 10 radar mapping, and remediation effort estimation.
+### Key Landing Page Sections & GSAP Animation Effects:
+1. **Hero Section (GSAP Hero Entrance):** High-impact value proposition, animated glassmorphic background, live metric badges, smooth entrance fade-in (`gsap.from`), and dual CTA buttons ("Experimentar com Scan de Exemplo" & "Analisar Meu JSON").
+2. **Security & Zero-Persistence Guarantee Card (Staggered Reveal):** Prominent security callouts highlighting 100% Client-Side execution, zero data persistence, zero telemetry, and OWASP Top 10 safe design animated with staggered GSAP reveals.
+3. **C-Level Feature Grid (Interactive Motion):** Highlighting Executive Risk Score, DefectDojo Parser Alignment, OWASP Top 10 radar mapping, and remediation effort estimation with hover interactions.
 4. **Interactive How-It-Works Workflow:** 3-step visual guide showing `semgrep scan --json` -> Drop JSON -> Executive Dashboard.
 5. **FAQ & Domain Footer:** Technical and compliance FAQ, domain branding (`semgrep.brunoizidorio.com.br`), GitHub link, and copyright.
 
@@ -25,10 +26,10 @@ Rather than immediately presenting a bare file upload box when opening `semgrep.
 frontend/src/
 ├── components/
 │   ├── landing/                  # Componentes da Landing Page
-│   │   ├── LandingPage.tsx       # Componente Container Principal
-│   │   ├── HeroSection.tsx       # Hero Banner & Call-to-Action
-│   │   ├── SecurityFeatures.tsx  # Cards de Garantias de Segurança (Zero-Persistence)
-│   │   ├── ValueProps.tsx        # Grid de Funcionalidades Executivas
+│   │   ├── LandingPage.tsx       # Componente Container Principal com GSAP Context
+│   │   ├── HeroSection.tsx       # Hero Banner Animado & Call-to-Action
+│   │   ├── SecurityFeatures.tsx  # Cards de Garantias de Segurança (Staggered GSAP)
+│   │   ├── ValueProps.tsx        # Grid de Funcionalidades Executivas (Interactive GSAP)
 │   │   ├── HowItWorks.tsx        # Guia Passo a Passo (Semgrep CLI -> Dashboard)
 │   │   ├── FaqSection.tsx        # Perguntas Frequentes & Conformidade
 │   │   └── LandingFooter.tsx     # Rodapé com Marca e Links
@@ -44,7 +45,7 @@ frontend/src/
 
 ## 3. Implementation Tasks
 
-### Task 1: Create Landing Page Container & Navigation State
+### Task 1: Create Landing Page Container, Navigation State & GSAP Setup
 
 **Files:**
 - Create: `frontend/src/components/landing/LandingPage.tsx`
@@ -53,18 +54,19 @@ frontend/src/
 
 **Details:**
 - Implement state machine in `App.tsx` allowing switching between `view: 'landing'` and `view: 'visualizer'`.
-- If a JSON file is uploaded or sample loaded, automatically transition to the Executive Dashboard.
+- Configure GSAP timeline context inside `LandingPage.tsx` for smooth mounting animations.
 - Write unit tests for landing view rendering and CTA click navigation.
 
 ---
 
-### Task 2: Implement Hero Section with Google Stitch UI Aesthetics
+### Task 2: Implement Hero Section with GSAP Entrance Animations
 
 **Files:**
 - Create: `frontend/src/components/landing/HeroSection.tsx`
 
 **Details:**
 - Build rich hero banner with dark slate tones (`#020617`), indigo/emerald gradients, and glassmorphic card borders.
+- Apply GSAP entrance timeline (`gsap.from('.hero-anim', { y: 30, opacity: 0, duration: 0.8, stagger: 0.15 })`).
 - Include headline: **"Transforme Scans de Segurança em Insights Executivos para C-Levels"**.
 - Include subheadline explaining 100% browser-side parsing for Semgrep CLI JSON.
 - Primary CTA: "Carregar Relatório JSON" (abre a área de intake).
@@ -72,15 +74,15 @@ frontend/src/
 
 ---
 
-### Task 3: Build Security & Zero-Persistence Guarantee Section
+### Task 3: Build Security & Zero-Persistence Guarantee Section with Stagger Reveal
 
 **Files:**
 - Create: `frontend/src/components/landing/SecurityFeatures.tsx`
 
 **Details:**
-- Create prominent security badges:
+- Create prominent security badges with GSAP staggered reveal animations:
   - 🛡️ **100% Client-Side SPA:** Zero backend, no database, findings stay in browser RAM.
-  - 🔒 **OWASP Top 10 Safe:** Strict Zod schema validation and DOMPurify XSS sanitization.
+  - 🔒 **OWASP Safe:** Strict Zod schema validation and DOMPurify XSS sanitization.
   - ⚡ **DefectDojo Engine:** Standardized parser matching OWASP DefectDojo standards.
   - 📊 **Executive Risk Score:** Normalized 0-100 score for instant executive visibility.
 
@@ -125,10 +127,3 @@ npm run build
 npx vitest run
 ```
 - Ensure 100% test pass rate and clean production bundle compilation.
-
----
-
-## 4. Next Steps for Developer / User
-
-1. Prototipe os componentes visuais e layouts desejados no **Google Stitch** (https://stitch.withgoogle.com/).
-2. Quando estiver pronto com as ideias do Stitch, podemos iniciar a execução deste plano tarefa por tarefa!
