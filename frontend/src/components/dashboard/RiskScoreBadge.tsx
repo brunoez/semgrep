@@ -74,12 +74,11 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
           </div>
         </div>
 
-        <div className="flex items-baseline gap-3 mt-2">
-          <span className="text-5xl font-extrabold text-white tracking-tight">Nota {risk.grade}</span>
-          <span className="text-sm text-slate-400 font-mono">({risk.score}/100)</span>
+        <div className="mt-2">
+          <span className="text-4xl font-extrabold text-white tracking-tight">Nota {risk.grade}</span>
         </div>
 
-        <div className="flex items-center gap-1.5 mt-1 text-[11px] text-slate-400 font-medium">
+        <div className="flex items-center gap-1.5 mt-2 text-[11px] text-slate-400 font-medium">
           <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" />
           <span>Security Rating (A+ = Seguro, F = Crítico)</span>
         </div>
@@ -89,7 +88,7 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
         </div>
       </div>
 
-      {/* SVG Circular Progress Gauge with Letter Grade Inside */}
+      {/* SVG Circular Progress Gauge with Letter Grade & Score Inside */}
       <div className="relative w-24 h-24 flex items-center justify-center flex-shrink-0">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 96 96">
           {/* Background Track Circle */}
@@ -117,12 +116,12 @@ export const RiskScoreBadge: React.FC<Props> = ({ summary }) => {
           />
         </svg>
         
-        {/* Big Letter Grade Inside Circle */}
+        {/* Big Letter Grade & Score Inside Circle */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <span className="font-extrabold text-3xl leading-none" style={{ color: risk.color }}>
             {risk.grade}
           </span>
-          <span className="text-[10px] font-mono text-slate-400 mt-0.5">
+          <span className="text-[11px] font-mono text-slate-400 mt-1 font-semibold">
             {risk.score}/100
           </span>
         </div>

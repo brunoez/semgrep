@@ -7,7 +7,7 @@ describe('Executive Risk Calculator with Letter Grades', () => {
     const result = calculateExecutiveRiskScore(summary);
     expect(result.score).toBe(100);
     expect(result.grade).toBe('A+');
-    expect(result.level).toContain('Nota A+');
+    expect(result.level).toBe('Excelente / Baixo Risco');
   });
 
   it('should return Grade B and 74 Score for moderate findings', () => {
@@ -15,7 +15,7 @@ describe('Executive Risk Calculator with Letter Grades', () => {
     const result = calculateExecutiveRiskScore(summary);
     expect(result.score).toBe(74);
     expect(result.grade).toBe('B');
-    expect(result.level).toContain('Nota B');
+    expect(result.level).toBe('Risco Moderado');
   });
 
   it('should return Grade F for critical report with many findings', () => {
@@ -23,6 +23,6 @@ describe('Executive Risk Calculator with Letter Grades', () => {
     const result = calculateExecutiveRiskScore(summary);
     expect(result.score).toBe(23);
     expect(result.grade).toBe('F');
-    expect(result.level).toContain('Nota F');
+    expect(result.level).toBe('Risco Crítico / Reprovado');
   });
 });

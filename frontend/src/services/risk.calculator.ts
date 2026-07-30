@@ -21,24 +21,24 @@ export interface RiskScoreResult {
 
 export function getSecurityGrade(score: number): { grade: SecurityGrade; level: string; color: string; badgeClass: string } {
   if (score >= 97) {
-    return { grade: 'A+', level: 'Nota A+ (Excelente / Baixo Risco)', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+    return { grade: 'A+', level: 'Excelente / Baixo Risco', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
   }
   if (score >= 90) {
-    return { grade: 'A', level: 'Nota A (Baixo Risco)', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+    return { grade: 'A', level: 'Baixo Risco', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
   }
   if (score >= 80) {
-    return { grade: 'B+', level: 'Nota B+ (Bom / Pouca Exposição)', color: '#84cc16', badgeClass: 'bg-lime-500/10 text-lime-400 border-lime-500/20' };
+    return { grade: 'B+', level: 'Bom / Pouca Exposição', color: '#84cc16', badgeClass: 'bg-lime-500/10 text-lime-400 border-lime-500/20' };
   }
   if (score >= 70) {
-    return { grade: 'B', level: 'Nota B (Risco Moderado)', color: '#f59e0b', badgeClass: 'bg-amber-500/10 text-amber-400 border-amber-500/20' };
+    return { grade: 'B', level: 'Risco Moderado', color: '#f59e0b', badgeClass: 'bg-amber-500/10 text-amber-400 border-amber-500/20' };
   }
   if (score >= 60) {
-    return { grade: 'C', level: 'Nota C (Atenção Necessária)', color: '#eab308', badgeClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' };
+    return { grade: 'C', level: 'Atenção Necessária', color: '#eab308', badgeClass: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20' };
   }
   if (score >= 50) {
-    return { grade: 'D', level: 'Nota D (Alto Risco)', color: '#f97316', badgeClass: 'bg-orange-500/10 text-orange-400 border-orange-500/20' };
+    return { grade: 'D', level: 'Alto Risco', color: '#f97316', badgeClass: 'bg-orange-500/10 text-orange-400 border-orange-500/20' };
   }
-  return { grade: 'F', level: 'Nota F (Risco Crítico / Reprovado)', color: '#ef4444', badgeClass: 'bg-rose-500/10 text-rose-400 border-rose-500/20' };
+  return { grade: 'F', level: 'Risco Crítico / Reprovado', color: '#ef4444', badgeClass: 'bg-rose-500/10 text-rose-400 border-rose-500/20' };
 }
 
 export function calculateExecutiveRiskScore(summary: {
