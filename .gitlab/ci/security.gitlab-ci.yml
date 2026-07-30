@@ -25,7 +25,7 @@ gitleaks_secret_scan:
     name: zricethezav/gitleaks:latest
     entrypoint: [""]
   script:
-    - gitleaks detect --source . --verbose --report-path gitleaks-report.json
+    - gitleaks detect --source . --config .gitleaks.toml --verbose --report-path gitleaks-report.json
   artifacts:
     name: gitleaks-report
     paths:

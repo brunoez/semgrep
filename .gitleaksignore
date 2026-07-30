@@ -1,0 +1,5 @@
+0bb709fbd8c4eae63b09de92dc0a9382bece675d:frontend/public/samples/semgrep-sample-report.json:generic-api-key:1
+0bb709fbd8c4eae63b09de92dc0a9382bece675d:frontend/public/samples/semgrep-sample-report.json:jwt:1
+0bb709fbd8c4eae63b09de92dc0a9382bece675d:frontend/public/samples/semgrep-sample-report.json:private-key:1
+ed672bebcd7e2098b2ed54db1583ce4503a6a2c4:docs/resultado_semgrep.json:generic-api-key:1
+ed672bebcd7e2098b2ed54db1583ce4503a6a2c4:docs/resultado_semgrep.json:jwt:1

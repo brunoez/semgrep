@@ -1,0 +1,10 @@
+# Configuração do Gitleaks para Ignorar Falsos Positivos em Relatórios de Exemplo
+
+[allowlist]
+description = "Ignorar relatórios de exemplo do Semgrep (dados fictícios do OWASP JuiceShop para demonstração)"
+paths = [
+  '''frontend/public/samples/semgrep-sample-report.json''',
+  '''docs/resultado_semgrep.json''',
+  '''docs/resultado_semgrep_juiceshop.json''',
+  '''docs/gitleaks-report.json''',
+]
