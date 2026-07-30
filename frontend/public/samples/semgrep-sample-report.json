@@ -1,0 +1,39 @@
+{
+  "version": "1.45.0",
+  "results": [
+    {
+      "check_id": "javascript.express.security.audit.xss.direct-response-write",
+      "path": "server/routes/api.js",
+      "start": { "line": 54, "col": 5 },
+      "end": { "line": 54, "col": 32 },
+      "extra": {
+        "message": "User input directly written to response stream without escaping.",
+        "severity": "ERROR",
+        "lines": "res.write('<div>' + req.query.name + '</div>');",
+        "metadata": {
+          "cwe": ["CWE-79"],
+          "owasp": ["A03:2021 - Injection"],
+          "impact": "HIGH",
+          "confidence": "HIGH"
+        }
+      }
+    },
+    {
+      "check_id": "python.lang.security.use-defused-xml",
+      "path": "services/parser.py",
+      "start": { "line": 12, "col": 1 },
+      "end": { "line": 12, "col": 24 },
+      "extra": {
+        "message": "Standard XML parsers are vulnerable to XML entity expansion attacks (XXE). Use defusedxml.",
+        "severity": "WARNING",
+        "lines": "import xml.etree.ElementTree as ET",
+        "metadata": {
+          "cwe": ["CWE-611"],
+          "owasp": ["A05:2021 - Security Misconfiguration"],
+          "impact": "MEDIUM",
+          "confidence": "HIGH"
+        }
+      }
+    }
+  ]
+}
