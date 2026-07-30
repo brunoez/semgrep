@@ -5,6 +5,8 @@ import { RiskScoreBadge } from './components/dashboard/RiskScoreBadge';
 import { ExecutiveMetrics } from './components/dashboard/ExecutiveMetrics';
 import { SeverityChart } from './components/dashboard/SeverityChart';
 import { OwaspRadarChart } from './components/dashboard/OwaspRadarChart';
+import { TopHotspotsCard } from './components/dashboard/TopHotspotsCard';
+import { TechStackBreakdown } from './components/dashboard/TechStackBreakdown';
 import { VulnerabilityTable } from './components/explorer/VulnerabilityTable';
 import { CodeViewerModal } from './components/explorer/CodeViewerModal';
 import type { NormalizedFinding } from './models/normalized.domain';
@@ -36,7 +38,16 @@ export const App: React.FC = () => {
               <OwaspRadarChart findings={report.findings} />
             </div>
 
-            <VulnerabilityTable findings={report.findings} onSelectFinding={setSelectedFinding} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <TopHotspotsCard hotspots={report.summary.topHotspots} />
+              <TechStackBreakdown techDistribution={report.summary.techDistribution} />
+            </div>
+
+            <VulnerabilityTable
+              findings={report.findings}
+              availableTechnologies={report.summary.availableTechnologies}
+              onSelectFinding={setSelectedFinding}
+            />
 
             <CodeViewerModal finding={selectedFinding} onClose={() => setSelectedFinding(null)} />
           </div>

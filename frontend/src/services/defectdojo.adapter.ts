@@ -1,5 +1,5 @@
 import { SemgrepReportSchema } from '../models/semgrep.schema';
-import type { NormalizedFinding, NormalizedReport, NormalizedSeverity } from '../models/normalized.domain';
+import type { NormalizedFinding, NormalizedReport, NormalizedSeverity, HotspotDirectory, TechShare } from '../models/normalized.domain';
 import { calculateFindingPriority } from './prioritization.engine';
 
 function mapSeverity(semgrepSeverity?: string, impact?: string, confidence?: string): NormalizedSeverity {
@@ -32,6 +32,24 @@ function calculateRemediationHours(severity: NormalizedSeverity): number {
   }
 }
 
+function getParentDirectory(filePath: string): string {
+  const parts = filePath.split('/');
+  if (parts.length <= 1) return 'Raiz do Projeto';
+  return parts.slice(0, Math.min(2, parts.length - 1)).join('/');
+}
+
+function formatTechName(tech: string): string {
+  const t = tech.toLowerCase().trim();
+  if (t === 'js' || t === 'javascript') return 'JavaScript';
+  if (t === 'ts' || t === 'typescript') return 'TypeScript';
+  if (t === 'python' || t === 'py') return 'Python';
+  if (t === 'secrets') return 'Secrets / Credenciais';
+  if (t === 'docker' || t === 'dockerfile') return 'Docker / Infra';
+  if (t === 'express') return 'Express.js';
+  if (t === 'skills-audit') return 'AI Skills Audit';
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedReport {
   let parsed: unknown;
   try {
@@ -60,6 +78,20 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
       cweList = [meta.cwe];
     }
 
+    let techList: string[] = [];
+    if (Array.isArray(meta.technology)) {
+      techList = meta.technology.map(t => formatTechName(t));
+    } else if (typeof meta.technology === 'string') {
+      techList = [formatTechName(meta.technology)];
+    }
+
+    let vulnClassList: string[] = [];
+    if (Array.isArray(meta.vulnerability_class)) {
+      vulnClassList = meta.vulnerability_class;
+    } else if (typeof meta.vulnerability_class === 'string') {
+      vulnClassList = [meta.vulnerability_class];
+    }
+
     const owaspList = Array.isArray(meta.owasp) ? meta.owasp : meta.owasp ? [meta.owasp] : [];
     const remediationHours = calculateRemediationHours(severity);
 
@@ -86,12 +118,58 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
       cwe: cweList,
       owasp: owaspList,
       category: meta.category || 'Security',
+      technology: techList,
+      vulnerabilityClass: vulnClassList,
       impact,
       confidence,
       remediationHours,
       priority,
     };
   });
+
+  // Calculate Directory Hotspots
+  const directoryMap: Record<string, { total: number; critical: number; high: number }> = {};
+  // Calculate Technology Distribution
+  const techMap: Record<string, number> = {};
+
+  findings.forEach((f) => {
+    const dir = getParentDirectory(f.filePath);
+    if (!directoryMap[dir]) {
+      directoryMap[dir] = { total: 0, critical: 0, high: 0 };
+    }
+    directoryMap[dir].total += 1;
+    if (f.severity === 'CRITICAL') directoryMap[dir].critical += 1;
+    if (f.severity === 'HIGH') directoryMap[dir].high += 1;
+
+    f.technology.forEach((tech) => {
+      techMap[tech] = (techMap[tech] || 0) + 1;
+    });
+  });
+
+  const totalFindingsCount = findings.length || 1;
+
+  const topHotspots: HotspotDirectory[] = Object.entries(directoryMap)
+    .map(([directoryPath, stats]) => ({
+      directoryPath,
+      findingCount: stats.total,
+      criticalCount: stats.critical,
+      highCount: stats.high,
+      percentage: Math.round((stats.total / totalFindingsCount) * 100),
+    }))
+    .sort((a, b) => b.findingCount - a.findingCount)
+    .slice(0, 5);
+
+  const totalTechHits = Object.values(techMap).reduce((a, b) => a + b, 0) || 1;
+
+  const techDistribution: TechShare[] = Object.entries(techMap)
+    .map(([technology, count]) => ({
+      technology,
+      count,
+      percentage: Math.round((count / totalTechHits) * 100),
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  const availableTechnologies = Array.from(new Set(findings.flatMap(f => f.technology))).sort();
 
   const summary = findings.reduce(
     (acc, f) => {
@@ -107,7 +185,20 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
       else acc.info += 1;
       return acc;
     },
-    { total: 0, critical: 0, high: 0, medium: 0, low: 0, info: 0, p1Count: 0, quickWinsCount: 0, totalRemediationHours: 0 }
+    {
+      total: 0,
+      critical: 0,
+      high: 0,
+      medium: 0,
+      low: 0,
+      info: 0,
+      p1Count: 0,
+      quickWinsCount: 0,
+      totalRemediationHours: 0,
+      topHotspots,
+      techDistribution,
+      availableTechnologies,
+    }
   );
 
   return {

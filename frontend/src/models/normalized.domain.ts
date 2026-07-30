@@ -10,6 +10,20 @@ export interface PriorityAnalysis {
   rationale: string;
 }
 
+export interface HotspotDirectory {
+  directoryPath: string;
+  findingCount: number;
+  criticalCount: number;
+  highCount: number;
+  percentage: number;
+}
+
+export interface TechShare {
+  technology: string;
+  count: number;
+  percentage: number;
+}
+
 export interface NormalizedFinding {
   id: string;
   checkId: string;
@@ -25,6 +39,8 @@ export interface NormalizedFinding {
   cwe: string[];
   owasp: string[];
   category: string;
+  technology: string[];
+  vulnerabilityClass: string[];
   impact?: string;
   confidence?: string;
   remediationHours: number;
@@ -45,5 +61,8 @@ export interface NormalizedReport {
     p1Count: number;
     quickWinsCount: number;
     totalRemediationHours: number;
+    topHotspots: HotspotDirectory[];
+    techDistribution: TechShare[];
+    availableTechnologies: string[];
   };
 }
