@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Gauge, Radar, FolderKanban, Cpu, Flame, Code2 } from 'lucide-react';
 
 export const ValueProps: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.gsap-value-card', {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power2.out',
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const features = [
     {
       icon: Gauge,
@@ -48,7 +65,7 @@ export const ValueProps: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-950">
+    <section ref={containerRef} className="py-20 bg-slate-950">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase tracking-widest font-mono text-indigo-400 font-bold">
@@ -68,11 +85,11 @@ export const ValueProps: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md hover:border-slate-700 transition shadow-xl flex flex-col justify-between"
+                className="gsap-value-card bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md hover:border-indigo-500/40 hover:-translate-y-1.5 transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`p-3 rounded-xl border ${f.color}`}>
+                    <div className={`p-3 rounded-xl border ${f.color} group-hover:scale-110 transition-transform`}>
                       <IconComponent className="w-6 h-6" />
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-700 bg-slate-800 text-slate-300">
@@ -80,7 +97,9 @@ export const ValueProps: React.FC = () => {
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-2">{f.title}</h3>
+                  <h3 className="text-base font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors">
+                    {f.title}
+                  </h3>
                   <p className="text-xs text-slate-400 leading-relaxed">{f.description}</p>
                 </div>
               </div>

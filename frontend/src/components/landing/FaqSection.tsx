@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 
 interface FaqItem {
@@ -30,14 +31,29 @@ const faqs: FaqItem[] = [
 ];
 
 export const FaqSection: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.gsap-faq-item', {
+        y: 25,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section className="py-20 bg-slate-950 border-t border-slate-800/80">
+    <section ref={containerRef} className="py-20 bg-slate-950 border-t border-slate-800/80">
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-400 text-xs font-semibold mb-3">
@@ -57,15 +73,15 @@ export const FaqSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden backdrop-blur-md transition-all"
+                className="gsap-faq-item bg-slate-900/60 border border-slate-800 hover:border-slate-700 rounded-2xl overflow-hidden backdrop-blur-md transition-all duration-200"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-semibold text-slate-200 text-sm hover:text-indigo-400 transition"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-semibold text-slate-200 text-sm hover:text-indigo-400 transition cursor-pointer"
                 >
                   <span>{faq.question}</span>
                   <ChevronDown
-                    className={`w-4 h-4 text-slate-500 transition-transform ${
+                    className={`w-4 h-4 text-slate-500 transition-transform duration-300 ${
                       isOpen ? 'rotate-180 text-indigo-400' : ''
                     }`}
                   />

@@ -1,7 +1,24 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Terminal, Upload, BarChart3, ArrowRight } from 'lucide-react';
 
 export const HowItWorks: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.gsap-step-card', {
+        x: -40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power2.out',
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const steps = [
     {
       step: '01',
@@ -30,7 +47,7 @@ export const HowItWorks: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-950 border-t border-slate-800/80">
+    <section ref={containerRef} className="py-20 bg-slate-950 border-t border-slate-800/80">
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase tracking-widest font-mono text-indigo-400 font-bold">
@@ -50,14 +67,16 @@ export const HowItWorks: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md relative flex flex-col justify-between group hover:border-indigo-500/50 transition-all shadow-xl"
+                className="gsap-step-card bg-slate-900/60 border border-slate-800 rounded-2xl p-6 backdrop-blur-md relative flex flex-col justify-between group hover:border-indigo-500/50 hover:-translate-y-1.5 transition-all duration-300 shadow-xl"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`p-3 rounded-xl border ${s.color}`}>
+                    <div className={`p-3 rounded-xl border ${s.color} group-hover:scale-110 transition-transform`}>
                       <IconComponent className="w-6 h-6" />
                     </div>
-                    <span className="text-2xl font-extrabold text-slate-700 font-mono">{s.step}</span>
+                    <span className="text-2xl font-extrabold text-slate-700 font-mono group-hover:text-indigo-400 transition-colors">
+                      {s.step}
+                    </span>
                   </div>
 
                   <h3 className="text-lg font-bold text-white mb-2">{s.title}</h3>
