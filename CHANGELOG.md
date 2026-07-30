@@ -6,6 +6,34 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.2] - 2026-07-30
+
+### 🚀 Adicionado (Added)
+- **Atualização da Documentação de Alterações:**
+  - Registro sincronizado do histórico de versões e melhorias no ecossistema de CI/CD.
+
+---
+
+## [1.0.1] - 2026-07-30
+
+### 🚀 Adicionado (Added)
+- **Configuração de Permissão Gitleaks (.gitleaks.toml & .gitleaksignore):**
+  - Adicionado suporte a `allowlist` para ignorar relatórios de amostra de vulnerabilidades estáticas de demonstração (`frontend/public/samples/semgrep-sample-report.json` e `docs/`).
+- **Tag Global de Runner no GitLab CI/CD:**
+  - Adicionada a tag de runner `oracle-vps` como padrão global no `.gitlab-ci.yml` para rotear todos os jobs para a VPS própria.
+- **Melhoria Visual no Executive Security Rating:**
+  - Medidor circular SVG proporcional exibindo apenas a Letra da Nota de Segurança (`A+`, `A`, `B+`, `B`, `C`, `D`, `F`) centralizada no anel, com o score numérico `30 / 100` em destaque no título esquerdo.
+
+### 🛠️ Corrigido (Fixed)
+- **Sobrescrita de Entrypoint no GitLab CI:**
+  - Sobrescrito o entrypoint com vetor vazio (`entrypoint: [""]`) nos jobs de segurança (`gitleaks`, `semgrep`, `trivy`), corrigindo o erro `unknown command "sh"`.
+- **Exceção de Volume de Código no Semgrep CLI:**
+  - Configurada a variável `SEMGREP_IN_DOCKER: "0"` no job `semgrep_sast_scan`, evitando a tentativa de montagem do volume `/src` inexistente no GitLab CI Runner.
+- **Remoção de Redundância Visual:**
+  - Eliminada a duplicidade do texto `(30/100)` que aparecia simultaneamente no título e no anel medidor.
+
+---
+
 ## [1.0.0] - 2026-07-30
 
 ### 🚀 Adicionado (Added)
@@ -33,7 +61,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
   - `nginx.conf` com cabeçalhos de segurança OWASP (`CSP`, `X-Frame-Options DENY`, `X-Content-Type-Options nosniff`).
   - `docker-compose.yml` para implantação com comando único.
   - Guia de implantação em produção em [docs/PROD.md](docs/PROD.md).
-  - Pipeline do GitLab CI/CD em `.gitlab-ci.yml`.
+  - Esteira modular do GitLab CI/CD em `.gitlab-ci.yml` e `.gitlab/ci/`.
   - Relatório de exemplo completo baseado no scan do **OWASP JuiceShop**.
 
 ---
