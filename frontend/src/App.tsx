@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/common/Header';
 import { FileDropzone } from './components/common/FileDropzone';
 import { RiskScoreBadge } from './components/dashboard/RiskScoreBadge';
 import { ExecutiveMetrics } from './components/dashboard/ExecutiveMetrics';
 import { SeverityChart } from './components/dashboard/SeverityChart';
 import { OwaspRadarChart } from './components/dashboard/OwaspRadarChart';
+import { VulnerabilityTable } from './components/explorer/VulnerabilityTable';
+import { CodeViewerModal } from './components/explorer/CodeViewerModal';
+import type { NormalizedFinding } from './models/normalized.domain';
 import { useSemgrepStore } from './store/useSemgrepStore';
 
 export const App: React.FC = () => {
   const { report } = useSemgrepStore();
+  const [selectedFinding, setSelectedFinding] = useState<NormalizedFinding | null>(null);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -31,6 +35,10 @@ export const App: React.FC = () => {
               <SeverityChart summary={report.summary} />
               <OwaspRadarChart findings={report.findings} />
             </div>
+
+            <VulnerabilityTable findings={report.findings} onSelectFinding={setSelectedFinding} />
+
+            <CodeViewerModal finding={selectedFinding} onClose={() => setSelectedFinding(null)} />
           </div>
         )}
       </main>

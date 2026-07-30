@@ -1,32 +1,43 @@
-# React + TypeScript + Vite
+# Semgrep CLI Frontend Visualizer & C-Level Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Dashboard executivo e visualizador de resultados do **Semgrep CLI**, 100% client-side, focado em segurança (OWASP Top 10 safe), alta performance e insights executivos para C-Levels (CISO, CTO, VP de Engenharia).
 
-Currently, two official plugins are available:
+## Principais Funcionalidades
+- **Zero-Persistence & Data Privacy:** 100% SPA no navegador. Nenhum relatório é enviado para servidores externos ou armazenado localmente.
+- **Executive Risk Score (0-100):** Cálculo inteligente da pontuação de risco baseado em severidade e densidade de vulnerabilidades.
+- **Gráficos Executivos:** Donut chart por severidade e gráfico de distribuição OWASP Top 10 mapeado.
+- **Vulnerability Explorer:** Tabela interativa com busca em tempo real, filtro por severidade e leitor seguro de trechos de código.
+- **DefectDojo Parser Alignment:** Leitura rigorosa e normalização do JSON gerado pelo Semgrep CLI.
+- **Suporte Multi-Entrada:** Drag & drop de arquivos JSON (limite 50MB), colador direto de texto ou relatório de exemplo pré-carregado.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tecnologias Utilizadas
+- **React 18 + Vite + TypeScript**
+- **Tailwind CSS** (Dark Mode executivo)
+- **Zod & DOMPurify** (Validação runtime de schema e prevenção contra XSS)
+- **Recharts** (Visualização de dados interativa)
+- **Vitest & React Testing Library** (Suíte completa de testes unitários)
 
-## React Compiler
+## Como Rodar Localmente
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Entrar na pasta do frontend
+cd frontend
 
-## Expanding the Oxlint configuration
+# Instalar as dependências
+npm install
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Rodar o servidor de desenvolvimento
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Como Rodar os Testes
+
+```bash
+npm run test
+```
+
+## Como Gerar o Build de Produção
+
+```bash
+npm run build
+```
