@@ -72,6 +72,63 @@ The application is tailored for **C-Level Executives (CISO, CTO, VP of Engineeri
  └────────────────────────────────────────────────────────────────────────┘
 ```
 
+### 2.3 Directory & File Hierarchy
+
+```
+Semgrep front/
+├── docs/
+│   └── superpowers/
+│       └── specs/
+│           └── 2026-07-30-semgrep-visualizer-design.md
+├── frontend/                     # Aplicativo Frontend SPA (React + Vite + TS)
+│   ├── public/
+│   │   ├── samples/              # Relatórios JSON de exemplo do Semgrep CLI
+│   │   │   └── semgrep-sample-report.json
+│   │   └── favicon.ico
+│   ├── src/
+│   │   ├── assets/               # Estilos globais e ícones
+│   │   ├── components/           # Componentes de Interface de Usuário
+│   │   │   ├── common/           # Componentes reutilizáveis (Header, Modais, Dropzone)
+│   │   │   │   ├── Header.tsx
+│   │   │   │   ├── Badge.tsx
+│   │   │   │   ├── Modal.tsx
+│   │   │   │   └── FileDropzone.tsx
+│   │   │   ├── dashboard/        # Painel Executivo C-Level
+│   │   │   │   ├── ExecutiveMetrics.tsx
+│   │   │   │   ├── RiskScoreBadge.tsx
+│   │   │   │   ├── SeverityChart.tsx
+│   │   │   │   ├── OwaspRadarChart.tsx
+│   │   │   │   └── TopVulnerableComponents.tsx
+│   │   │   ├── explorer/         # Tabela e Leitor de Vulnerabilidades
+│   │   │   │   ├── VulnerabilityTable.tsx
+│   │   │   │   ├── VulnerabilityFilters.tsx
+│   │   │   │   └── CodeViewerModal.tsx
+│   │   │   └── export/           # Gerador de Relatório Executivo para Impressão/PDF
+│   │   │       └── ExecutiveReportPdf.tsx
+│   │   ├── models/               # Schemas Zod e Interfaces TypeScript
+│   │   │   ├── semgrep.schema.ts
+│   │   │   └── normalized.domain.ts
+│   │   ├── services/             # Adaptadores, Sanitizadores e Cálculo de Risco
+│   │   │   ├── defectdojo.adapter.ts
+│   │   │   ├── risk.calculator.ts
+│   │   │   └── sanitizer.service.ts
+│   │   ├── store/                # Estado Reativo em RAM (Sem persistência local)
+│   │   │   └── useSemgrepStore.ts
+│   │   ├── App.tsx               # Roteador / Gerenciador de Telas
+│   │   ├── index.css             # Estilos Tailwind e Tokens Visuais
+│   │   └── main.tsx              # Ponto de Entrada React
+│   ├── tests/                    # Testes Unitários e de Segurança (Vitest)
+│   │   ├── defectdojo.adapter.test.ts
+│   │   ├── risk.calculator.test.ts
+│   │   ├── semgrep.schema.test.ts
+│   │   └── sanitizer.service.test.ts
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── tailwind.config.js
+│   └── vite.config.ts
+└── backend/                      # Diretório mantido para expansões futuras (se aplicável)
+```
+
 ---
 
 ## 3. Security Specification (Security by Design)
