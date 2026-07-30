@@ -6,6 +6,8 @@ semgrep_sast_scan:
   image:
     name: semgrep/semgrep:latest
     entrypoint: [""]
+  variables:
+    SEMGREP_IN_DOCKER: "0"
   script:
     - semgrep scan --config auto --json > semgrep-sast-report.json
   artifacts:
