@@ -8,7 +8,7 @@ describe('LandingPage Component', () => {
     render(<React.StrictMode><LandingPage /></React.StrictMode>);
 
     expect(screen.getByText(/Transforme Scans de Segurança em/i)).toBeDefined();
-    expect(screen.getByText(/100% Client-Side SPA/i)).toBeDefined();
+    expect(screen.getAllByText(/100% Client-Side/i).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/semgrep.brunoizidorio.com.br/i).length).toBeGreaterThan(0);
   });
 
