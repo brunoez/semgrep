@@ -30,7 +30,11 @@ export const OwaspRadarChart: React.FC<Props> = ({ findings }) => {
           <BarChart data={data} layout="vertical" margin={{ left: 20 }}>
             <XAxis type="number" stroke="#64748b" />
             <YAxis dataKey="category" type="category" stroke="#94a3b8" tick={{ fontSize: 11 }} />
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc' }} />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc' }}
+              itemStyle={{ color: '#f8fafc' }}
+              labelStyle={{ color: '#f8fafc' }}
+            />
             <Bar dataKey="count" fill="#6366f1" radius={[0, 4, 4, 0]}>
               {data.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#6366f1' : '#818cf8'} />

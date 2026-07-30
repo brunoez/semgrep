@@ -11,8 +11,14 @@ export function calculateExecutiveRiskScore(summary: {
   medium: number;
   low: number;
 }): RiskScoreResult {
-  const penalty = (summary.critical * 25) + (summary.high * 10) + (summary.medium * 3) + (summary.low * 1);
-  const score = Math.max(0, 100 - penalty);
+  const totalFindings = summary.critical + summary.high + summary.medium + summary.low;
+  if (totalFindings === 0) {
+    return { score: 100, level: 'Excelente / Baixo Risco', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };
+  }
+
+  // Logarithmic risk scale: handles both small & large enterprise scans without immediate saturation
+  const weightedImpact = (summary.critical * 15) + (summary.high * 5) + (summary.medium * 1.5) + (summary.low * 0.5);
+  const score = Math.max(0, Math.round(100 - 40 * Math.log10(1 + weightedImpact / 10)));
 
   if (score >= 90) {
     return { score, level: 'Excelente / Baixo Risco', color: '#10b981', badgeClass: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' };

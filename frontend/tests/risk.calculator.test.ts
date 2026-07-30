@@ -9,10 +9,19 @@ describe('Executive Risk Calculator', () => {
     expect(result.level).toBe('Excelente / Baixo Risco');
   });
 
-  it('should decrease score accurately based on critical and high vulnerabilities', () => {
+  it('should decrease score logarithmically based on critical and high vulnerabilities', () => {
     const summary = { critical: 2, high: 1, medium: 0, low: 0 };
     const result = calculateExecutiveRiskScore(summary);
-    expect(result.score).toBe(40); // 100 - (2*25 + 1*10) = 40
+    // impact = 2*15 + 1*5 = 35. 100 - 40 * log10(1 + 3.5) = 100 - 40 * 0.653 = 74
+    expect(result.score).toBe(74);
+    expect(result.level).toBe('Risco Moderado');
+  });
+
+  it('should calculate meaningful score for large scan reports', () => {
+    const summary = { critical: 3, high: 143, medium: 43, low: 0 };
+    const result = calculateExecutiveRiskScore(summary);
+    // 3*15 + 143*5 + 43*1.5 = 45 + 715 + 64.5 = 824.5. 100 - 40 * log10(83.45) = 100 - 76.8 = 23
+    expect(result.score).toBe(23);
     expect(result.level).toBe('Risco Crítico');
   });
 });

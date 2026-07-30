@@ -28,7 +28,11 @@ export const SeverityChart: React.FC<Props> = ({ summary }) => {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc' }} />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc' }}
+              itemStyle={{ color: '#f8fafc' }}
+              labelStyle={{ color: '#f8fafc' }}
+            />
             <Legend />
           </PieChart>
         </ResponsiveContainer>
