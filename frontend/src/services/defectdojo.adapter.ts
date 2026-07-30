@@ -2,11 +2,22 @@ import { SemgrepReportSchema } from '../models/semgrep.schema';
 import type { NormalizedFinding, NormalizedReport, NormalizedSeverity } from '../models/normalized.domain';
 
 function mapSeverity(semgrepSeverity?: string, impact?: string, confidence?: string): NormalizedSeverity {
-  if (semgrepSeverity === 'ERROR') {
-    if (impact === 'HIGH' && confidence === 'HIGH') return 'CRITICAL';
+  const sev = (semgrepSeverity || '').toUpperCase();
+  const imp = (impact || '').toUpperCase();
+  const conf = (confidence || '').toUpperCase();
+
+  if (sev === 'CRITICAL' || (sev === 'ERROR' && imp === 'HIGH' && conf === 'HIGH')) {
+    return 'CRITICAL';
+  }
+  if (sev === 'HIGH' || sev === 'ERROR') {
     return 'HIGH';
   }
-  if (semgrepSeverity === 'WARNING') return 'MEDIUM';
+  if (sev === 'MEDIUM' || sev === 'WARNING') {
+    return 'MEDIUM';
+  }
+  if (sev === 'LOW' || sev === 'INFO') {
+    return 'LOW';
+  }
   return 'LOW';
 }
 
@@ -38,9 +49,16 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
     const meta = item.extra.metadata || {};
     const impact = meta.impact;
     const confidence = meta.confidence;
-    const severity = mapSeverity(item.extra.severity, impact, confidence);
+    const rawSeverity = item.extra.severity || meta.severity;
+    const severity = mapSeverity(rawSeverity, impact, confidence);
     
-    const cweList = Array.isArray(meta.cwe) ? meta.cwe : meta.cwe ? [meta.cwe] : [];
+    let cweList: string[] = [];
+    if (Array.isArray(meta.cwe)) {
+      cweList = meta.cwe.filter(c => typeof c === 'string') as string[];
+    } else if (typeof meta.cwe === 'string') {
+      cweList = [meta.cwe];
+    }
+
     const owaspList = Array.isArray(meta.owasp) ? meta.owasp : meta.owasp ? [meta.owasp] : [];
 
     return {

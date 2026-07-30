@@ -8,14 +8,15 @@ export const SemgrepFindingSchema = z.object({
   extra: z.object({
     message: z.string(),
     lines: z.string().optional(),
-    severity: z.enum(['ERROR', 'WARNING', 'INFO']).optional(),
+    severity: z.string().optional(),
     metadata: z.object({
       category: z.string().optional(),
-      cwe: z.union([z.string(), z.array(z.string())]).optional(),
+      cwe: z.union([z.string(), z.array(z.string()), z.boolean()]).optional(),
       owasp: z.union([z.string(), z.array(z.string())]).optional(),
       impact: z.string().optional(),
       confidence: z.string().optional(),
       likelihood: z.string().optional(),
+      severity: z.string().optional(),
       vulnerability_class: z.array(z.string()).optional(),
     }).passthrough().optional(),
   }).passthrough(),
