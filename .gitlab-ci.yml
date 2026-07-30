@@ -1,5 +1,9 @@
 # Orquestrador Modular do GitLab CI/CD (com DevSecOps Security Pipeline)
 
+default:
+  tags:
+    - oracle-vps
+
 stages:
   - security-scan
   - test
