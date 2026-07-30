@@ -36,8 +36,8 @@ export function calculateFindingPriority(input: InputParams): PriorityAnalysis {
   );
   if (isHighRiskOwasp) score += 15;
 
-  // Quick Win / High ROI boost: High severity with low effort
-  const isQuickWin = (input.severity === 'CRITICAL' || input.severity === 'HIGH') && input.remediationHours <= 4;
+  // Quick Win: High/Critical severity or High OWASP Risk WITH low remediation effort (<= 2h)
+  const isQuickWin = (input.severity === 'CRITICAL' || input.severity === 'HIGH' || isHighRiskOwasp) && input.remediationHours <= 2;
   if (isQuickWin) score += 10;
 
   const finalScore = Math.min(100, Math.max(1, Math.round(score)));
@@ -63,7 +63,7 @@ export function calculateFindingPriority(input: InputParams): PriorityAnalysis {
   const rationaleParts: string[] = [];
   if (input.severity === 'CRITICAL') rationaleParts.push('Severidade Crítica');
   if (isHighRiskOwasp) rationaleParts.push('Vulnerabilidade OWASP de Alto Risco');
-  if (isQuickWin) rationaleParts.push('Quick Win (Baixo esforço de correção)');
+  if (isQuickWin) rationaleParts.push('Quick Win (Baixo esforço de correção <= 2h)');
 
   return {
     score: finalScore,

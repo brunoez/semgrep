@@ -22,7 +22,11 @@ function mapSeverity(semgrepSeverity?: string, impact?: string, confidence?: str
   return 'LOW';
 }
 
-function calculateRemediationHours(severity: NormalizedSeverity): number {
+function calculateRemediationHours(severity: NormalizedSeverity, checkId: string, vulnClasses: string[]): number {
+  const check = checkId.toLowerCase();
+  const isSecret = check.includes('secret') || check.includes('env') || vulnClasses.some(v => v.toLowerCase().includes('secret'));
+  if (isSecret) return 1; // Rotação de chave / segredo em .env é 1h (Quick Win de alto ROI)
+
   switch (severity) {
     case 'CRITICAL': return 8;
     case 'HIGH': return 4;
@@ -93,7 +97,7 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
     }
 
     const owaspList = Array.isArray(meta.owasp) ? meta.owasp : meta.owasp ? [meta.owasp] : [];
-    const remediationHours = calculateRemediationHours(severity);
+    const remediationHours = calculateRemediationHours(severity, item.check_id, vulnClassList);
 
     const priority = calculateFindingPriority({
       severity,

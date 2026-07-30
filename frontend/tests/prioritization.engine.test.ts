@@ -13,7 +13,31 @@ describe('Vulnerability Prioritization Engine', () => {
 
     expect(priority.tier).toBe('P1');
     expect(priority.score).toBeGreaterThanOrEqual(85);
-    expect(priority.isQuickWin).toBe(true); // High Severity + Low Effort = Quick Win!
+    expect(priority.isQuickWin).toBe(true); // High Severity + Low Effort (<= 2h) = Quick Win!
+  });
+
+  it('should NOT mark a High severity finding requiring 4h of effort as Quick Win', () => {
+    const priority = calculateFindingPriority({
+      severity: 'HIGH',
+      impact: 'HIGH',
+      confidence: 'HIGH',
+      owasp: ['A03:2021 - Injection'],
+      remediationHours: 4,
+    });
+
+    expect(priority.isQuickWin).toBe(false); // 4h effort is not a "quick win"
+  });
+
+  it('should mark a Secret Leak with 1h effort as Quick Win', () => {
+    const priority = calculateFindingPriority({
+      severity: 'HIGH',
+      impact: 'HIGH',
+      confidence: 'HIGH',
+      owasp: ['A07:2021 - Identification and Authentication Failures'],
+      remediationHours: 1,
+    });
+
+    expect(priority.isQuickWin).toBe(true);
   });
 
   it('should assign P4 Low priority to Low severity findings', () => {
