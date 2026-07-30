@@ -1,6 +1,10 @@
 import React from 'react';
 import { Header } from './components/common/Header';
 import { FileDropzone } from './components/common/FileDropzone';
+import { RiskScoreBadge } from './components/dashboard/RiskScoreBadge';
+import { ExecutiveMetrics } from './components/dashboard/ExecutiveMetrics';
+import { SeverityChart } from './components/dashboard/SeverityChart';
+import { OwaspRadarChart } from './components/dashboard/OwaspRadarChart';
 import { useSemgrepStore } from './store/useSemgrepStore';
 
 export const App: React.FC = () => {
@@ -9,13 +13,24 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <Header />
-      <main className="container mx-auto px-6 py-6">
+      <main className="container mx-auto px-6 py-8">
         {!report ? (
           <FileDropzone />
         ) : (
-          <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl">
-            <h2 className="text-xl font-bold">Relatório Carregado com Sucesso!</h2>
-            <p className="text-sm text-slate-400 mt-2">Versão: {report.version} | Total de Achados: {report.summary.total}</p>
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <RiskScoreBadge summary={report.summary} />
+              </div>
+              <div className="lg:col-span-2 flex items-center">
+                <ExecutiveMetrics report={report} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <SeverityChart summary={report.summary} />
+              <OwaspRadarChart findings={report.findings} />
+            </div>
           </div>
         )}
       </main>
