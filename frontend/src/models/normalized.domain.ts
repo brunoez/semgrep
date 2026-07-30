@@ -1,4 +1,14 @@
 export type NormalizedSeverity = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'INFO';
+export type PriorityTier = 'P1' | 'P2' | 'P3' | 'P4';
+
+export interface PriorityAnalysis {
+  score: number; // 0 to 100
+  tier: PriorityTier;
+  label: string;
+  badgeClass: string;
+  isQuickWin: boolean;
+  rationale: string;
+}
 
 export interface NormalizedFinding {
   id: string;
@@ -18,6 +28,7 @@ export interface NormalizedFinding {
   impact?: string;
   confidence?: string;
   remediationHours: number;
+  priority: PriorityAnalysis;
 }
 
 export interface NormalizedReport {
@@ -31,6 +42,8 @@ export interface NormalizedReport {
     medium: number;
     low: number;
     info: number;
+    p1Count: number;
+    quickWinsCount: number;
     totalRemediationHours: number;
   };
 }

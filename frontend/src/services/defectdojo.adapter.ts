@@ -1,5 +1,6 @@
 import { SemgrepReportSchema } from '../models/semgrep.schema';
 import type { NormalizedFinding, NormalizedReport, NormalizedSeverity } from '../models/normalized.domain';
+import { calculateFindingPriority } from './prioritization.engine';
 
 function mapSeverity(semgrepSeverity?: string, impact?: string, confidence?: string): NormalizedSeverity {
   const sev = (semgrepSeverity || '').toUpperCase();
@@ -60,6 +61,15 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
     }
 
     const owaspList = Array.isArray(meta.owasp) ? meta.owasp : meta.owasp ? [meta.owasp] : [];
+    const remediationHours = calculateRemediationHours(severity);
+
+    const priority = calculateFindingPriority({
+      severity,
+      impact,
+      confidence,
+      owasp: owaspList,
+      remediationHours,
+    });
 
     return {
       id: `finding-${index}-${item.check_id}`,
@@ -78,7 +88,8 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
       category: meta.category || 'Security',
       impact,
       confidence,
-      remediationHours: calculateRemediationHours(severity),
+      remediationHours,
+      priority,
     };
   });
 
@@ -86,6 +97,9 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
     (acc, f) => {
       acc.total += 1;
       acc.totalRemediationHours += f.remediationHours;
+      if (f.priority.tier === 'P1') acc.p1Count += 1;
+      if (f.priority.isQuickWin) acc.quickWinsCount += 1;
+
       if (f.severity === 'CRITICAL') acc.critical += 1;
       else if (f.severity === 'HIGH') acc.high += 1;
       else if (f.severity === 'MEDIUM') acc.medium += 1;
@@ -93,7 +107,7 @@ export function parseAndNormalizeSemgrepReport(jsonString: string): NormalizedRe
       else acc.info += 1;
       return acc;
     },
-    { total: 0, critical: 0, high: 0, medium: 0, low: 0, info: 0, totalRemediationHours: 0 }
+    { total: 0, critical: 0, high: 0, medium: 0, low: 0, info: 0, p1Count: 0, quickWinsCount: 0, totalRemediationHours: 0 }
   );
 
   return {
