@@ -6,6 +6,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.3] - 2026-07-30
+
+### 🛠️ Corrigido (Fixed)
+- **Mapeamento de Volume no Semgrep SAST:**
+  - Criado o link simbólico `ln -sf "$CI_PROJECT_DIR" /src` no job `semgrep_sast_scan`, satisfazendo a verificação interna de diretório da CLI do Semgrep em containers Docker no GitLab CI.
+
+---
+
 ## [1.0.2] - 2026-07-30
 
 ### 🚀 Adicionado (Added)
