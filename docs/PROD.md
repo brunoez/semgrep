@@ -159,24 +159,28 @@ O estágio `deploy` está configurado no arquivo modular [`.gitlab/ci/deploy.git
 ```yaml
 deploy_production:
   stage: deploy
+  image: docker:24-dind
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
   tags:
     - oracle-vps
   environment:
     name: production
     url: https://semgrep.brunoizidorio.com.br
   script:
-    - echo "🚀 [1/4] Acessando diretório do projeto na VPS (/opt/semgrep)..."
-    - cd /opt/semgrep
-    - echo "🔄 [2/4] Sincronizando repositório com o branch master..."
-    - git fetch origin master
-    - git reset --hard origin/master
-    - echo "🐳 [3/4] Reconstruindo e reiniciando os containers Docker..."
-    - docker compose up -d --build
-    - echo "🧹 [4/4] Removendo imagens Docker órfãs/antigas..."
+    - echo "🚀 [1/4] Autenticando no GitLab Container Registry..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "📥 [2/4] Baixando a imagem mais recente compilada ($CI_REGISTRY_IMAGE:latest)..."
+    - docker pull $CI_REGISTRY_IMAGE:latest
+    - echo "🐳 [3/4] Atualizando container de produção no host..."
+    - docker stop semgrep-app || true
+    - docker rm semgrep-app || true
+    - docker run -d --name semgrep-app --restart always -p 8080:80 $CI_REGISTRY_IMAGE:latest
+    - echo "🧹 [4/4] Limpando imagens antigas e não utilizadas..."
     - docker image prune -af
-    - echo "🧪 Validando execução dos containers..."
-    - docker compose ps
-    - curl -I http://localhost:8080 || exit 1
     - echo "✅ Deploy em produção concluído com sucesso!"
   only:
     - master
