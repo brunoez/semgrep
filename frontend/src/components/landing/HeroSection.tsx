@@ -12,20 +12,30 @@ export const HeroSection: React.FC<Props> = ({ onLoadSample }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.gsap-hero-left', {
-        x: -30,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power2.out',
-      });
+      gsap.fromTo(
+        '.gsap-hero-left',
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.out',
+          clearProps: 'all',
+        }
+      );
 
-      gsap.from('.gsap-hero-right', {
-        x: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-      });
+      gsap.fromTo(
+        '.gsap-hero-right',
+        { x: 30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          clearProps: 'all',
+        }
+      );
     }, heroRef);
 
     return () => ctx.revert();

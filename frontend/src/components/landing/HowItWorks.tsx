@@ -7,13 +7,18 @@ export const HowItWorks: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.gsap-step-card', {
-        x: -40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power2.out',
-      });
+      gsap.fromTo(
+        '.gsap-step-card',
+        { x: -30, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: 'power2.out',
+          clearProps: 'all',
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();

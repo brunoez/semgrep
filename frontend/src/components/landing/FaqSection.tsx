@@ -21,7 +21,7 @@ const faqs: FaqItem[] = [
     answer: 'Suportamos nativamente a estrutura oficial do Semgrep CLI (incluindo versões com severidades CRITICAL, HIGH, MEDIUM, LOW, ERROR e WARNING, além de regras comunitárias e Pro rules).',
   },
   {
-    question: 'O que é o Executive Risk Score e como ele é calculado?',
+    question: 'O que é o Executive Risk Score e como ele é calculated?',
     answer: 'É uma métrica de 0 a 100 desenhada para executivos (C-Levels). Ela combina o impacto ponderado de vulnerabilidades críticas, altas, médias e baixas através de uma curva de decaimento logarítmico, evitando saturação rápida em grandes projetos.',
   },
   {
@@ -36,13 +36,18 @@ export const FaqSection: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.gsap-faq-item', {
-        y: 25,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power2.out',
-      });
+      gsap.fromTo(
+        '.gsap-faq-item',
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: 'power2.out',
+          clearProps: 'all',
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();

@@ -7,13 +7,18 @@ export const ValueProps: React.FC = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.gsap-value-card', {
-        y: 35,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power2.out',
-      });
+      gsap.fromTo(
+        '.gsap-value-card',
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'power2.out',
+          clearProps: 'all',
+        }
+      );
     }, containerRef);
 
     return () => ctx.revert();
