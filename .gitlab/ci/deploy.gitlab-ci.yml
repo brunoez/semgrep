@@ -16,7 +16,7 @@ deploy_production:
     - echo "🐳 [3/4] Reconstruindo e reiniciando os containers Docker..."
     - docker compose up -d --build
     - echo "🧹 [4/4] Removendo imagens Docker órfãs/antigas..."
-    - docker image prune -f
+    - docker image prune -af
     - echo "🧪 Validando execução dos containers..."
     - docker compose ps
     - curl -I http://localhost:8080 || exit 1
