@@ -18,9 +18,11 @@ deploy_production:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo "📥 [2/4] Baixando a imagem mais recente compilada ($CI_REGISTRY_IMAGE:latest)..."
     - docker pull $CI_REGISTRY_IMAGE:latest
-    - echo "🐳 [3/4] Atualizando container de produção no host..."
-    - docker stop semgrep-app || true
-    - docker rm semgrep-app || true
+    - echo "🐳 [3/4] Liberando a porta 8080 de quaisquer containers anteriores..."
+    - docker rm -f semgrep-app || true
+    - OLD_IDS=$(docker ps -a -q --filter "publish=8080")
+    - if [ -n "$OLD_IDS" ]; then docker stop $OLD_IDS || true; docker rm -f $OLD_IDS || true; fi
+    - echo "🚀 Iniciando novo container semgrep-app na porta 8080..."
     - docker run -d --name semgrep-app --restart always -p 8080:80 $CI_REGISTRY_IMAGE:latest
     - echo "🧹 [4/4] Limpando imagens antigas e não utilizadas..."
     - docker image prune -af

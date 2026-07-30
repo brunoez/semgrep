@@ -6,6 +6,14 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.6] - 2026-07-30
+
+### 🛠️ Corrigido (Fixed)
+- **Resolução de Conflito de Porta (Port 8080 Allocated):**
+  - Atualizado o script em [`.gitlab/ci/deploy.gitlab-ci.yml`](.gitlab/ci/deploy.gitlab-ci.yml) para identificar e encerrar dinamicamente qualquer container publicado na porta 8080 (`docker ps -a -q --filter "publish=8080"`) antes de subir a nova instância `semgrep-app`, eliminando a falha `Bind for 0.0.0.0:8080 failed`.
+
+---
+
 ## [1.0.5] - 2026-07-30
 
 ### 🛠️ Corrigido (Fixed)
