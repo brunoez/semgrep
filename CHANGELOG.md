@@ -6,6 +6,18 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ---
 
+## [1.0.7] - 2026-07-30
+
+### 🚀 Adicionado & 🛠️ Melhorado (Added & Improved)
+- **Tabela Clicável no Explorer (`VulnerabilityTable.tsx`):**
+  - Toda a linha `<tr>` da tabela de vulnerabilidades tornou-se interativa e clicável (`cursor-pointer`), além de aceitar navegação por teclado (`Enter` / `Espaço`) com destaque do botão de ação em hover (`group-hover`).
+- **Animações GSAP no Modal (`CodeViewerModal.tsx`):**
+  - Implementadas animações fluídas de entrada (`fromTo` com `scale: 0.92`, `y: 20` ➔ `scale: 1`, `y: 0`) e saída via GSAP ao fechar o modal.
+- **Fechamento via Tecla ESC (`CodeViewerModal.tsx`):**
+  - Adicionado listener global de teclado para fechar o modal suavemente ao pressionar a tecla `ESC`.
+
+---
+
 ## [1.0.6] - 2026-07-30
 
 ### 🛠️ Corrigido (Fixed)
