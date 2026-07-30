@@ -1,5 +1,5 @@
 import { SemgrepReportSchema } from '../models/semgrep.schema';
-import { NormalizedFinding, NormalizedReport, NormalizedSeverity } from '../models/normalized.domain';
+import type { NormalizedFinding, NormalizedReport, NormalizedSeverity } from '../models/normalized.domain';
 
 function mapSeverity(semgrepSeverity?: string, impact?: string, confidence?: string): NormalizedSeverity {
   if (semgrepSeverity === 'ERROR') {

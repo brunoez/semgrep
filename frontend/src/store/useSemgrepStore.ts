@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { NormalizedReport } from '../models/normalized.domain';
+import type { NormalizedReport } from '../models/normalized.domain';
 import { parseAndNormalizeSemgrepReport } from '../services/defectdojo.adapter';
 
 interface SemgrepStoreState {
