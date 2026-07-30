@@ -1,12 +1,15 @@
-# Orchestrador Modular do GitLab CI/CD
+# Orquestrador Modular do GitLab CI/CD (com DevSecOps Security Pipeline)
 
 stages:
+  - security-scan
   - test
   - build
   - docker-build
+  - docker-security
 
-# Inclusão dos Módulos Especializados de CI/CD
+# Inclusão dos Módulos Especializados de CI/CD & Segurança
 include:
+  - local: '.gitlab/ci/security.gitlab-ci.yml'
   - local: '.gitlab/ci/test.gitlab-ci.yml'
   - local: '.gitlab/ci/build.gitlab-ci.yml'
   - local: '.gitlab/ci/docker.gitlab-ci.yml'
