@@ -1,6 +1,8 @@
 import React from 'react';
 import { ShieldCheck, RefreshCw, FileText, Home } from 'lucide-react';
 import { useSemgrepStore } from '../../store/useSemgrepStore';
+import { useLanguage } from '../../context/LanguageContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface Props {
   onGoHome?: () => void;
@@ -8,6 +10,7 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ onGoHome }) => {
   const { report, reset } = useSemgrepStore();
+  const { t } = useLanguage();
 
   const handleReset = () => {
     reset();
@@ -25,38 +28,41 @@ export const Header: React.FC<Props> = ({ onGoHome }) => {
         </div>
         <div>
           <h1 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-            Semgrep CLI Visualizer
+            {t('headerTitle')}
             <span className="text-[10px] font-mono font-normal text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
               semgrep.brunoizidorio.com.br
             </span>
           </h1>
-          <p className="text-xs text-slate-400">Visualizador Executivo Zero-Persistence Client-Side</p>
+          <p className="text-xs text-slate-400">{t('subtitle')}</p>
         </div>
       </div>
 
-      {report ? (
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition cursor-pointer"
-          >
-            <FileText className="w-4 h-4" /> Exportar PDF
-          </button>
+      <div className="flex items-center gap-3">
+        <LanguageSwitcher />
+        {report ? (
+          <>
+            <button
+              onClick={() => window.print()}
+              className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition cursor-pointer"
+            >
+              <FileText className="w-4 h-4" /> {t('exportPdf')}
+            </button>
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition shadow-lg shadow-indigo-600/20 cursor-pointer"
+            >
+              <RefreshCw className="w-4 h-4" /> {t('newScan')}
+            </button>
+          </>
+        ) : (
           <button
             onClick={handleReset}
-            className="flex items-center gap-2 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg transition shadow-lg shadow-indigo-600/20 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition cursor-pointer"
           >
-            <RefreshCw className="w-4 h-4" /> Novo Scan / Início
+            <Home className="w-3.5 h-3.5 text-indigo-400" /> {t('home')}
           </button>
-        </div>
-      ) : (
-        <button
-          onClick={handleReset}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-lg border border-slate-700 transition cursor-pointer"
-        >
-          <Home className="w-3.5 h-3.5 text-indigo-400" /> Página Inicial
-        </button>
-      )}
+        )}
+      </div>
     </header>
   );
 };
