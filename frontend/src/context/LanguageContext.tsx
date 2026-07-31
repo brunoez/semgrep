@@ -18,7 +18,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (saved && ALLOWED_LANGUAGES.includes(saved as Language)) {
       return saved as Language;
     }
-    return 'pt-BR';
+    return (typeof navigator !== 'undefined' && navigator.language?.startsWith('en')) ? 'en-US' : 'pt-BR';
   });
 
   const setLanguage = (lang: Language) => {
