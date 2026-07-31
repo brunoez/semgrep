@@ -4,6 +4,17 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.9] - 2026-07-30
+
+### 🚀 Adicionado (Added)
+- **Suporte Multi-Idioma (i18n PT-BR / EN-US):**
+  - Adicionado seletor de idiomas no cabeçalho ([`LanguageSwitcher.tsx`](frontend/src/components/common/LanguageSwitcher.tsx)) com ícones de bandeiras (🇧🇷 PT / 🇺🇸 EN).
+  - Implementado o gerenciamento global de tradução via React Context ([`LanguageContext.tsx`](frontend/src/context/LanguageContext.tsx)) com dicionários estritamente tipados ([`translations.ts`](frontend/src/locales/translations.ts)).
+  - Suporte a detecção automática do idioma preferido do navegador (`navigator.language`) com fallback para Português (Brasil).
+  - Persistência e validação estrita contra *input injection* no `localStorage` (`semgrep_app_lang`).
+  - Atualização dinâmica do atributo `document.documentElement.lang` para SEO e leitores de tela.
+  - Suíte de testes unitários abrangente cobrindo troca de idioma, persistência e sanitização em `frontend/tests/LanguageContext.test.tsx` e `frontend/tests/LanguageSwitcher.test.tsx`.
+
 ---
 
 ## [1.0.8] - 2026-07-30

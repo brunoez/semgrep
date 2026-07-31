@@ -47,6 +47,11 @@ Toda a leitura de arquivos JSON, validação de schema Zod, normalização Defec
 ### 5. 💻 Leitor de Código Seguro com Proteção XSS (DOMPurify)
 - Modal interativo para inspeção de trechos vulneráveis com proteção rigorosa contra Cross-Site Scripting.
 
+### 6. 🌐 Suporte Multi-Idioma & Internacionalização (PT-BR / EN-US)
+- Seletor visual de idiomas no topo da página (bandeiras 🇧🇷 PT / 🇺🇸 EN).
+- Troca instantânea de contexto de tradução sem necessidade de recarga da página.
+- Detecção automática do idioma do navegador (`navigator.language`) e sincronização dinâmica do atributo `lang` no elemento `<html>`.
+
 ---
 
 ## 🚀 Como Executar Localmente
@@ -93,7 +98,7 @@ Para a documentação completa de autorização `git clone` (Deploy Keys), prime
 - **Estilização & Design:** TailwindCSS, Lucide Icons, GSAP (Animações)
 - **Visualização de Dados:** Recharts (Radar Chart & Heatmaps)
 - **Validação & Segurança:** Zod Schema Validation, DOMPurify Sanitizer
-- **Gerenciamento de Estado:** Zustand
+- **Gerenciamento de Estado & i18n:** Zustand, React Context API (Internacionalização PT-BR / EN-US com sanitização de `localStorage`)
 - **Testes Unitários:** Vitest, React Testing Library
 
 ---
