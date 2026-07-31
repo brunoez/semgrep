@@ -3,6 +3,7 @@ import { X, ShieldAlert, FileCode, Sparkles } from 'lucide-react';
 import gsap from 'gsap';
 import type { NormalizedFinding } from '../../models/normalized.domain';
 import { sanitizeText } from '../../services/sanitizer.service';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface Props {
   finding: NormalizedFinding | null;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
+  const { t } = useLanguage();
   const [activeFinding, setActiveFinding] = useState<NormalizedFinding | null>(finding);
   const isClosingRef = useRef(false);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,23 @@ export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
 
   if (!activeFinding) return null;
 
+  const getPriorityLabel = (tier: string) => {
+    switch (tier) {
+      case 'P1': return t('p1Label');
+      case 'P2': return t('p2Label');
+      case 'P3': return t('p3Label');
+      case 'P4': default: return t('p4Label');
+    }
+  };
+
+  const getTranslatedRationale = (rationale: string) => {
+    const parts: string[] = [];
+    if (rationale.includes('Severidade Crítica') || rationale.includes('Critical Severity')) parts.push(t('ratCriticalSev'));
+    if (rationale.includes('OWASP')) parts.push(t('ratHighOwasp'));
+    if (rationale.includes('Quick Win')) parts.push(t('ratQuickWin'));
+    return parts.join(' • ') || t('ratDefault');
+  };
+
   return (
     <div
       ref={overlayRef}
@@ -103,8 +122,8 @@ export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
         <button
           onClick={handleClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-white p-1.5 rounded-lg hover:bg-slate-800 transition"
-          aria-label="Fechar modal (ESC)"
-          title="Fechar (ESC)"
+          aria-label={t('closeModal')}
+          title={t('closeModal')}
         >
           <X className="w-5 h-5" />
         </button>
@@ -130,24 +149,24 @@ export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
         <div className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-slate-950 p-3 rounded-lg border border-slate-800">
             <div>
-              <span className="text-slate-400 font-medium">Arquivo & Linha: </span>
+              <span className="text-slate-400 font-medium">{t('fileAndLine')} </span>
               <span className="text-indigo-400 font-mono block mt-0.5">{sanitizeText(activeFinding.filePath)}:{activeFinding.startLine}</span>
             </div>
             <div>
-              <span className="text-slate-400 font-medium">Priorização Inteligente: </span>
-              <span className="text-slate-200 font-sans block mt-0.5">{activeFinding.priority.label}</span>
+              <span className="text-slate-400 font-medium">{t('smartPrioritization')} </span>
+              <span className="text-slate-200 font-sans block mt-0.5">{getPriorityLabel(activeFinding.priority.tier)}</span>
             </div>
           </div>
 
           <div>
-            <span className="text-slate-400 font-medium">Justificativa da Prioridade: </span>
+            <span className="text-slate-400 font-medium">{t('priorityRationale')} </span>
             <p className="text-slate-300 mt-1 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/80 leading-relaxed font-sans text-xs">
-              {sanitizeText(activeFinding.priority.rationale)}
+              {sanitizeText(getTranslatedRationale(activeFinding.priority.rationale))}
             </p>
           </div>
 
           <div>
-            <span className="text-slate-400 font-medium">Descrição da Vulnerabilidade: </span>
+            <span className="text-slate-400 font-medium">{t('vulnerabilityDesc')} </span>
             <p className="text-slate-200 mt-1 bg-slate-950 p-3 rounded-lg border border-slate-800 leading-relaxed">
               {sanitizeText(activeFinding.message)}
             </p>
@@ -157,7 +176,7 @@ export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
             <div>
               <div className="flex items-center gap-2 text-slate-400 mb-1">
                 <FileCode className="w-4 h-4" />
-                <span>Trecho de Código Vulnerável:</span>
+                <span>{t('codeViewerTitle')}</span>
               </div>
               <pre className="p-4 bg-slate-950 rounded-xl border border-slate-800 font-mono text-emerald-400 overflow-x-auto text-xs leading-relaxed max-h-60 overflow-y-auto">
                 <code>{sanitizeText(activeFinding.codeSnippet)}</code>

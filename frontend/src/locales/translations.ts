@@ -95,6 +95,81 @@ export const translations = {
     footerSubtitle: 'Plataforma Zero-Persistence para Análise Executiva de Riscos',
     footerCopyright: 'Bruno Izidorio. Todos os direitos reservados.',
     footerSecurityNote: 'Nenhum dado ou código enviado sai do seu navegador.',
+
+    // Dashboard - Executive Risk Badge & Ratings
+    riskRatingTitle: 'EXECUTIVE SECURITY RATING',
+    gradeTitle: 'Classificação por Notas (A+ até F)',
+    securityRatingNote: 'Security Rating: Nota',
+    totalImpact: 'Impacto Total',
+    gradeAPlus: 'Excelente / Baixo Risco',
+    gradeA: 'Baixo Risco',
+    gradeBPlus: 'Bom / Pouca Exposição',
+    gradeB: 'Risco Moderado',
+    gradeC: 'Atenção Necessária',
+    gradeD: 'Alto Risco',
+    gradeF: 'Risco Crítico / Reprovado',
+
+    // Dashboard - Executive Metrics
+    p1Urgent: 'P1 Urgente',
+    quickWins: 'Quick Wins',
+    critical: 'Críticas',
+    high: 'Altas',
+    medium: 'Médias',
+    low: 'Baixas',
+    scannedFiles: 'Arquivos Scaneados',
+    estimatedEffort: 'Esforço Estimado',
+
+    // Dashboard - Charts
+    severityDistribution: 'Distribuição por Severidade',
+    noVulnerabilities: 'Nenhuma vulnerabilidade encontrada.',
+    owaspRadarTitle: 'Mapeamento OWASP Top 10 (Gráfico Radar)',
+    noOwaspTags: 'Nenhuma tag OWASP encontrada no relatório.',
+    vulnerabilitiesWord: 'Vulnerabilidades',
+
+    // Dashboard - Hotspots & Tech Stack
+    topHotspotsTitle: 'Top 5 Diretórios Hotspots (Concentração de Risco)',
+    noHotspots: 'Nenhum diretório vulnerável mapeado.',
+    hotspotsFooter: 'Identifica módulos do código que acumulam a maior parcela do débito técnico de segurança.',
+    findingsWord: 'achados',
+    criticalWord: 'Críticas',
+    techStackTitle: 'Tecnologias & Stacks Afetadas',
+    noTechs: 'Nenhuma tecnologia mapeada nas regras.',
+    techStackFooter: 'Mapeamento de riscos por ecossistema de código (ex: Frontend, Backend, Secrets, Docker).',
+
+    // Explorer - Vulnerability Table
+    vulnerabilityExplorer: 'Explorer de Vulnerabilidades',
+    explorerSubtitle: 'Priorização inteligente baseada em impacto e ROI de correção',
+    searchPlaceholder: 'Buscar regra, arquivo...',
+    allTechs: 'Todas Tecnologias',
+    allPriorities: 'Todas Prioridades',
+    allSeverities: 'Todas Severidades',
+    sortPriority: 'Ordenado por Prioridade',
+    sortSeverity: 'Ordenado por Severidade',
+    colPriority: 'Prioridade',
+    colSeverity: 'Severidade',
+    colRule: 'Regra (Check ID)',
+    colTech: 'Tecnologia',
+    colFile: 'Arquivo & Linha',
+    colOwasp: 'OWASP',
+    colAction: 'Ação',
+    p1Label: 'P1 - Correção Urgente',
+    p2Label: 'P2 - Alta Prioridade',
+    p3Label: 'P3 - Média Prioridade',
+    p4Label: 'P4 - Baixa Prioridade',
+
+    // Explorer - Code Viewer Modal
+    codeViewerTitle: 'Trecho de Código Vulnerável:',
+    smartPrioritization: 'Priorização Inteligente:',
+    priorityRationale: 'Justificativa da Prioridade:',
+    vulnerabilityDesc: 'Descrição da Vulnerabilidade:',
+    fileAndLine: 'Arquivo & Linha:',
+    closeModal: 'Fechar (ESC)',
+
+    // Priority Rationales
+    ratCriticalSev: 'Severidade Crítica',
+    ratHighOwasp: 'Vulnerabilidade OWASP de Alto Risco',
+    ratQuickWin: 'Quick Win (Baixo esforço de correção <= 2h)',
+    ratDefault: 'Priorização padrão baseada em impacto',
   },
   'en-US': {
     // Header
@@ -190,6 +265,81 @@ export const translations = {
     footerSubtitle: 'Zero-Persistence Platform for Executive Risk Analysis',
     footerCopyright: 'Bruno Izidorio. All rights reserved.',
     footerSecurityNote: 'No uploaded data or code leaves your browser.',
+
+    // Dashboard - Executive Risk Badge & Ratings
+    riskRatingTitle: 'EXECUTIVE SECURITY RATING',
+    gradeTitle: 'Grade Rating (A+ to F)',
+    securityRatingNote: 'Security Rating: Grade',
+    totalImpact: 'Total Impact',
+    gradeAPlus: 'Excellent / Low Risk',
+    gradeA: 'Low Risk',
+    gradeBPlus: 'Good / Low Exposure',
+    gradeB: 'Moderate Risk',
+    gradeC: 'Attention Needed',
+    gradeD: 'High Risk',
+    gradeF: 'Critical Risk / Failed',
+
+    // Dashboard - Executive Metrics
+    p1Urgent: 'P1 Urgent',
+    quickWins: 'Quick Wins',
+    critical: 'Critical',
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low',
+    scannedFiles: 'Scanned Files',
+    estimatedEffort: 'Estimated Effort',
+
+    // Dashboard - Charts
+    severityDistribution: 'Severity Distribution',
+    noVulnerabilities: 'No vulnerabilities found.',
+    owaspRadarTitle: 'OWASP Top 10 Mapping (Radar Chart)',
+    noOwaspTags: 'No OWASP tags found in report.',
+    vulnerabilitiesWord: 'Vulnerabilities',
+
+    // Dashboard - Hotspots & Tech Stack
+    topHotspotsTitle: 'Top 5 Hotspot Directories (Risk Concentration)',
+    noHotspots: 'No vulnerable directories mapped.',
+    hotspotsFooter: 'Identifies code modules accumulating the largest share of technical security debt.',
+    findingsWord: 'findings',
+    criticalWord: 'Critical',
+    techStackTitle: 'Affected Technologies & Stacks',
+    noTechs: 'No technology mapped in rules.',
+    techStackFooter: 'Risk mapping by code ecosystem (e.g. Frontend, Backend, Secrets, Docker).',
+
+    // Explorer - Vulnerability Table
+    vulnerabilityExplorer: 'Vulnerability Explorer',
+    explorerSubtitle: 'Smart prioritization based on impact and remediation ROI',
+    searchPlaceholder: 'Search rule, file...',
+    allTechs: 'All Technologies',
+    allPriorities: 'All Priorities',
+    allSeverities: 'All Severities',
+    sortPriority: 'Sorted by Priority',
+    sortSeverity: 'Sorted by Severity',
+    colPriority: 'Priority',
+    colSeverity: 'Severity',
+    colRule: 'Rule (Check ID)',
+    colTech: 'Technology',
+    colFile: 'File & Line',
+    colOwasp: 'OWASP',
+    colAction: 'Action',
+    p1Label: 'P1 - Urgent Fix',
+    p2Label: 'P2 - High Priority',
+    p3Label: 'P3 - Medium Priority',
+    p4Label: 'P4 - Low Priority',
+
+    // Explorer - Code Viewer Modal
+    codeViewerTitle: 'Vulnerable Code Snippet:',
+    smartPrioritization: 'Smart Prioritization:',
+    priorityRationale: 'Priority Rationale:',
+    vulnerabilityDesc: 'Vulnerability Description:',
+    fileAndLine: 'File & Line:',
+    closeModal: 'Close (ESC)',
+
+    // Priority Rationales
+    ratCriticalSev: 'Critical Severity',
+    ratHighOwasp: 'High-Risk OWASP Vulnerability',
+    ratQuickWin: 'Quick Win (Low fix effort <= 2h)',
+    ratDefault: 'Default prioritization based on impact',
   },
 } as const;
 

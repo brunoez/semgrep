@@ -1,12 +1,15 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import type { NormalizedFinding } from '../../models/normalized.domain';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface Props {
   findings: NormalizedFinding[];
 }
 
 export const OwaspRadarChart: React.FC<Props> = ({ findings }) => {
+  const { t } = useLanguage();
+
   // Pre-initialize OWASP Top 10 categories to show uniform radar web
   const owaspCounts: Record<string, number> = {
     'A01:Broken Access': 0,
@@ -49,10 +52,10 @@ export const OwaspRadarChart: React.FC<Props> = ({ findings }) => {
 
   return (
     <div className="p-6 bg-slate-900 border border-slate-800 rounded-2xl h-80 shadow-xl">
-      <h3 className="text-sm font-semibold text-slate-300 mb-2">Mapeamento OWASP Top 10 (Gráfico Radar)</h3>
+      <h3 className="text-sm font-semibold text-slate-300 mb-2">{t('owaspRadarTitle')}</h3>
       {!hasData ? (
         <div className="flex items-center justify-center h-56 text-xs text-slate-500">
-          Nenhuma tag OWASP encontrada no relatório.
+          {t('noOwaspTags')}
         </div>
       ) : (
         <ResponsiveContainer width="100%" height="90%">
@@ -60,7 +63,7 @@ export const OwaspRadarChart: React.FC<Props> = ({ findings }) => {
             <PolarGrid stroke="#334155" />
             <PolarAngleAxis dataKey="category" stroke="#94a3b8" tick={{ fontSize: 9, fill: '#94a3b8' }} />
             <PolarRadiusAxis stroke="#475569" angle={30} tick={{ fontSize: 9 }} />
-            <Radar name="Vulnerabilidades" dataKey="count" stroke="#6366f1" fill="#6366f1" fillOpacity={0.4} />
+            <Radar name={t('vulnerabilitiesWord')} dataKey="count" stroke="#6366f1" fill="#6366f1" fillOpacity={0.4} />
             <Tooltip
               contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', color: '#f8fafc' }}
               itemStyle={{ color: '#818cf8' }}

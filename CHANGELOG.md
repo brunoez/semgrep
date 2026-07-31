@@ -4,6 +4,15 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.11] - 2026-07-30
+
+### 🛠️ Corrigido & 🚀 Melhorado (Fixed & Improved)
+- **Tradução Completa do Dashboard Executivo & Explorer (i18n):**
+  - Conectados todos os componentes da página de resultados e dashboard executivo ao dicionário `translations.ts` via `useLanguage()`: [`RiskScoreBadge.tsx`](frontend/src/components/dashboard/RiskScoreBadge.tsx), [`ExecutiveMetrics.tsx`](frontend/src/components/dashboard/ExecutiveMetrics.tsx), [`SeverityChart.tsx`](frontend/src/components/dashboard/SeverityChart.tsx), [`OwaspRadarChart.tsx`](frontend/src/components/dashboard/OwaspRadarChart.tsx), [`TopHotspotsCard.tsx`](frontend/src/components/dashboard/TopHotspotsCard.tsx), [`TechStackBreakdown.tsx`](frontend/src/components/dashboard/TechStackBreakdown.tsx), [`VulnerabilityTable.tsx`](frontend/src/components/explorer/VulnerabilityTable.tsx) e [`CodeViewerModal.tsx`](frontend/src/components/explorer/CodeViewerModal.tsx).
+  - Expandido o dicionário `src/locales/translations.ts` com suporte bilíngue completo (PT-BR e EN-US) para classificações de risco (A+ a F), métricas C-Level, distribuição de severidades, gráficos OWASP, hotspots, ecossistemas de código, filtros/ordenação do explorer e justificativas de prioridade.
+
+---
+
 ## [1.0.10] - 2026-07-30
 
 ### 🛠️ Corrigido & 🚀 Melhorado (Fixed & Improved)
