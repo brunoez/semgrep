@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Terminal, Upload, BarChart3, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const HowItWorks: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,25 +30,25 @@ export const HowItWorks: React.FC = () => {
     {
       step: '01',
       icon: Terminal,
-      title: 'Execute o Scan no Terminal',
-      description: 'Rode o Semgrep CLI no seu repositório exportando o resultado bruto para o formato JSON.',
+      title: t('step1Title'),
+      description: t('step1Desc'),
       code: 'semgrep scan --json > resultado_semgrep.json',
       color: 'text-indigo-400 border-indigo-500/30 bg-indigo-500/10',
     },
     {
       step: '02',
       icon: Upload,
-      title: 'Carregue o Relatório JSON',
-      description: 'Arraste o arquivo .json diretamente nesta aplicação ou cole o conteúdo bruto sem nenhum backend.',
+      title: t('step2Title'),
+      description: t('step2Desc'),
       code: 'semgrep.brunoizidorio.com.br',
       color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
     },
     {
       step: '03',
       icon: BarChart3,
-      title: 'Visualize Insights Executivos',
-      description: 'Acesse instantaneamente o Executive Risk Score, Gráfico Radar OWASP, Hotspots e Exportação PDF.',
-      code: 'Dashboard Executivo Instantâneo',
+      title: t('step3Title'),
+      description: t('step3Desc'),
+      code: t('step3Code'),
       color: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
     },
   ];
@@ -56,13 +58,13 @@ export const HowItWorks: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase tracking-widest font-mono text-indigo-400 font-bold">
-            Fluxo de Trabalho Simples & Seguro
+            {t('howItWorksBadge')}
           </span>
           <h2 className="text-3xl font-extrabold text-white tracking-tight mt-2">
-            Do Terminal ao Dashboard Executivo em 3 Passos
+            {t('howItWorksTitle')}
           </h2>
           <p className="text-sm text-slate-400 mt-3">
-            Sem instalar softwares adicionais, sem cadastros e sem expor seu código-fonte para terceiros.
+            {t('howItWorksSubtitle')}
           </p>
         </div>
 

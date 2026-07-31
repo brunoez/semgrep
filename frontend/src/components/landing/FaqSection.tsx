@@ -1,38 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ChevronDown, HelpCircle } from 'lucide-react';
-
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-const faqs: FaqItem[] = [
-  {
-    question: 'Os dados do meu arquivo JSON de scan são enviados para algum servidor?',
-    answer: 'Não, de forma alguma. Toda a leitura, validação de schema Zod, normalização DefectDojo e renderização gráfica ocorrem 100% no seu próprio navegador (client-side SPA). O código-fonte e as vulnerabilidades nunca deixam a memória RAM da sua aba.',
-  },
-  {
-    question: 'Como faço para gerar o arquivo JSON com o Semgrep CLI?',
-    answer: 'Basta executar no terminal da sua aplicação o comando oficial do Semgrep exportando o resultado em formato JSON: semgrep scan --json > resultado_semgrep.json.',
-  },
-  {
-    question: 'Quais versões e esquemas do Semgrep são suportados?',
-    answer: 'Suportamos nativamente a estrutura oficial do Semgrep CLI (incluindo versões com severidades CRITICAL, HIGH, MEDIUM, LOW, ERROR e WARNING, além de regras comunitárias e Pro rules).',
-  },
-  {
-    question: 'O que é o Executive Risk Score e como ele é calculated?',
-    answer: 'É uma métrica de 0 a 100 desenhada para executivos (C-Levels). Ela combina o impacto ponderado de vulnerabilidades críticas, altas, médias e baixas através de uma curva de decaimento logarítmico, evitando saturação rápida em grandes projetos.',
-  },
-  {
-    question: 'Existe algum limite de tamanho para o arquivo JSON carregado?',
-    answer: 'Como o processamento é feito pela engine JavaScript do seu navegador, suportamos relatórios de até 50MB ou milhares de vulnerabilidades com renderização fluida.',
-  },
-];
+import { useLanguage } from '../../context/LanguageContext';
 
 export const FaqSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -53,6 +27,14 @@ export const FaqSection: React.FC = () => {
     return () => ctx.revert();
   }, []);
 
+  const faqs = [
+    { question: t('faq1Q'), answer: t('faq1A') },
+    { question: t('faq2Q'), answer: t('faq2A') },
+    { question: t('faq3Q'), answer: t('faq3A') },
+    { question: t('faq4Q'), answer: t('faq4A') },
+    { question: t('faq5Q'), answer: t('faq5A') },
+  ];
+
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
@@ -62,13 +44,13 @@ export const FaqSection: React.FC = () => {
       <div className="container mx-auto px-6 max-w-4xl">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-400 text-xs font-semibold mb-3">
-            <HelpCircle className="w-3.5 h-3.5" /> Dúvidas Frequentes
+            <HelpCircle className="w-3.5 h-3.5" /> {t('faqBadge')}
           </div>
           <h2 className="text-3xl font-extrabold text-white tracking-tight">
-            Perguntas Frequentes & Conformidade
+            {t('faqTitle')}
           </h2>
           <p className="text-sm text-slate-400 mt-2">
-            Entenda por que o Semgrep CLI Visualizer é seguro para uso em ambientes corporativos sensíveis.
+            {t('faqSubtitle')}
           </p>
         </div>
 

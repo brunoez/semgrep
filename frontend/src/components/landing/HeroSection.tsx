@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Play, Upload, Bolt } from 'lucide-react';
 import { FileDropzone } from '../common/FileDropzone';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface Props {
   onLoadSample: () => void;
@@ -9,6 +10,7 @@ interface Props {
 
 export const HeroSection: React.FC<Props> = ({ onLoadSample }) => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,15 +61,15 @@ export const HeroSection: React.FC<Props> = ({ onLoadSample }) => {
           <div className="lg:col-span-6 space-y-8">
             <div className="gsap-hero-left inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold shadow-lg">
               <Bolt className="w-3.5 h-3.5 text-indigo-400 fill-current" />
-              <span className="uppercase tracking-wider">100% Client-Side • Privacy First</span>
+              <span className="uppercase tracking-wider">{t('heroBadge')}</span>
             </div>
 
             <h1 className="gsap-hero-left text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
-              Transforme Scans de Segurança em <span className="text-indigo-400">Insights Executivos</span>
+              {t('heroTitlePrefix')}<span className="text-indigo-400">{t('heroTitleHighlight')}</span>
             </h1>
 
             <p className="gsap-hero-left text-sm sm:text-base text-slate-400 leading-relaxed max-w-lg">
-              Visualize resultados do Semgrep CLI em segundos. Sem nuvem, sem logs persistentes, 100% privado. Gere relatórios de alto nível com Executive Risk Score (0-100) e Mapeamento OWASP sem sair do navegador.
+              {t('heroDescription')}
             </p>
 
             <div className="gsap-hero-left flex flex-wrap gap-4 pt-2">
@@ -76,7 +78,7 @@ export const HeroSection: React.FC<Props> = ({ onLoadSample }) => {
                 className="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-indigo-600/25 border border-indigo-500/50 flex items-center gap-2 cursor-pointer active:scale-95"
               >
                 <Upload className="w-4 h-4" />
-                Analisar Meu JSON
+                {t('analyzeBtn')}
               </button>
 
               <button
@@ -84,7 +86,7 @@ export const HeroSection: React.FC<Props> = ({ onLoadSample }) => {
                 className="px-6 py-3.5 bg-slate-900 hover:bg-slate-800 text-slate-100 rounded-xl font-bold text-sm border border-slate-800 transition-all flex items-center gap-2 cursor-pointer active:scale-95"
               >
                 <Play className="w-4 h-4 text-indigo-400 fill-current" />
-                Ver Exemplo ao Vivo
+                {t('viewSampleBtn')}
               </button>
             </div>
           </div>

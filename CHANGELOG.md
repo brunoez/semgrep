@@ -4,6 +4,15 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.10] - 2026-07-30
+
+### 🛠️ Corrigido & 🚀 Melhorado (Fixed & Improved)
+- **Tradução Completa da Landing Page (i18n):**
+  - Conectados todos os componentes da Landing Page ao dicionário `translations.ts` via `useLanguage()`: [`HeroSection.tsx`](frontend/src/components/landing/HeroSection.tsx), [`FileDropzone.tsx`](frontend/src/components/common/FileDropzone.tsx), [`HowItWorks.tsx`](frontend/src/components/landing/HowItWorks.tsx), [`ValueProps.tsx`](frontend/src/components/landing/ValueProps.tsx), [`SecurityFeatures.tsx`](frontend/src/components/landing/SecurityFeatures.tsx), [`FaqSection.tsx`](frontend/src/components/landing/FaqSection.tsx) e [`LandingFooter.tsx`](frontend/src/components/landing/LandingFooter.tsx).
+  - Expandido o dicionário em `src/locales/translations.ts` com traduções completas para todos os títulos, descrições, botões, selos, áreas de drop/paste e seções de FAQ em Português e Inglês.
+
+---
+
 ## [1.0.9] - 2026-07-30
 
 ### 🚀 Adicionado (Added)

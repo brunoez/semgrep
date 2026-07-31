@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Gauge, Radar, FolderKanban, Cpu, Flame, Code2 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const ValueProps: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,44 +29,44 @@ export const ValueProps: React.FC = () => {
   const features = [
     {
       icon: Gauge,
-      title: 'Executive Risk Score (0-100)',
-      description: 'Cálculo de risco logarítmico ponderado pela severidade e impacto das falhas, evitando saturação rápida.',
-      badge: 'C-Level Metric',
+      title: t('vp1Title'),
+      description: t('vp1Desc'),
+      badge: t('vp1Badge'),
       color: 'text-indigo-400 border-indigo-500/20 bg-indigo-500/10',
     },
     {
       icon: Radar,
-      title: 'Mapeamento OWASP Top 10 (Radar)',
-      description: 'Gráfico visual em radar mapeando categorias OWASP (Injeção, Controle de Acesso, Falhas Criptográficas).',
-      badge: 'Standard OWASP',
+      title: t('vp2Title'),
+      description: t('vp2Desc'),
+      badge: t('vp2Badge'),
       color: 'text-rose-400 border-rose-500/20 bg-rose-500/10',
     },
     {
       icon: FolderKanban,
-      title: 'Hotspots de Diretórios',
-      description: 'Identifica instantaneamente os módulos e pastas do projeto que concentram 80% do débito de segurança.',
-      badge: 'Priorização de Módulos',
+      title: t('vp3Title'),
+      description: t('vp3Desc'),
+      badge: t('vp3Badge'),
       color: 'text-amber-400 border-amber-500/20 bg-amber-500/10',
     },
     {
       icon: Cpu,
-      title: 'Breakdown por Stacks & Tecnologias',
-      description: 'Classificação por ecossistemas afetados (Python, JavaScript/TypeScript, Secrets, Docker, Express).',
-      badge: 'Multi-Stack',
+      title: t('vp4Title'),
+      description: t('vp4Desc'),
+      badge: t('vp4Badge'),
       color: 'text-emerald-400 border-emerald-500/20 bg-emerald-500/10',
     },
     {
       icon: Flame,
-      title: 'Quick Wins & P1 Urgente',
-      description: 'Filtra automaticamente falhas com alto impacto de segurança e baixo tempo estimado de correção (<= 2h).',
-      badge: 'Alto ROI de Correção',
+      title: t('vp5Title'),
+      description: t('vp5Desc'),
+      badge: t('vp5Badge'),
       color: 'text-orange-400 border-orange-500/20 bg-orange-500/10',
     },
     {
       icon: Code2,
-      title: 'Leitor de Código & Sanitização XSS',
-      description: 'Modal para inspeção do trecho de código vulnerável com proteção XSS (DOMPurify) e sintaxe formatada.',
-      badge: 'Developer Experience',
+      title: t('vp6Title'),
+      description: t('vp6Desc'),
+      badge: t('vp6Badge'),
       color: 'text-purple-400 border-purple-500/20 bg-purple-500/10',
     },
   ];
@@ -74,13 +76,13 @@ export const ValueProps: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs uppercase tracking-widest font-mono text-indigo-400 font-bold">
-            Inteligência de Dados sem Poluição
+            {t('valuePropsBadge')}
           </span>
           <h2 className="text-3xl font-extrabold text-white tracking-tight mt-2">
-            Funcionalidades Projetadas para Executivos & Engenharia
+            {t('valuePropsTitle')}
           </h2>
           <p className="text-sm text-slate-400 mt-3">
-            Tudo o que C-Levels e times de segurança precisam para priorizar a remediação de riscos em tempo recorde.
+            {t('valuePropsSubtitle')}
           </p>
         </div>
 

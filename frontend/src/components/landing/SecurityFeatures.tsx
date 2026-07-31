@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ShieldCheck, Lock, Cpu } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 export const SecurityFeatures: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,26 +29,23 @@ export const SecurityFeatures: React.FC = () => {
   const guarantees = [
     {
       icon: ShieldCheck,
-      title: '100% Client-Side Execution',
-      description:
-        'Execução totalmente isolada na memória RAM da sua aba. Nenhum dado, vulnerabilidade ou código do seu repositório é enviado para servidores externos.',
-      highlight: 'Zero Telemetria • Zero Backend',
+      title: t('sec1Title'),
+      description: t('sec1Desc'),
+      highlight: t('sec1Highlight'),
       color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
     },
     {
       icon: Lock,
-      title: 'OWASP Safe & XSS Protection',
-      description:
-        'Validação rigorosa de tipos com schemas Zod e sanitização completa de strings vulneráveis com DOMPurify para prevenção de XSS.',
-      highlight: 'Schema Validated',
+      title: t('sec2Title'),
+      description: t('sec2Desc'),
+      highlight: t('sec2Highlight'),
       color: 'text-indigo-400 border-indigo-500/30 bg-indigo-500/10',
     },
     {
       icon: Cpu,
-      title: 'DefectDojo Engine Alignment',
-      description:
-        'Modelo de normalização compatível com os padrões de AppSec corporativos do OWASP DefectDojo para consolidação de relatórios.',
-      highlight: 'Standard AppSec Model',
+      title: t('sec3Title'),
+      description: t('sec3Desc'),
+      highlight: t('sec3Highlight'),
       color: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
     },
   ];
@@ -56,10 +55,10 @@ export const SecurityFeatures: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="text-center max-w-xl mx-auto mb-12">
           <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono">
-            Garantias de Privacidade & Segurança
+            {t('secFeaturesBadge')}
           </span>
           <h2 className="text-2xl font-bold text-white mt-1">
-            Privacidade Absoluta para Ambientes Corporativos Sensíveis
+            {t('secFeaturesTitle')}
           </h2>
         </div>
 
