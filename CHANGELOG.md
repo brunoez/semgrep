@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.14] - 2026-08-02
+
+### 🛠️ Corrigido (Fixed)
+- **Correção de Push no GitLab Container Registry (`docker.gitlab-ci.yml`):**
+  - Resolvido o erro `error from registry: blob unknown to registry` durante a etapa `docker-build` no GitLab CI/CD ativando `DOCKER_BUILDKIT: "1"`, fazendo pull explícito das imagens base (`node:20-alpine` e `nginx:alpine-slim`) e utilizando `--no-cache` no `docker build`.
+
+---
+
 ## [1.0.13] - 2026-08-02
 
 ### 🤖 Descoberta Automática de IA (IsItAgentReady / Agent-Ready Standards)
