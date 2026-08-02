@@ -26,6 +26,20 @@
     <meta property="twitter:title" content="Semgrep CLI Visualizer &amp; Executive Security Dashboard" />
     <meta property="twitter:description" content="Transforme scans brutos do Semgrep CLI em relatórios visuais executivos de cibersegurança. 100% Client-Side, sem envio de código para a nuvem." />
 
+    <!-- Progressive Web App (PWA) Metadata -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- Agent Readiness & Discovery Links (RFC 8288 / RFC 9727) -->
+    <link rel="api-catalog" href="/.well-known/api-catalog" type="application/linkset+json" />
+    <link rel="agent-skills" href="/.well-known/agent-skills/index.json" type="application/json" />
+    <link rel="mcp-server-card" href="/.well-known/mcp/server-card.json" type="application/json" />
+    <link rel="author" href="/auth.md" type="text/markdown" />
+    <link rel="alternate" href="/index.md" type="text/markdown" title="Markdown for Agents" />
+
     <!-- Fontes do Google (Inter & JetBrains Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -4,6 +4,17 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.15] - 2026-08-02
+
+### 📱 Progressive Web App (PWA Support)
+- **Web App Manifest (`manifest.json`):** Publicado manifesto PWA com ícones responsivos, atalhos de ação ("Novo Scan"), suporte a modo `standalone` e tema visual alinhado ao slate-950 (`#0f172a`).
+- **Service Worker (`sw.js` & `serviceWorkerRegistration.ts`):** Implementada estratégia de cache *Network First* com fallback offline para instâncias do navegador. Registro seguro via TypeScript em `main.tsx` mantendo conformidade estrita com a Content Security Policy (CSP).
+- **Metadados Mobile & iOS:** Adicionadas meta tags de suporte PWA para dispositivos móveis (`mobile-web-app-capable`, `apple-mobile-web-app-capable`, `apple-touch-icon`).
+- **Configuração Nginx (`nginx.conf`):** Criados endpoints dedicados para `/manifest.json` (`application/manifest+json`) e `/sw.js` com cabeçalho `Service-Worker-Allowed: /` e política de no-cache para atualizações instantâneas do worker.
+- **Testes de Integração PWA:** Criada a suíte de testes unitários [`pwa.test.ts`](frontend/tests/pwa.test.ts) cobrindo manifest.json, sw.js e meta tags no index.html.
+
+---
+
 ## [1.0.14] - 2026-08-02
 
 ### 🛠️ Corrigido (Fixed)
