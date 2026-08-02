@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.21] - 2026-08-02
+
+### ⚙️ CI/CD & Docker Update
+- **Atualização da Imagem Docker-in-Docker para a Versão Mais Recente (`docker:dind`):**
+  - Atualizadas as configurações no `docker.gitlab-ci.yml` e `deploy.gitlab-ci.yml` para utilizar a imagem mais recente `docker:dind` (Docker v28/v29 DinD).
+
+---
+
 ## [1.0.20] - 2026-08-02
 
 ### ⚙️ CI/CD & Docker Update

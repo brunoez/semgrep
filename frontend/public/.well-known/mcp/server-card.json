@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "serverInfo": {
     "name": "Semgrep CLI Visualizer",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "description": "100% Client-Side SAST Report Visualizer and Executive Security Dashboard"
   },
   "transport": {

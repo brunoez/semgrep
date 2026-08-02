@@ -19,7 +19,7 @@ Não há banco de dados, API backend ou armazenamento persistente. O container D
 Antes de iniciar a implantação na sua VPS (Oracle Cloud, DigitalOcean, AWS EC2, GCP ou servidor próprio):
 
 - **Git:** Instalado na VPS (`sudo apt install -y git`)
-- **Docker Engine:** Versão 24.0+ instalada
+- **Docker Engine:** Versão 24.0+ (ou superior) instalada
 - **Docker Compose:** Plugin v2.0+ instalado
 - **Portas Liberadas:** Porta `80` (HTTP) e `443` (HTTPS) no firewall/Security List
 - **Domínio Apontado:** Registro DNS tipo `A` apontando `semgrep.brunoizidorio.com.br` para o IP público da VPS
