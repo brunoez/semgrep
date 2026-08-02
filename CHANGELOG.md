@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.16] - 2026-08-02
+
+### 🛠️ Corrigido (Fixed)
+- **Desativação de Attestation Manifests no GitLab Registry (`docker.gitlab-ci.yml`):**
+  - Resolvido o erro `error from registry: blob unknown to registry - sha256:...` na etapa `docker-build` ao desativar as atestações de BuildKit OCI em favor de imagens standard v2 (`DOCKER_BUILDKIT: "0"` e `BUILDX_NO_DEFAULT_ATTESTATIONS: "1"`), garantindo compatibilidade total com o GitLab Container Registry.
+
+---
+
 ## [1.0.15] - 2026-08-02
 
 ### 📱 Progressive Web App (PWA Support)
