@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.20] - 2026-08-02
+
+### ⚙️ CI/CD & Docker Update
+- **Atualização da Imagem Base Node.js para LTS (`node:lts-alpine`):**
+  - Atualizada a imagem de build no `Dockerfile`, `build.gitlab-ci.yml` e `test.gitlab-ci.yml` para utilizar `node:lts-alpine`, acompanhando automaticamente as versões Long-Term Support mais recentes do Node.js.
+
+---
+
 ## [1.0.19] - 2026-08-02
 
 ### 🔐 Segurança & CSP (`nginx.conf`)

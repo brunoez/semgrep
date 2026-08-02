@@ -1,7 +1,7 @@
 # Módulo de Compilação estática do Vite SPA
 
 build_frontend:
-  image: node:20-alpine
+  image: node:lts-alpine
   stage: build
   cache:
     key: ${CI_COMMIT_REF_SLUG}

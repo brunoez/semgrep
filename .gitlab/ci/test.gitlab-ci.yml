@@ -1,7 +1,7 @@
 # Módulo de Testes Unitários (Vitest)
 
 .node_base:
-  image: node:20-alpine
+  image: node:lts-alpine
   cache:
     key: ${CI_COMMIT_REF_SLUG}
     paths:

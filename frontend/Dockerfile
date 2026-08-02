@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for Semgrep CLI Visualizer (Production SPA)
 # Stage 1: Build static assets
-FROM node:20-alpine AS builder
+FROM node:lts-alpine AS builder
 
 WORKDIR /app
 
