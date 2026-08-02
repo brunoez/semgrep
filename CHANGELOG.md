@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.19] - 2026-08-02
+
+### 🔐 Segurança & CSP (`nginx.conf`)
+- **Autorização de Hashes para Scripts Cloudflare RUM/Analytics:**
+  - Adicionados os hashes SHA-256 dos scripts injetados pela Cloudflare (`'sha256-9rjqDwqng+84TaBV01no9yCOv0QZxnB5+Cy5n5J09ng='`, `'sha256-r14klObAIK8GtUiPavIov6OmoHnx0Q+H8GXjqrj+ZgQ='` e `'sha256-ZxnJQKzdWvpTYLVGIY3mXvorurcoffPR7ma3dOyFq5k='`) no diretiva `script-src` da Content-Security-Policy em `nginx.conf`, garantindo compatibilidade total sem comprometer a segurança ou introduzir `'unsafe-inline'`.
+
+---
+
 ## [1.0.18] - 2026-08-02
 
 ### 🛠️ Corrigido (Fixed)
