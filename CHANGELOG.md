@@ -4,6 +4,15 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.18] - 2026-08-02
+
+### 🛠️ Corrigido (Fixed)
+- **Blindagem do Service Worker (`sw.js`):**
+  - Corrigida a excepção `TypeError: Failed to execute 'put' on 'Cache': Request scheme 'chrome-extension' is unsupported` ignorando requisições que não utilizem protocolo `http`/`https` (como extensoes de navegador `chrome-extension://` e scripts injetados).
+  - Corrigido o tratamento no fallback de rede em `sw.js` para assegurar que um objeto `Response` válido seja retornado sem lançar `Failed to convert value to 'Response'`.
+
+---
+
 ## [1.0.17] - 2026-08-02
 
 ### 📚 Documentação & AI Agent Discovery (DNS-AID)

@@ -23,7 +23,7 @@ describe('Progressive Web App (PWA) Assets & Config', () => {
     expect(fs.existsSync(swPath)).toBe(true);
     const content = fs.readFileSync(swPath, 'utf-8');
 
-    expect(content).toContain('semgrep-visualizer-v1');
+    expect(content).toContain('semgrep-visualizer-v2');
     expect(content).toContain("self.addEventListener('install'");
     expect(content).toContain("self.addEventListener('activate'");
     expect(content).toContain("self.addEventListener('fetch'");
