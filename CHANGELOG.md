@@ -4,6 +4,18 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.12] - 2026-08-02
+
+### 🔒 Segurança & Hardening (Security & Hardening)
+- **Endurecimento de Cabeçalhos HTTP de Segurança (Nginx Security Headers):**
+  - **Permissions-Policy:** Adicionado o cabeçalho `Permissions-Policy` desabilitando APIs de hardware e navegador não utilizadas (`camera=()`, `microphone=()`, `geolocation=()`, `payment=()`, `usb=()`, etc.).
+  - **Content-Security-Policy (CSP):** Removida a diretiva `'unsafe-inline'` de `script-src` na configuração do Nginx ([`nginx.conf`](frontend/nginx.conf)) para reforçar a mitigação contra ataques de Cross-Site Scripting (XSS).
+  - **Isolamento de Origem (COEP / COOP / CORP):** Adicionados os cabeçalhos de segurança avançados `Cross-Origin-Embedder-Policy: credentialless`, `Cross-Origin-Opener-Policy: same-origin` e `Cross-Origin-Resource-Policy: same-origin`.
+  - **Preservação de Cabeçalhos em Assets Estáticos:** Re-declarados os cabeçalhos de segurança dentro do bloco `location ~* \.(?:js|css...)` no Nginx para evitar que o Cache-Control sobrescreva os cabeçalhos de segurança pai em arquivos estáticos.
+  - **Testes de Integração Nginx:** Adicionada suíte de testes unitários automatizados em [`nginx.config.test.ts`](frontend/tests/nginx.config.test.ts) validando a presença e formato de todos os cabeçalhos de segurança no build.
+
+---
+
 ## [1.0.11] - 2026-07-30
 
 ### 🛠️ Corrigido & 🚀 Melhorado (Fixed & Improved)
