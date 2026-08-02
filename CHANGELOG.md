@@ -4,6 +4,14 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.17] - 2026-08-02
+
+### 📚 Documentação & AI Agent Discovery (DNS-AID)
+- **Guia Completo de Registros DNS-AID Cloudflare (`PROD.md`):**
+  - Adicionado guia detalhado para cadastro de registros DNS para AI Discovery (DNS-AID conforme draft-mozleywilliams-dnsop-dnsaid e RFC 9460) na Cloudflare para o subdomínio `semgrep.brunoizidorio.com.br` cobrindo os entrypoints `_index._agents`, `_a2a._agents` e `_mcp._agents` com registros do tipo **HTTPS**, **SVCB** e **TXT**.
+
+---
+
 ## [1.0.16] - 2026-08-02
 
 ### 🛠️ Corrigido (Fixed)

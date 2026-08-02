@@ -40,10 +40,33 @@ A aplicação inclui suporte nativo aos padrões abertos de AI Agent Discovery (
 - **WebMCP API:** Suporte nativo a `navigator.modelContext.provideContext()` expondo as ferramentas `analyze_semgrep_report` e `get_executive_risk_score`.
 
 ### Registros DNS para AI Discovery (DNS-AID)
-Para habilitar a descoberta de agentes via DNS (DNS-AID), cadastre no seu provedor de DNS (com DNSSEC ativado):
+Como o domínio `brunoizidorio.com.br` utiliza a Cloudflare como provedor autoritativo de DNS com DNSSEC ativado, cadastre os seguintes registros na aba **DNS > Records** do painel da Cloudflare:
+
+| Tipo | Nome | Prioridade | Target / Conteúdo | Parâmetros / Content |
+|---|---|---|---|---|
+| **HTTPS** | `_index._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **SVCB** | `_index._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **TXT** | `_index._agents.semgrep` | - | - | `"v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json"` |
+| **HTTPS** | `_a2a._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **SVCB** | `_a2a._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **TXT** | `_a2a._agents.semgrep` | - | - | `"v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json"` |
+| **HTTPS** | `_mcp._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **SVCB** | `_mcp._agents.semgrep` | `1` | `.` | `alpn="h2,http/1.1"` |
+| **TXT** | `_mcp._agents.semgrep` | - | - | `"v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/mcp/server-card.json"` |
+
+#### Formato BIND / Zone File Standard (RFC 9460 & Draft DNS-AID):
 ```dns
-_index._agents.semgrep.brunoizidorio.com.br. IN HTTPS 1 . alpn="h2,http/1.1" port="443" ipv4hint="<SEU_IP_VPS>"
-_a2a._agents.semgrep.brunoizidorio.com.br.   IN HTTPS 1 . alpn="h2,http/1.1" port="443" ipv4hint="<SEU_IP_VPS>"
+_index._agents.semgrep.brunoizidorio.com.br. IN HTTPS 1 . alpn="h2,http/1.1"
+_index._agents.semgrep.brunoizidorio.com.br. IN SVCB  1 . alpn="h2,http/1.1"
+_index._agents.semgrep.brunoizidorio.com.br. IN TXT   "v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json"
+
+_a2a._agents.semgrep.brunoizidorio.com.br.   IN HTTPS 1 . alpn="h2,http/1.1"
+_a2a._agents.semgrep.brunoizidorio.com.br.   IN SVCB  1 . alpn="h2,http/1.1"
+_a2a._agents.semgrep.brunoizidorio.com.br.   IN TXT   "v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json"
+
+_mcp._agents.semgrep.brunoizidorio.com.br.   IN HTTPS 1 . alpn="h2,http/1.1"
+_mcp._agents.semgrep.brunoizidorio.com.br.   IN SVCB  1 . alpn="h2,http/1.1"
+_mcp._agents.semgrep.brunoizidorio.com.br.   IN TXT   "v=dnsaid1; uri=https://semgrep.brunoizidorio.com.br/.well-known/mcp/server-card.json"
 ```
 
 ---
