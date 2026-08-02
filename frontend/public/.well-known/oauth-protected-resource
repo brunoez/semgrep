@@ -1,0 +1,14 @@
+{
+  "resource": "https://semgrep.brunoizidorio.com.br",
+  "authorization_servers": [
+    "https://semgrep.brunoizidorio.com.br"
+  ],
+  "scopes_supported": [
+    "read:report",
+    "analyze:report"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ],
+  "resource_documentation": "https://semgrep.brunoizidorio.com.br/auth.md"
+}

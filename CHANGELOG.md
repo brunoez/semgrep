@@ -4,6 +4,21 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.0.13] - 2026-08-02
+
+### 🤖 Descoberta Automática de IA (IsItAgentReady / Agent-Ready Standards)
+- **Sitemap & Robots.txt:** Publicado `sitemap.xml` com a URL canônica do projeto e adicionada a referência `Sitemap:` no `robots.txt`.
+- **Markdown Negotiation:** Suporte ao cabeçalho `Accept: text/markdown` via rewrite do Nginx servindo `index.md` para agentes de IA com cabeçalhos `Vary: Accept` e `x-markdown-tokens`.
+- **Link Response Headers (RFC 8288):** Adicionados cabeçalhos HTTP `Link` mapeando `api-catalog`, `agent-skills`, `mcp-server-card` e `service-doc`.
+- **API Catalog (RFC 9727):** Publicado `/.well-known/api-catalog` com o schema `application/linkset+json`.
+- **OAuth & Auth.md (RFC 8414 & RFC 9728):** Disponibilizadas especificações e metadados de autenticação e registro anônimo de agentes em `/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource`, `/.well-known/openid-configuration` e `/auth.md`.
+- **MCP Server Card (SEP-1649):** Publicado `/.well-known/mcp/server-card.json`.
+- **Agent Skills Discovery Index:** Publicado `/.well-known/agent-skills/index.json` (schema v0.2.0).
+- **Integração WebMCP API:** Implementada em `webMcp.ts` com chamada a `navigator.modelContext.provideContext()` registrando as ferramentas `analyze_semgrep_report` e `get_executive_risk_score` nativas do navegador.
+- **Suíte de Testes de Agent Discovery:** Adicionados testes unitários em [`agentDiscovery.test.ts`](frontend/tests/agentDiscovery.test.ts) validando arquivos estáticos, schemas JSON e ferramentas WebMCP.
+
+---
+
 ## [1.0.12] - 2026-08-02
 
 ### 🔒 Segurança & Hardening (Security & Hardening)

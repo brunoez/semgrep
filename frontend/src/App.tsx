@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/common/Header';
 import { LandingPage } from './components/landing/LandingPage';
 import { LandingFooter } from './components/landing/LandingFooter';
@@ -12,10 +12,15 @@ import { VulnerabilityTable } from './components/explorer/VulnerabilityTable';
 import { CodeViewerModal } from './components/explorer/CodeViewerModal';
 import type { NormalizedFinding } from './models/normalized.domain';
 import { useSemgrepStore } from './store/useSemgrepStore';
+import { registerWebMcpTools } from './utils/webMcp';
 
 export const App: React.FC = () => {
   const { report, reset } = useSemgrepStore();
   const [selectedFinding, setSelectedFinding] = useState<NormalizedFinding | null>(null);
+
+  useEffect(() => {
+    registerWebMcpTools();
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between">

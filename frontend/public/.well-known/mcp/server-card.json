@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "serverInfo": {
+    "name": "Semgrep CLI Visualizer",
+    "version": "1.0.13",
+    "description": "100% Client-Side SAST Report Visualizer and Executive Security Dashboard"
+  },
+  "transport": {
+    "type": "webmcp",
+    "endpoint": "https://semgrep.brunoizidorio.com.br/"
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false
+  }
+}

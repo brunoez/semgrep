@@ -1,0 +1,6 @@
+# Semgrep CLI Visualizer - Robots & Agent Discovery Specification
+User-agent: *
+Allow: /
+
+# Agent & Search Engine Sitemap Reference
+Sitemap: https://semgrep.brunoizidorio.com.br/sitemap.xml

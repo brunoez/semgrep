@@ -26,6 +26,28 @@ Antes de iniciar a implantação na sua VPS (Oracle Cloud, DigitalOcean, AWS EC2
 
 ---
 
+## 🤖 Descoberta Automática por Agentes de IA (IsItAgentReady / Agent-Ready Standards)
+
+A aplicação inclui suporte nativo aos padrões abertos de AI Agent Discovery (RFC 8288, RFC 9727, RFC 8414, RFC 9728, SEP-1649, WebMCP, Markdown Negotiation):
+
+- **Sitemap & Robots.txt:** `https://semgrep.brunoizidorio.com.br/sitemap.xml` referenciado em `robots.txt`.
+- **Markdown Negotiation:** Requisições HTTP com `Accept: text/markdown` retornam `https://semgrep.brunoizidorio.com.br/index.md`.
+- **Link Headers (RFC 8288):** Retorna `Link: </.well-known/api-catalog>; rel="api-catalog", </.well-known/agent-skills/index.json>; rel="agent-skills", ...`.
+- **API Catalog (RFC 9727):** `https://semgrep.brunoizidorio.com.br/.well-known/api-catalog` (`application/linkset+json`).
+- **MCP Server Card (SEP-1649):** `https://semgrep.brunoizidorio.com.br/.well-known/mcp/server-card.json`.
+- **Agent Skills Index:** `https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json`.
+- **OAuth & Auth.md:** Metadata em `/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource` e `/auth.md`.
+- **WebMCP API:** Suporte nativo a `navigator.modelContext.provideContext()` expondo as ferramentas `analyze_semgrep_report` e `get_executive_risk_score`.
+
+### Registros DNS para AI Discovery (DNS-AID)
+Para habilitar a descoberta de agentes via DNS (DNS-AID), cadastre no seu provedor de DNS (com DNSSEC ativado):
+```dns
+_index._agents.semgrep.brunoizidorio.com.br. IN HTTPS 1 . alpn="h2,http/1.1" port="443" ipv4hint="<SEU_IP_VPS>"
+_a2a._agents.semgrep.brunoizidorio.com.br.   IN HTTPS 1 . alpn="h2,http/1.1" port="443" ipv4hint="<SEU_IP_VPS>"
+```
+
+---
+
 ## 🔑 Autorização para `git clone` na VPS (GitLab Deploy Keys)
 
 Para permitir que a VPS faça o `git clone` e receba atualizações do repositório no GitLab de forma segura (sem expor credenciais pessoais):
