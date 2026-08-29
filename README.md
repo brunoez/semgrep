@@ -1,3 +1,9 @@
+<div align="right">
+
+[🇺🇸 English](README.md) &nbsp;|&nbsp; [🇧🇷 Português](README.pt-BR.md)
+
+</div>
+
 # 🛡️ Semgrep CLI Visualizer & Executive Dashboard
 
 [![GitHub Release](https://img.shields.io/github/v/release/brunoez/semgrep?style=flat-svg)](https://github.com/brunoez/semgrep/releases)
@@ -9,109 +15,109 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-svg)](LICENSE)
 
 > **Live Demo:** [https://semgrep.brunoizidorio.com.br](https://semgrep.brunoizidorio.com.br)  
-> **Repositório GitHub:** [https://github.com/brunoez/semgrep](https://github.com/brunoez/semgrep)
+> **GitHub Repository:** [https://github.com/brunoez/semgrep](https://github.com/brunoez/semgrep)
 
-O **Semgrep CLI Visualizer** é uma plataforma web estática (SPA) moderna, desenhada para transformar resultados brutos de scans do Semgrep CLI em **dashboards de inteligência executiva (C-Level)** e **interfaces de priorização de remediação para times de engenharia**.
+**Semgrep CLI Visualizer** is a modern static web application (SPA) designed to transform raw Semgrep CLI scan outputs into **executive intelligence dashboards (C-Level)** and **actionable remediation prioritization interfaces for engineering teams**.
 
 ---
 
 ## 🔒 100% Client-Side & Zero-Persistence (Privacy First)
 
-Toda a leitura de arquivos JSON, validação de schema Zod, normalização DefectDojo, cálculo de pontuação e renderização de gráficos ocorrem **exclusivamente no seu navegador (RAM local)**.
+All JSON file parsing, Zod schema validation, DefectDojo normalization, security score computation, and chart rendering happen **exclusively in your browser (local RAM)**.
 
-- ❌ **Sem Banco de Dados ou Backend**
-- ❌ **Sem Envio de Código-Fonte para a Nuvem**
-- ❌ **Sem Rastreamento de Telemetria ou Analytics**
-- ✅ **Compatível com Ambientes Corporativos Sensíveis (PCI-DSS, LGPD, SOC2)**
+- ❌ **No Database or Backend Required**
+- ❌ **No Source Code Sent to the Cloud**
+- ❌ **No Telemetry Tracking or Analytics**
+- ✅ **Fully Compliant with Strict Privacy & Compliance Standards (PCI-DSS, GDPR/LGPD, SOC2)**
 
 ---
 
-## 🐳 Execução Rápida via Docker (GHCR)
+## 🐳 Quick Start with Docker (GHCR)
 
-Execute a aplicação instantaneamente em qualquer máquina sem precisar clonar o repositório ou instalar Node.js:
+Run the application instantly without cloning the repository or installing Node.js:
 
 ```bash
-# Executar a imagem oficial do GitHub Packages
+# Run the official image from GitHub Packages
 docker run -d -p 8080:8080 --name semgrep-visualizer ghcr.io/brunoez/semgrep:latest
 ```
 
-Acesse em seu navegador: `http://localhost:8080`
+Access in your browser: `http://localhost:8080`
 
 ---
 
-## 🚀 Como Executar pelo Código-Fonte
+## 🚀 Running from Source Code
 
-### Pré-requisitos
-- **Node.js:** Versão 20.x ou superior
-- **npm:** Versão 10.x ou superior
+### Prerequisites
+- **Node.js:** Version 20.x or higher
+- **npm:** Version 10.x or higher
 
-### Passo a Passo
+### Step-by-Step
 
 ```bash
-# 1. Clonar o repositório
+# 1. Clone the repository
 git clone https://github.com/brunoez/semgrep.git
 cd semgrep/frontend
 
-# 2. Instalar dependências
+# 2. Install dependencies
 npm install
 
-# 3. Executar servidor de desenvolvimento Vite
+# 3. Start Vite development server
 npm run dev
 ```
 
-Acesse em seu navegador: `http://localhost:5173`
+Access in your browser: `http://localhost:5173`
 
 ---
 
-## 🛠️ Execução via Docker Compose
+## 🛠️ Running with Docker Compose
 
 ```bash
-# Iniciar container via Docker Compose
+# Start container with Docker Compose
 docker compose up -d
 ```
 
 ---
 
-## ✨ Principais Funcionalidades
+## ✨ Key Features
 
-### 1. 📊 Executive Security Rating (0-100 & Notas A+ até F)
-- **Cálculo Logarítmico Ponderado:** Avalia vulnerabilidades Críticas (15 pts), Altas (5 pts), Médias (1.5 pts) e Baixas (0.5 pts) evitando saturação rápida em grandes projetos.
-- **Medidor Circular SVG Dinâmico:** Exibe o preenchimento proporcional e a nota por letras (`A+`, `A`, `B+`, `B`, `C`, `D`, `F`).
+### 1. 📊 Executive Security Rating (0-100 & Grades A+ to F)
+- **Weighted Logarithmic Calculation:** Evaluates Critical (15 pts), High (5 pts), Medium (1.5 pts), and Low (0.5 pts) vulnerabilities to prevent rapid score saturation on large codebases.
+- **Dynamic Circular SVG Gauge:** Displays proportional fill and letter grades (`A+`, `A`, `B+`, `B`, `C`, `D`, `F`).
 
-### 2. 🎯 Gráfico Radar OWASP Top 10 (Recharts)
-- Mapeamento visual das 10 categorias OWASP (A01 Injection, A02 Broken Access Control, A03 Cryptographic Failures, etc.).
+### 2. 🎯 OWASP Top 10 Radar Chart (Recharts)
+- Visual mapping across the 10 OWASP categories (A01 Injection, A02 Broken Access Control, A03 Cryptographic Failures, etc.).
 
-### 3. 🚀 Motor de Priorização & Quick Wins (ROI de Remediação)
-- Classificação automática de vulnerabilidades em tiers de urgência:
-  - **P1 Urgente:** Críticas/Altas com alto risco operacional.
-  - **P2 Alta / P3 Média / P4 Baixa**
-  - **⚡ Quick Wins:** Falhas com alto impacto de segurança e tempo estimado de correção $\le 2\text{h}$ (ex: Vazamento de credenciais em `.env`).
+### 3. 🚀 Prioritization Engine & Quick Wins (Remediation ROI)
+- Automatic vulnerability triage into urgency tiers:
+  - **P1 Urgent:** Critical/High with operational risk.
+  - **P2 High / P3 Medium / P4 Low**
+  - **⚡ Quick Wins:** High-security-impact findings with estimated fix time $\le 2\text{h}$ (e.g., Leaked credentials in `.env`).
 
-### 4. 🗂️ Hotspots de Diretórios & Tech Breakdown
-- Identificação instantânea das pastas/módulos do projeto que concentram 80% do débito de segurança.
-- Filtro por tecnologias afetadas (Python, JavaScript/TypeScript, Secrets, Docker, Express.js).
+### 4. 🗂️ Directory Hotspots & Tech Breakdown
+- Instant identification of directories and modules concentrating 80% of security debt.
+- Filter by affected technologies (Python, JavaScript/TypeScript, Secrets, Docker, Express.js).
 
-### 5. 💻 Leitor de Código Seguro com Proteção XSS (DOMPurify)
-- Modal interativo para inspeção de trechos com proteção rigorosa contra Cross-Site Scripting.
+### 5. 💻 Secure Code Viewer with XSS Protection (DOMPurify)
+- Interactive snippet inspection modal with strict Cross-Site Scripting sanitization.
 
-### 6. 🌐 Suporte Multi-Idioma & Internacionalização (PT-BR / EN-US)
-- Seletor visual de idiomas no topo da página (bandeiras 🇧🇷 PT / 🇺🇸 EN).
-- Troca instantânea de contexto de tradução sem necessidade de recarga da página.
-- Detecção automática do idioma do navegador (`navigator.language`) e sincronização dinâmica do atributo `lang` no elemento `<html>`.
-
----
-
-## 📐 Engenharia Orientada a Especificações (Specs)
-
-O projeto adota uma arquitetura formal de especificações e garantia de qualidade documentada no diretório [`specs/`](specs/):
-
-- **SDD (*Spec-Driven Development*):** [Invariantes de Arquitetura Zero-Persistence & Isolamento](specs/sdd/02-core-architecture-invariants.sdd.md).
-- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo [privacidade e isolamento de memória](specs/bdd/client-privacy-sanitization.feature).
-- **SecDD (*Security-Driven Development*):** [Modelagem de Ameaças STRIDE e Casos de Abuso](specs/secdd/threat-model-and-abuse-cases.md).
-- **TDD (*Test-Driven Development*):** Suíte de testes automatizados no Vitest (48 testes) com 100% de cobertura dos critérios de segurança.
+### 6. 🌐 Multi-Language & Internationalization Support (PT-BR / EN-US)
+- Visual language switcher at the top of the interface (flags 🇧🇷 PT / 🇺🇸 EN).
+- Instant translation context switching without page reloads.
+- Automatic browser language detection (`navigator.language`) and dynamic synchronization of the HTML `lang` attribute.
 
 ---
 
-## 📄 Licença
+## 📐 Specification-Driven Engineering (Specs)
 
-Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+The project adheres to a formal specification architecture and quality assurance framework documented in [`specs/`](specs/):
+
+- **SDD (*Spec-Driven Development*):** [Zero-Persistence Architecture Invariants & Isolation](specs/sdd/02-core-architecture-invariants.sdd.md).
+- **BDD (*Behavior-Driven Development*):** Executable Gherkin scenarios in [`specs/bdd/`](specs/bdd/) covering [memory isolation and client privacy](specs/bdd/client-privacy-sanitization.feature).
+- **SecDD (*Security-Driven Development*):** [STRIDE Threat Model and Abuse Cases](specs/secdd/threat-model-and-abuse-cases.md).
+- **TDD (*Test-Driven Development*):** Automated Vitest test suite with 100% coverage of security requirements.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
