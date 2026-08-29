@@ -1,0 +1,9 @@
+# Semgrep CLI Visualizer & Executive Security Dashboard
+> 100% Client-Side SAST Report Visualizer and Executive Risk Scoring Engine
+
+- Website: https://semgrep.brunoizidorio.com.br/
+- Agent Registration: https://semgrep.brunoizidorio.com.br/auth.md
+- Markdown Summary: https://semgrep.brunoizidorio.com.br/index.md
+- Agent Skills Index: https://semgrep.brunoizidorio.com.br/.well-known/agent-skills/index.json
+- MCP Server Card: https://semgrep.brunoizidorio.com.br/.well-known/mcp/server-card.json
+- API Catalog: https://semgrep.brunoizidorio.com.br/.well-known/api-catalog

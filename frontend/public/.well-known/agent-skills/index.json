@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agentskills.io/schema/v0.2.0/index.json",
+  "skills": [
+    {
+      "name": "semgrep-sast-analysis",
+      "type": "analysis",
+      "description": "Parse Semgrep CLI JSON reports, calculate Executive Risk Score, map OWASP Top 10 vulnerabilities and prioritize Quick Wins.",
+      "url": "https://semgrep.brunoizidorio.com.br/",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

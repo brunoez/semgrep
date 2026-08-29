@@ -1,0 +1,29 @@
+{
+  "name": "Semgrep CLI Visualizer & Executive Security Dashboard",
+  "short_name": "Semgrep Visualizer",
+  "description": "Plataforma de inteligência executiva em cibersegurança e análise visual para relatórios do Semgrep CLI 100% Client-Side",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "categories": ["developer", "security", "utilities"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Novo Scan",
+      "short_name": "Novo Scan",
+      "description": "Carregar e analisar um novo relatório Semgrep CLI",
+      "url": "/?action=new",
+      "icons": [{ "src": "/favicon.svg", "sizes": "512x512" }]
+    }
+  ]
+}

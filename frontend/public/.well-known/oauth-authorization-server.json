@@ -1,0 +1,25 @@
+{
+  "issuer": "https://semgrep.brunoizidorio.com.br",
+  "authorization_endpoint": "https://semgrep.brunoizidorio.com.br/",
+  "token_endpoint": "https://semgrep.brunoizidorio.com.br/",
+  "jwks_uri": "https://semgrep.brunoizidorio.com.br/",
+  "grant_types_supported": [
+    "implicit"
+  ],
+  "response_types_supported": [
+    "token"
+  ],
+  "agent_auth": {
+    "skill": "https://semgrep.brunoizidorio.com.br/auth.md",
+    "register_uri": "https://semgrep.brunoizidorio.com.br/auth.md",
+    "supported_identity_types": [
+      "anonymous",
+      "agent"
+    ],
+    "credential_types": [
+      "none"
+    ],
+    "claim_uri": "https://semgrep.brunoizidorio.com.br/auth.md",
+    "revocation_uri": "https://semgrep.brunoizidorio.com.br/auth.md"
+  }
+}
