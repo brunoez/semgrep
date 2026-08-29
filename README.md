@@ -107,10 +107,10 @@ Para a documentação completa de autorização `git clone` (Deploy Keys), prime
 
 O projeto adota uma arquitetura formal de especificações e garantia de qualidade documentada no diretório [`specs/`](specs/):
 
-- **SDD (*Spec-Driven Development*):** [Especificação de Remediação de Segurança](specs/sdd/01-security-hardening-remediation.sdd.md) e [Invariantes de Arquitetura Zero-Persistence](specs/sdd/02-core-architecture-invariants.sdd.md).
-- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo isolamento de memória, privacidade e hardening.
+- **SDD (*Spec-Driven Development*):** [Remediação de Segurança P1-P5](specs/sdd/01-security-hardening-remediation.sdd.md), [Invariantes de Arquitetura Zero-Persistence](specs/sdd/02-core-architecture-invariants.sdd.md) e [Remediação Pós-Auditoria](specs/sdd/03-audit-remediation-and-hardening.sdd.md).
+- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo isolamento de memória, privacidade e [remediação pós-auditoria](specs/bdd/audit-remediation.feature).
 - **SecDD (*Security-Driven Development*):** [Modelagem de Ameaças STRIDE e Casos de Abuso](specs/secdd/threat-model-and-abuse-cases.md).
-- **TDD (*Test-Driven Development*):** Suíte de testes automatizados no Vitest com 100% de cobertura dos critérios de segurança.
+- **TDD (*Test-Driven Development*):** Suíte de testes automatizados no Vitest (48 testes) com 100% de cobertura dos critérios de segurança.
 - **Relatório de Auditoria em PDF:** Disponível em [`docs/security-audit/relatorio-auditoria-seguranca.pdf`](docs/security-audit/relatorio-auditoria-seguranca.pdf).
 
 ---

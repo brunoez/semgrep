@@ -1,7 +1,7 @@
 # 📐 Guia de Engenharia Orientada a Especificações (Specs)
 
 > **Projeto:** Semgrep CLI Visualizer & Executive Security Dashboard  
-> **Versão da Arquitetura:** 1.1.0  
+> **Versão da Arquitetura:** 1.2.0  
 > **Padrão de Engenharia:** SDD (Spec-Driven Development), BDD (Behavior-Driven Development), SecDD (Security-Driven Development) e TDD (Test-Driven Development).
 
 ---
@@ -27,10 +27,12 @@ specs/
 ├── README.md                                          # Visão geral das metodologias e taxonomia de specs
 ├── sdd/                                               # Spec-Driven Development (Especificações Técnicas Formais)
 │   ├── 01-security-hardening-remediation.sdd.md       # SDD de Remediação das 5 Falhas de Segurança (P1 a P5)
-│   └── 02-core-architecture-invariants.sdd.md         # SDD dos Invariantes de Arquitetura Zero-Persistence
+│   ├── 02-core-architecture-invariants.sdd.md         # SDD dos Invariantes de Arquitetura Zero-Persistence
+│   └── 03-audit-remediation-and-hardening.sdd.md       # SDD de Remediação Pós-Auditoria de Segurança (Deps, CSP, Dropzone)
 ├── bdd/                                               # Behavior-Driven Development (Features Gherkin Executáveis)
 │   ├── security-remediation.feature                   # Cenários Gherkin para P1, P2, P3, P4 e P5
-│   └── client-privacy-sanitization.feature            # Cenários Gherkin de Zero-Persistence e Prevenção de XSS
+│   ├── client-privacy-sanitization.feature            # Cenários Gherkin de Zero-Persistence e Prevenção de XSS
+│   └── audit-remediation.feature                      # Cenários Gherkin para Remediação Pós-Auditoria (SDD-003)
 └── secdd/                                             # Security-Driven Development & Threat Modeling
     └── threat-model-and-abuse-cases.md                # Matriz de Ameaças STRIDE e Contramedidas de Defesa
 ```

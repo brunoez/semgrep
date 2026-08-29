@@ -37,10 +37,17 @@ export const FileDropzone: React.FC = () => {
   };
 
   const readFile = (file: File) => {
-    if (!file.name.endsWith('.json')) {
+    if (!file.name.toLowerCase().endsWith('.json')) {
       alert(t('jsonErrorAlert'));
       return;
     }
+
+    const validMimes = ['application/json', 'text/json', 'text/plain', ''];
+    if (file.type && !validMimes.includes(file.type.toLowerCase())) {
+      alert(t('jsonErrorAlert'));
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const content = event.target?.result as string;

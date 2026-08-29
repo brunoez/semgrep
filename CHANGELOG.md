@@ -4,6 +4,26 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-08-29
+
+### 🔐 Remediação Pós-Auditoria de Segurança & Hardening Contínuo (SDD-003)
+- **Supply Chain Security & Atualização do DOMPurify (P1):**
+  - Atualizada a dependência de produção `dompurify` para `^3.2.4` em `frontend/package.json` e sincronizado o `package-lock.json`, eliminando advisory de segurança (GHSA-55q2-fjhq-7xh7) e assegurando 0 vulnerabilidades no `npm audit --omit=dev`.
+- **Hardening de Diretivas CSP no Nginx (P2):**
+  - Inclusão explícita das diretivas `object-src 'none';` e `base-uri 'self';` em todas as declarações `Content-Security-Policy` no `frontend/nginx.conf`, bloqueando injeções por plugins legados e manipulações da URL base do documento.
+- **Validação Defensiva de MIME Type no FileDropzone (P3):**
+  - Implementada verificação defensiva de `file.type` em `frontend/src/components/common/FileDropzone.tsx`, rejeitando antecipadamente arquivos binários e não-JSON antes do acionamento do `FileReader`.
+- **Relatório Oficial de Auditoria de Segurança em PDF:**
+  - Publicado o relatório técnico completo em `docs/security-audit/relatorio-auditoria-seguranca.pdf` com gráficos de rosca e barras, classificação Grade A+ e mapeamento metódico das 5 categorias de vulnerabilidade.
+
+### 📐 Especificações & Qualidade (TDD)
+- **SDD-003 & BDD Feature:**
+  - Adicionado `specs/sdd/03-audit-remediation-and-hardening.sdd.md` e `specs/bdd/audit-remediation.feature`.
+- **Cobertura de Testes Automatizados:**
+  - Criado `frontend/tests/FileDropzone.test.tsx` e expandido `frontend/tests/nginx.config.test.ts`, elevando a suíte para 13 arquivos e 48 testes unitários/integração no Vitest passando com 100% de sucesso.
+
+---
+
 ## [1.1.0] - 2026-08-29
 
 ### 🔐 Segurança & DevSecOps Hardening (Auditoria Completa & Remediações P1-P5)

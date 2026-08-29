@@ -48,6 +48,16 @@ describe('Nginx Security Headers Configuration', () => {
     expect(nginxConfig).toMatch(/listen\s+8080;/);
   });
 
+  it('should include object-src \'none\' and base-uri \'self\' in Content-Security-Policy', () => {
+    const cspMatches = nginxConfig.match(/Content-Security-Policy "[^"]+"/g);
+    expect(cspMatches).not.toBeNull();
+    expect(cspMatches!.length).toBeGreaterThan(0);
+    for (const csp of cspMatches!) {
+      expect(csp).toContain("object-src 'none'");
+      expect(csp).toContain("base-uri 'self'");
+    }
+  });
+
   it('should use unprivileged base image in Dockerfile', () => {
     const dockerfilePath = path.resolve(__dirname, '../Dockerfile');
     const dockerfileContent = fs.readFileSync(dockerfilePath, 'utf-8');
