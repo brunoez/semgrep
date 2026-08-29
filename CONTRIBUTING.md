@@ -17,9 +17,9 @@ Antes de enviar qualquer contribuição, observe os pilares inegociáveis do pro
 
 ## 🌿 Fluxo de Branching & Git
 
-Utilizamos o padrão de **GitFlow / Feature Branching**:
+Utilizamos o padrão de **Feature Branching**:
 
-- `master`: Branch principal e estável de produção.
+- `main` / `master`: Branch principal e estável de produção.
 - `feat/nome-da-feature`: Para desenvolvimento de novas funcionalidades.
 - `fix/descricao-da-correcao`: Para correção de bugs.
 - `docs/nome-da-doc`: Para atualizações de documentação.
@@ -31,8 +31,8 @@ Utilizamos o padrão de **GitFlow / Feature Branching**:
 Os commits devem seguir a especificação [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/):
 
 - `feat: adiciona gráfico de distribuição de regras`
-- `fix: resolve travamento de opacidade no GSAP`
-- `docs: adiciona guia de deploy no PROD.md`
+- `fix: resolve renderização no modal de código`
+- `docs: atualiza documentação no README`
 - `test: adiciona testes unitários para a priorização P1`
 - `refactor: otimiza leitura do adaptador DefectDojo`
 
@@ -53,10 +53,10 @@ npm run build
 
 ---
 
-## 🚀 Processo de Pull Request / Merge Request
+## 🚀 Processo de Pull Request
 
-1. Faça um Fork do repositório no GitLab.
+1. Faça um Fork do repositório no GitHub.
 2. Crie sua branch (`git checkout -b feat/minha-funcionalidade`).
 3. Implemente as alterações e garanta que `npm test` e `npm run build` passem sem erros.
-4. Envie o commit e abra um **Merge Request** para a branch `master`.
-5. Descreva claramente no Merge Request o que foi alterado e como testar.
+4. Envie o commit e abra um **Pull Request** para a branch principal.
+5. Descreva claramente no Pull Request o que foi alterado e como testar.

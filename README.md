@@ -1,6 +1,6 @@
 # 🛡️ Semgrep CLI Visualizer & Executive Dashboard
 
-[![GitLab CI/CD](https://img.shields.io/gitlab/pipeline-status/brunoizidorio/semgrep?branch=master&style=flat-svg)](https://gitlab.com/brunoizidorio/semgrep/-/pipelines)
+[![GitHub Release](https://img.shields.io/github/v/release/brunoez/semgrep?style=flat-svg)](https://github.com/brunoez/semgrep/releases)
 [![Security Grade](https://img.shields.io/badge/Security_Rating-Grade_A%2B-100b981?style=flat-svg)](https://semgrep.brunoizidorio.com.br)
 [![Framework](https://img.shields.io/badge/Vite-5.4-646CFF?style=flat-svg&logo=vite)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=flat-svg&logo=react)](https://react.dev/)
@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-svg)](LICENSE)
 
 > **Live Demo:** [https://semgrep.brunoizidorio.com.br](https://semgrep.brunoizidorio.com.br)  
-> **Repositório GitLab:** [https://gitlab.com/brunoizidorio/semgrep](https://gitlab.com/brunoizidorio/semgrep)
+> **Repositório GitHub:** [https://github.com/brunoez/semgrep](https://github.com/brunoez/semgrep)
 
 O **Semgrep CLI Visualizer** é uma plataforma web estática (SPA) moderna, desenhada para transformar resultados brutos de scans do Semgrep CLI em **dashboards de inteligência executiva (C-Level)** e **interfaces de priorização de remediação para times de engenharia**.
 
@@ -45,7 +45,7 @@ Toda a leitura de arquivos JSON, validação de schema Zod, normalização Defec
 - Filtro por tecnologias afetadas (Python, JavaScript/TypeScript, Secrets, Docker, Express.js).
 
 ### 5. 💻 Leitor de Código Seguro com Proteção XSS (DOMPurify)
-- Modal interativo para inspeção de trechos vulneráveis com proteção rigorosa contra Cross-Site Scripting.
+- Modal interativo para inspeção de trechos com proteção rigorosa contra Cross-Site Scripting.
 
 ### 6. 🌐 Suporte Multi-Idioma & Internacionalização (PT-BR / EN-US)
 - Seletor visual de idiomas no topo da página (bandeiras 🇧🇷 PT / 🇺🇸 EN).
@@ -64,7 +64,7 @@ Toda a leitura de arquivos JSON, validação de schema Zod, normalização Defec
 
 ```bash
 # 1. Clonar o repositório
-git clone https://gitlab.com/brunoizidorio/semgrep.git
+git clone https://github.com/brunoez/semgrep.git
 cd semgrep/frontend
 
 # 2. Instalar dependências
@@ -78,17 +78,16 @@ Acesse em seu navegador: `http://localhost:5173`
 
 ---
 
-## 🐳 Execução em Produção via Docker & CI/CD
+## 🐳 Execução via Docker Compose
 
-A aplicação conta com build multi-stage Docker, servidor estático Nginx Alpine e pipeline de CI/CD automatizado no GitLab.
+A aplicação conta com build multi-stage Docker e servidor estático Nginx unprivileged de alta performance.
 
 ```bash
-# Build e execução manual via Docker Compose
+# Build e execução via Docker Compose
 docker compose up -d --build
 ```
 
-Acesse em: `http://localhost:8080`  
-Para a documentação completa de autorização `git clone` (Deploy Keys), primeiro deploy manual e esteira automatizada no GitLab CI/CD, consulte [docs/PROD.md](docs/PROD.md).
+Acesse em: `http://localhost:8080`
 
 ---
 
@@ -103,15 +102,14 @@ Para a documentação completa de autorização `git clone` (Deploy Keys), prime
 
 ---
 
-## 📐 Engenharia Orientada a Especificações & DevSecOps
+## 📐 Engenharia Orientada a Especificações (Specs)
 
 O projeto adota uma arquitetura formal de especificações e garantia de qualidade documentada no diretório [`specs/`](specs/):
 
-- **SDD (*Spec-Driven Development*):** [Remediação de Segurança P1-P5](specs/sdd/01-security-hardening-remediation.sdd.md), [Invariantes de Arquitetura Zero-Persistence](specs/sdd/02-core-architecture-invariants.sdd.md) e [Remediação Pós-Auditoria](specs/sdd/03-audit-remediation-and-hardening.sdd.md).
-- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo isolamento de memória, privacidade e [remediação pós-auditoria](specs/bdd/audit-remediation.feature).
+- **SDD (*Spec-Driven Development*):** [Invariantes de Arquitetura Zero-Persistence & Isolamento](specs/sdd/02-core-architecture-invariants.sdd.md).
+- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo [privacidade e isolamento de memória](specs/bdd/client-privacy-sanitization.feature).
 - **SecDD (*Security-Driven Development*):** [Modelagem de Ameaças STRIDE e Casos de Abuso](specs/secdd/threat-model-and-abuse-cases.md).
 - **TDD (*Test-Driven Development*):** Suíte de testes automatizados no Vitest (48 testes) com 100% de cobertura dos critérios de segurança.
-- **Relatório de Auditoria em PDF:** Disponível em [`docs/security-audit/relatorio-auditoria-seguranca.pdf`](docs/security-audit/relatorio-auditoria-seguranca.pdf).
 
 ---
 
