@@ -4,6 +4,35 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-08-29
+
+### 🔐 Segurança & DevSecOps Hardening (Auditoria Completa & Remediações P1-P5)
+- **Bloqueio Impeditivo no Pipeline de CI/CD para Detecção de Segredos (P1):**
+  - Removida a diretiva `allow_failure: true` do job `gitleaks_secret_scan` em `.gitlab/ci/security.gitlab-ci.yml`. O pipeline agora interrompe imediatamente os estágios de build e deploy caso sejam detectadas credenciais expostas não listadas no `.gitleaks.toml`.
+- **Hardening de Contêiner Nginx Unprivileged (P2):**
+  - Migrada a imagem base de produção no `frontend/Dockerfile` para `nginxinc/nginx-unprivileged:alpine-slim`.
+  - Reconfigurado o Nginx (`frontend/nginx.conf`) para escuta na porta não-privilegiada `8080` e execução sob usuário `101:101` (`USER 101`), em conformidade com o CIS Docker Benchmark e diretrizes OWASP.
+  - Atualizado `docker-compose.yml` para mapeamento `8080:8080` e healthcheck na porta `8080`.
+- **Defesa contra DoS e Validação de Limite no WebMCP (P3):**
+  - Implementada validação de teto de payload (50MB) e tratamento de erro defensivo estruturado no método `execute` da ferramenta WebMCP `analyze_semgrep_report` em `frontend/src/utils/webMcp.ts`.
+- **Isolamento Determinístico no Deploy do GitLab CI (P4):**
+  - Atualizado `.gitlab/ci/deploy.gitlab-ci.yml` para remover buscas genéricas por porta no host, adotando parada nominal idempotente (`docker rm -f semgrep-app || true`) e mapeamento `-p 8080:8080`.
+- **Sanitização Consistente & Schemas Zod Estritos (P5):**
+  - Envolvido o campo OWASP com `sanitizeText()` em `frontend/src/components/explorer/VulnerabilityTable.tsx` para reforço de Defesa em Profundidade contra XSS.
+  - Substituído `.passthrough()` por `.strip()` nos schemas Zod em `frontend/src/models/semgrep.schema.ts`, descartando propriedades desconhecidas e prevenindo acúmulo de memória.
+
+### 📐 Engenharia Orientada a Especificações (`specs/`)
+- **Framework de Especificações (SDD, BDD, SecDD, TDD):**
+  - Criado o diretório `specs/` com documentação formal sem sobrecarga (*no overkill*):
+    - `specs/sdd/01-security-hardening-remediation.sdd.md`: Especificação técnica de engenharia para as 5 correções de segurança.
+    - `specs/sdd/02-core-architecture-invariants.sdd.md`: Invariantes de arquitetura Zero-Persistence, RAM isolation e CSP.
+    - `specs/bdd/security-remediation.feature`: Cenários Gherkin executáveis para validação comportamental de P1 a P5.
+    - `specs/bdd/client-privacy-sanitization.feature`: Cenários Gherkin para privacidade e mitigação de XSS.
+    - `specs/secdd/threat-model-and-abuse-cases.md`: Modelagem de ameaças STRIDE e casos de abuso (*Abuse Cases*).
+  - Expandida a suíte de testes Vitest para 12 arquivos e 44 testes automatizados cobrindo todos os cenários TDD.
+
+---
+
 ## [1.0.21] - 2026-08-02
 
 ### ⚙️ CI/CD & Docker Update

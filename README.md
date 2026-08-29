@@ -103,6 +103,18 @@ Para a documentação completa de autorização `git clone` (Deploy Keys), prime
 
 ---
 
+## 📐 Engenharia Orientada a Especificações & DevSecOps
+
+O projeto adota uma arquitetura formal de especificações e garantia de qualidade documentada no diretório [`specs/`](specs/):
+
+- **SDD (*Spec-Driven Development*):** [Especificação de Remediação de Segurança](specs/sdd/01-security-hardening-remediation.sdd.md) e [Invariantes de Arquitetura Zero-Persistence](specs/sdd/02-core-architecture-invariants.sdd.md).
+- **BDD (*Behavior-Driven Development*):** Cenários Gherkin executáveis em [`specs/bdd/`](specs/bdd/) cobrindo isolamento de memória, privacidade e hardening.
+- **SecDD (*Security-Driven Development*):** [Modelagem de Ameaças STRIDE e Casos de Abuso](specs/secdd/threat-model-and-abuse-cases.md).
+- **TDD (*Test-Driven Development*):** Suíte de testes automatizados no Vitest com 100% de cobertura dos critérios de segurança.
+- **Relatório de Auditoria em PDF:** Disponível em [`docs/security-audit/relatorio-auditoria-seguranca.pdf`](docs/security-audit/relatorio-auditoria-seguranca.pdf).
+
+---
+
 ## 📄 Licença
 
 Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.

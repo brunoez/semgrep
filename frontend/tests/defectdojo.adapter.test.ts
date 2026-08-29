@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parseAndNormalizeSemgrepReport } from '../src/services/defectdojo.adapter';
+import { SemgrepFindingSchema } from '../src/models/semgrep.schema';
 import fs from 'fs';
 import path from 'path';
 
@@ -77,4 +78,29 @@ describe('DefectDojo Semgrep Adapter', () => {
   it('should reject non-JSON or invalid schema input safely', () => {
     expect(() => parseAndNormalizeSemgrepReport('invalid json')).toThrow('Formato de JSON inválido');
   });
+
+  it('SemgrepFindingSchema should strip unknown arbitrary properties from metadata and extra', () => {
+    const rawFindingWithJunk = {
+      check_id: 'test.rule.id',
+      path: 'src/index.ts',
+      start: { line: 1, col: 1 },
+      end: { line: 1, col: 10 },
+      unknown_root_property: 'should_be_stripped',
+      extra: {
+        message: 'Test message',
+        severity: 'INFO',
+        unknown_extra_property: 'should_be_stripped_too',
+        metadata: {
+          category: 'security',
+          unknown_metadata_property: 'should_be_stripped_as_well'
+        }
+      }
+    };
+
+    const parsed = SemgrepFindingSchema.parse(rawFindingWithJunk);
+    expect((parsed as any).unknown_root_property).toBeUndefined();
+    expect((parsed.extra as any).unknown_extra_property).toBeUndefined();
+    expect(((parsed.extra.metadata || {}) as any).unknown_metadata_property).toBeUndefined();
+  });
 });
+

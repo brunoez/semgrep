@@ -43,4 +43,16 @@ describe('Nginx Security Headers Configuration', () => {
       expect(staticConfig).toContain('Cross-Origin-Resource-Policy');
     }
   });
+
+  it('should listen on unprivileged port 8080', () => {
+    expect(nginxConfig).toMatch(/listen\s+8080;/);
+  });
+
+  it('should use unprivileged base image in Dockerfile', () => {
+    const dockerfilePath = path.resolve(__dirname, '../Dockerfile');
+    const dockerfileContent = fs.readFileSync(dockerfilePath, 'utf-8');
+    expect(dockerfileContent).toContain('FROM nginxinc/nginx-unprivileged:alpine-slim');
+    expect(dockerfileContent).toContain('EXPOSE 8080');
+    expect(dockerfileContent).toContain('USER 101');
+  });
 });

@@ -82,4 +82,47 @@ describe('Agent Discovery & Agent-Ready Standard Files', () => {
     expect(capturedTools[0].name).toBe('analyze_semgrep_report');
     expect(capturedTools[1].name).toBe('get_executive_risk_score');
   });
+
+  it('WebMCP: analyze_semgrep_report should reject payloads exceeding 50MB safely', async () => {
+    let capturedTools: any = null;
+    (global as any).navigator = {
+      modelContext: {
+        provideContext: (ctx: any) => {
+          capturedTools = ctx.tools;
+        }
+      }
+    };
+
+    registerWebMcpTools();
+    const analyzeTool = capturedTools.find((t: any) => t.name === 'analyze_semgrep_report');
+    expect(analyzeTool).toBeDefined();
+
+    // Payload de 51MB
+    const oversizedPayload = 'a'.repeat(51 * 1024 * 1024);
+    const result = await analyzeTool.execute({ reportContent: oversizedPayload });
+
+    expect(result).toEqual({
+      success: false,
+      error: 'O payload do relatório excede o limite de segurança de 50MB.'
+    });
+  });
+
+  it('WebMCP: analyze_semgrep_report should catch and return structured error for invalid JSON', async () => {
+    let capturedTools: any = null;
+    (global as any).navigator = {
+      modelContext: {
+        provideContext: (ctx: any) => {
+          capturedTools = ctx.tools;
+        }
+      }
+    };
+
+    registerWebMcpTools();
+    const analyzeTool = capturedTools.find((t: any) => t.name === 'analyze_semgrep_report');
+    const result = await analyzeTool.execute({ reportContent: 'not valid json' });
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBe('Formato de JSON inválido');
+  });
 });
+

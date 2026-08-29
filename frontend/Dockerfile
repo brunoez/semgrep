@@ -12,8 +12,10 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve static bundle via Nginx (Unprivileged, Hardened)
-FROM nginx:alpine-slim
+# Stage 2: Serve static bundle via Unprivileged Nginx (Hardened, Non-Root)
+FROM nginxinc/nginx-unprivileged:alpine-slim
+
+USER root
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -21,6 +23,12 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Copy production static build artifacts from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+# Ensure correct permissions for unprivileged user (UID 101)
+RUN chown -R 101:101 /usr/share/nginx/html /etc/nginx/conf.d/default.conf
+
+USER 101
+
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
+

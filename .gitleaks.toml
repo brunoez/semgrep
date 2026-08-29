@@ -7,4 +7,5 @@ paths = [
   '''docs/resultado_semgrep.json''',
   '''docs/resultado_semgrep_juiceshop.json''',
   '''docs/gitleaks-report.json''',
+  '''resultado_semgrep.json''',
 ]

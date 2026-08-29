@@ -19,8 +19,8 @@ export const SemgrepFindingSchema = z.object({
       severity: z.string().optional(),
       technology: z.union([z.string(), z.array(z.string())]).optional(),
       vulnerability_class: z.union([z.string(), z.array(z.string())]).optional(),
-    }).passthrough().optional(),
-  }).passthrough(),
+    }).strip().optional(),
+  }).strip(),
 });
 
 export const SemgrepReportSchema = z.object({

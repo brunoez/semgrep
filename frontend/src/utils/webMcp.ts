@@ -40,24 +40,37 @@ export function registerWebMcpTools() {
             required: ['reportContent']
           },
           execute: async ({ reportContent }) => {
-            const content = String(reportContent);
-            const report = parseAndNormalizeSemgrepReport(content);
-            const risk = calculateExecutiveRiskScore(report.summary);
-            useSemgrepStore.setState({ report, isLoading: false, error: null });
-            return {
-              success: true,
-              totalFindings: report.summary.total,
-              executiveRiskScore: risk.score,
-              riskGrade: risk.grade,
-              riskLevel: risk.level,
-              severityDistribution: {
-                critical: report.summary.critical,
-                high: report.summary.high,
-                medium: report.summary.medium,
-                low: report.summary.low,
-                info: report.summary.info
+            try {
+              const content = String(reportContent || '');
+              if (content.length > 50 * 1024 * 1024) {
+                return {
+                  success: false,
+                  error: 'O payload do relatório excede o limite de segurança de 50MB.'
+                };
               }
-            };
+              const report = parseAndNormalizeSemgrepReport(content);
+              const risk = calculateExecutiveRiskScore(report.summary);
+              useSemgrepStore.setState({ report, isLoading: false, error: null });
+              return {
+                success: true,
+                totalFindings: report.summary.total,
+                executiveRiskScore: risk.score,
+                riskGrade: risk.grade,
+                riskLevel: risk.level,
+                severityDistribution: {
+                  critical: report.summary.critical,
+                  high: report.summary.high,
+                  medium: report.summary.medium,
+                  low: report.summary.low,
+                  info: report.summary.info
+                }
+              };
+            } catch (err: any) {
+              return {
+                success: false,
+                error: err.message || 'Erro ao processar relatório Semgrep via WebMCP'
+              };
+            }
           }
         },
         {
