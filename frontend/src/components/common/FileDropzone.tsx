@@ -48,6 +48,11 @@ export const FileDropzone: React.FC = () => {
       return;
     }
 
+    if (file.size > 50 * 1024 * 1024) {
+      alert(t('jsonSizeErrorAlert'));
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const content = event.target?.result as string;

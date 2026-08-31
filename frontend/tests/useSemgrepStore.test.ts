@@ -28,4 +28,23 @@ describe('useSemgrepStore (In-Memory)', () => {
     expect(useSemgrepStore.getState().report?.findings).toHaveLength(1);
     expect(useSemgrepStore.getState().error).toBeNull();
   });
+
+  it('should handle fetch failure or timeout gracefully in loadSample', async () => {
+    // Mock global fetch to simulate network timeout/failure
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = async () => {
+      const err = new Error('The operation was aborted due to timeout');
+      err.name = 'TimeoutError';
+      throw err;
+    };
+
+    try {
+      await useSemgrepStore.getState().loadSample();
+      expect(useSemgrepStore.getState().isLoading).toBe(false);
+      expect(useSemgrepStore.getState().error).toContain('Tempo limite esgotado');
+      expect(useSemgrepStore.getState().report).toBeNull();
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
+  });
 });

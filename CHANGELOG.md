@@ -4,6 +4,39 @@ Todas as alterações notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.2.1] - 2026-08-31
+
+### 🔐 Segurança, Resiliência de APIs & Hardening (SDD-003 / BDD / SecDD)
+- **Eliminação de Fallback SPA HTML em Endpoints de Agentes (.well-known) (Achado #1 / P1):**
+  - Substituída a diretiva de fallback para `index.html` em rotas `/.well-known/` no Nginx por `try_files $uri $uri.json =404;`, prevenindo que agentes de IA e clientes de API recebam HTML em vez de respostas estruturadas JSON.
+- **Proteção Síncrona contra Client-Side Out-of-Memory (OOM) no Dropzone (Achado #2 / P1):**
+  - Inserida validação defensiva imediata `file.size <= 50MB` em `FileDropzone.tsx` antes da alocação de memória do `FileReader`, prevenindo travamento do navegador por arquivos gigantes.
+- **Limites de Buffer e Defesa contra DoS no Nginx (Achado #3 / P2):**
+  - Configurado `client_max_body_size 50M;` no Nginx para mitigar sobrecarga de buffer e saturação de I/O.
+- **Timeouts Defensivos em Chamadas Assíncronas (Achado #4 / P2):**
+  - Adicionado `AbortSignal.timeout(8000)` e tratamento de erro de timeout no método `loadSample()` da store Zustand (`useSemgrepStore.ts`).
+- **Desacoplamento e Consentimento de Estado no WebMCP (Achado #5 / P3):**
+  - Refatorada a ferramenta `analyze_semgrep_report` para retornar métricas executivas diretamente ao agente de IA e emitir o evento customizado `webmcp:report_analyzed`, evitando sobrescrita não autorizada do dashboard do operador.
+- **Endurecimento de Cabeçalhos HTTP & HSTS (Achado #6 / P2):**
+  - Incluído `Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"`, ativada a diretiva `server_tokens off;` e corrigida a sintaxe de escuta para `listen 8080 default_server;`. Limpeza de domínios externos do CSP garantindo conformidade com *Zero-Telemetry*.
+- **Normalização de Caminhos de Arquivo Windows (Achado #7 / P3):**
+  - Normalizadas contrabarras (`\`) para barras POSIX (`/`) no adaptador DefectDojo (`defectdojo.adapter.ts`), corrigindo a agregação de hotspots em ambientes Windows.
+- **Conformidade de Status HTTP no Service Worker (Achado #8 / P3):**
+  - Substituído o código não-padronizado `488` por `503 Service Unavailable` em respostas de fallback de rede no `sw.js`.
+- **Isolamento e Hardening de Contêiner Docker (Achado #9 / P2):**
+  - Habilitados `read_only: true`, `security_opt: [no-new-privileges:true]`, `cap_drop: [ALL]`, montagens em memória `tmpfs` e limites de cgroups (`cpus: 0.50`, `memory: 256M`) no `docker-compose.yml`.
+- **Preservação de Integridade de Snippets de Código (Achado #10 / P3):**
+  - Substituída a sanitização destrutiva de snippets de código por escape nativo e seguro do React JSX no `CodeViewerModal.tsx`.
+
+### 📐 Especificações & Qualidade (TDD)
+- **Engenharia Orientada a Especificações:**
+  - Criados `specs/sdd/03-api-security-and-resilience-remediation.sdd.md` e `specs/bdd/api-security-and-resilience-remediation.feature`.
+  - Atualizado `specs/secdd/threat-model-and-abuse-cases.md` com 5 diagramas de casos de abuso (*Abuse Cases*) e matriz STRIDE expandida.
+- **Suíte de Testes Vitest (56 Testes Passando):**
+  - Expandidos os testes unitários e de integração em `FileDropzone.test.tsx`, `useSemgrepStore.test.ts`, `defectdojo.adapter.test.ts`, `nginx.config.test.ts` e `pwa.test.ts`, totalizando 56 testes automatizados aprovados (100% de cobertura dos cenários de remediação).
+
+---
+
 ## [1.2.0] - 2026-08-29
 
 ### 🔐 Segurança & Hardening Contínuo (SDD-003)

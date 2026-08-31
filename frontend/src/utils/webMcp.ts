@@ -50,7 +50,19 @@ export function registerWebMcpTools() {
               }
               const report = parseAndNormalizeSemgrepReport(content);
               const risk = calculateExecutiveRiskScore(report.summary);
-              useSemgrepStore.setState({ report, isLoading: false, error: null });
+
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(
+                  new CustomEvent('webmcp:report_analyzed', {
+                    detail: { totalFindings: report.summary.total, executiveRiskScore: risk.score }
+                  })
+                );
+                const currentReport = useSemgrepStore.getState().report;
+                if (!currentReport) {
+                  useSemgrepStore.setState({ report, isLoading: false, error: null });
+                }
+              }
+
               return {
                 success: true,
                 totalFindings: report.summary.total,

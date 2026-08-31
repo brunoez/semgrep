@@ -27,6 +27,8 @@ describe('Progressive Web App (PWA) Assets & Config', () => {
     expect(content).toContain("self.addEventListener('install'");
     expect(content).toContain("self.addEventListener('activate'");
     expect(content).toContain("self.addEventListener('fetch'");
+    expect(content).toContain("status: 503");
+    expect(content).not.toContain("status: 488");
   });
 
   it('should include PWA meta tags in index.html', () => {

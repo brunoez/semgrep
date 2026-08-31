@@ -27,6 +27,7 @@ export const translations = {
     pasteSubmitBtn: 'Analisar Conteúdo Colado',
     pasteLoading: 'Processando JSON...',
     jsonErrorAlert: 'Por favor, envie um arquivo com extensão .json',
+    jsonSizeErrorAlert: 'O arquivo excede o limite de segurança de 50MB.',
 
     // How It Works
     howItWorksBadge: 'FLUXO DE TRABALHO SIMPLES & SEGURO',
@@ -199,6 +200,7 @@ export const translations = {
     pasteSubmitBtn: 'Analyze Pasted Content',
     pasteLoading: 'Processing JSON...',
     jsonErrorAlert: 'Please upload a file with a .json extension',
+    jsonSizeErrorAlert: 'The file exceeds the 50MB safety limit.',
 
     // How It Works
     howItWorksBadge: 'SIMPLE & SECURE WORKFLOW',

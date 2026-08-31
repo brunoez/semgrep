@@ -179,7 +179,7 @@ export const CodeViewerModal: React.FC<Props> = ({ finding, onClose }) => {
                 <span>{t('codeViewerTitle')}</span>
               </div>
               <pre className="p-4 bg-slate-950 rounded-xl border border-slate-800 font-mono text-emerald-400 overflow-x-auto text-xs leading-relaxed max-h-60 overflow-y-auto">
-                <code>{sanitizeText(activeFinding.codeSnippet)}</code>
+                <code>{activeFinding.codeSnippet}</code>
               </pre>
             </div>
           )}

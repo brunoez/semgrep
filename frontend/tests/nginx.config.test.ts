@@ -45,7 +45,7 @@ describe('Nginx Security Headers Configuration', () => {
   });
 
   it('should listen on unprivileged port 8080', () => {
-    expect(nginxConfig).toMatch(/listen\s+8080;/);
+    expect(nginxConfig).toMatch(/listen\s+8080\b/);
   });
 
   it('should include object-src \'none\' and base-uri \'self\' in Content-Security-Policy', () => {
@@ -64,5 +64,32 @@ describe('Nginx Security Headers Configuration', () => {
     expect(dockerfileContent).toContain('FROM nginxinc/nginx-unprivileged:alpine-slim');
     expect(dockerfileContent).toContain('EXPOSE 8080');
     expect(dockerfileContent).toContain('USER 101');
+  });
+
+  it('should include Strict-Transport-Security (HSTS) header', () => {
+    expect(nginxConfig).toContain('Strict-Transport-Security');
+    expect(nginxConfig).toContain('max-age=31536000');
+    expect(nginxConfig).toContain('includeSubDomains');
+  });
+
+  it('should include server_tokens off directive', () => {
+    expect(nginxConfig).toMatch(/server_tokens\s+off;/);
+  });
+
+  it('should configure listen 8080 default_server correctly', () => {
+    expect(nginxConfig).toMatch(/listen\s+8080\s+default_server;/);
+  });
+
+  it('should configure client_max_body_size to 50M', () => {
+    expect(nginxConfig).toMatch(/client_max_body_size\s+50M;/);
+  });
+
+  it('should not fallback to /index.html in .well-known locations', () => {
+    const wellKnownBlockMatch = nginxConfig.match(/location ~\* \^\\\/\\\.well-known\/[^\}]+\}/g);
+    if (wellKnownBlockMatch) {
+      for (const block of wellKnownBlockMatch) {
+        expect(block).not.toContain('/index.html');
+      }
+    }
   });
 });

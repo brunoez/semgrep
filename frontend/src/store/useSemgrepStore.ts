@@ -32,13 +32,19 @@ export const useSemgrepStore = create<SemgrepStoreState>((set) => ({
   loadSample: async () => {
     set({ isLoading: true, error: null });
     try {
-      const res = await fetch('/samples/semgrep-sample-report.json');
+      const res = await fetch('/samples/semgrep-sample-report.json', {
+        signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined,
+      });
       if (!res.ok) throw new Error('Não foi possível carregar o relatório de exemplo.');
       const text = await res.text();
       const normalized = parseAndNormalizeSemgrepReport(text);
       set({ report: normalized, isLoading: false });
     } catch (err: any) {
-      set({ error: err.message || 'Erro ao carregar exemplo', isLoading: false });
+      const isTimeout = err.name === 'TimeoutError' || err.name === 'AbortError' || err.message?.includes('aborted');
+      const errorMessage = isTimeout
+        ? 'Tempo limite esgotado ao carregar o exemplo de relatório.'
+        : (err.message || 'Erro ao carregar exemplo');
+      set({ error: errorMessage, isLoading: false });
     }
   },
 

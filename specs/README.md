@@ -26,9 +26,11 @@ flowchart TD
 specs/
 ├── README.md                                          # Visão geral das metodologias e taxonomia de specs
 ├── sdd/                                               # Spec-Driven Development (Especificações Técnicas Formais)
-│   └── 02-core-architecture-invariants.sdd.md         # SDD dos Invariantes de Arquitetura Zero-Persistence & Isolamento
+│   ├── 02-core-architecture-invariants.sdd.md         # SDD dos Invariantes de Arquitetura Zero-Persistence & Isolamento
+│   └── 03-api-security-and-resilience-remediation.sdd.md # SDD de Remediação de APIs, Resiliência e Hardening
 ├── bdd/                                               # Behavior-Driven Development (Features Gherkin Executáveis)
-│   └── client-privacy-sanitization.feature            # Cenários Gherkin de Zero-Persistence e Prevenção de XSS
+│   ├── client-privacy-sanitization.feature            # Cenários Gherkin de Zero-Persistence e Prevenção de XSS
+│   └── api-security-and-resilience-remediation.feature # Cenários Gherkin de Remediação OWASP API Top 10
 └── secdd/                                             # Security-Driven Development & Threat Modeling
     └── threat-model-and-abuse-cases.md                # Matriz de Ameaças STRIDE e Casos de Abuso
 ```

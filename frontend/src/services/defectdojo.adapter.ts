@@ -37,7 +37,8 @@ function calculateRemediationHours(severity: NormalizedSeverity, checkId: string
 }
 
 function getParentDirectory(filePath: string): string {
-  const parts = filePath.split('/');
+  const normalized = filePath.replace(/\\/g, '/');
+  const parts = normalized.split('/');
   if (parts.length <= 1) return 'Raiz do Projeto';
   return parts.slice(0, Math.min(2, parts.length - 1)).join('/');
 }

@@ -102,5 +102,31 @@ describe('DefectDojo Semgrep Adapter', () => {
     expect((parsed.extra as any).unknown_extra_property).toBeUndefined();
     expect(((parsed.extra.metadata || {}) as any).unknown_metadata_property).toBeUndefined();
   });
+
+  it('should normalize Windows backslash paths into valid directory hotspots', () => {
+    const rawWindowsJson = JSON.stringify({
+      version: '1.45.0',
+      results: [
+        {
+          check_id: 'rules.security.sql_injection',
+          path: 'src\\backend\\controllers\\auth.controller.ts',
+          start: { line: 10, col: 1 },
+          end: { line: 10, col: 20 },
+          extra: {
+            message: 'SQL Injection in auth',
+            severity: 'ERROR',
+            metadata: {
+              impact: 'HIGH',
+              confidence: 'HIGH'
+            }
+          }
+        }
+      ]
+    });
+
+    const report = parseAndNormalizeSemgrepReport(rawWindowsJson);
+    expect(report.summary.topHotspots).toHaveLength(1);
+    expect(report.summary.topHotspots[0].directoryPath).toBe('src/backend');
+  });
 });
 

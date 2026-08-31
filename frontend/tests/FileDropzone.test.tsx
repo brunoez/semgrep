@@ -73,4 +73,24 @@ describe('FileDropzone Component - Defensive MIME & Extension Validation', () =>
       expect(useSemgrepStore.getState().report).not.toBeNull();
     });
   });
+
+  it('should reject files larger than 50MB before reading into memory', () => {
+    const alertMock = vi.spyOn(window, 'alert').mockImplementation(() => {});
+    const { container } = render(
+      <LanguageProvider>
+        <FileDropzone />
+      </LanguageProvider>
+    );
+
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const largeFile = new File(['mock content'], 'huge.json', {
+      type: 'application/json',
+    });
+    Object.defineProperty(largeFile, 'size', { value: 60 * 1024 * 1024 });
+
+    fireEvent.change(input, { target: { files: [largeFile] } });
+
+    expect(alertMock).toHaveBeenCalledWith('O arquivo excede o limite de segurança de 50MB.');
+    expect(useSemgrepStore.getState().report).toBeNull();
+  });
 });

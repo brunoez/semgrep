@@ -72,10 +72,10 @@ self.addEventListener('fetch', (event) => {
             return indexFallback;
           }
         }
-        return new Response('Network error', {
-          status: 488,
-          statusText: 'Network Error',
-          headers: { 'Content-Type': 'text/plain' }
+        return new Response('Service Unavailable (Offline)', {
+          status: 503,
+          statusText: 'Service Unavailable',
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' }
         });
       })
   );
